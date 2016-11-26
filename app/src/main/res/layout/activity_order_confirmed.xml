@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/activity_order_confirmed"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.bipul.fauxify.OrderConfirmed">
+
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_cartactivity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Not Confirmed"
+        android:id="@+id/current_time"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:textSize="36sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00 Minutes"
+        android:id="@+id/deliverytime"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:textSize="36sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order ID"
+        android:id="@+id/orderId_orderconfirmed"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:textSize="36sp"/>
+
+</LinearLayout>

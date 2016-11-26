@@ -1,0 +1,250 @@
+package com.example.bipul.fauxify;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+/**
+ * Created by Bipul Lohia on 8/31/2016.
+ */
+public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
+
+    private ArrayList<Address> addressList;
+    JSONArray jArray;
+    Integer position;
+
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+        private static final String TAG = "error";
+        public TextView userAddress;
+        Context context;
+
+        public MyViewHolder(View view) {
+            super(view);
+
+            context = view.getContext();
+
+            view.setOnLongClickListener(this);
+
+            userAddress = (TextView) view.findViewById(R.id.user_address);
+        }
+
+
+
+        @Override
+        public boolean onLongClick(View v) {
+
+            position = getAdapterPosition();
+
+            AlertDialog.Builder alertbuilder = new AlertDialog.Builder(context);
+            alertbuilder.setMessage("Do you want to delete this address?")
+                    .setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                                class BackgrTask extends AsyncTask<Void, Void, String> {
+
+                                    String urladdress, urlEmail, urlFinal, JSON_STRING;
+                                    String[] savedaddress;
+
+                                    @Override
+                                    protected void onPreExecute() {
+                                        SharedPreferences sharedPref = context.getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+                                        urlEmail = sharedPref.getString("personEmail", null);
+                                        assert urlEmail != null;
+                                        urlEmail = urlEmail.replace("@", "%40");
+                                        urladdress = MainActivity.requestURL+"Fauxusers/";
+                                        urlFinal = urladdress + urlEmail;
+                                        Log.e("checkurl", urlFinal);
+
+                                    }
+
+                                    @Override
+                                    protected String doInBackground(Void... params) {
+
+                                        try {
+                                            URL url = new URL(urlFinal);
+                                            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                                            InputStream inputStream = httpURLConnection.getInputStream();
+                                            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                                            StringBuilder stringBuilder = new StringBuilder();
+                                            while ((JSON_STRING = bufferedReader.readLine()) != null) {
+                                                stringBuilder.append(JSON_STRING + "\n");
+                                            }
+
+                                            bufferedReader.close();
+                                            inputStream.close();
+                                            httpURLConnection.disconnect();
+
+                                            String result_checkjson = stringBuilder.toString().trim();
+                                            Log.e("result", result_checkjson);
+
+                                            JSONObject jobject = new JSONObject(result_checkjson);
+                                            jArray = jobject.getJSONArray("Address");
+
+
+                                            if (jArray != null) {
+
+                                                savedaddress = new String[jArray.length()];
+
+                                                for (int j = 0; j <= (jArray.length() - 1); j++) {
+                                                    savedaddress[j] = jArray.getString(j);
+                                                    Log.e("saved addresses", savedaddress[j]);
+                                                }
+                                            } else {
+                                                Log.e("Addressconfirm activity", "no previous address found");
+                                            }
+
+                                        } catch (JSONException | IOException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        try {
+
+                                            URL urll = new URL(urlFinal);
+                                            HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
+
+                                            httpConnection.setDoOutput(true);
+                                            httpConnection.setDoInput(true);
+
+                                            httpConnection.setRequestMethod("PUT");
+                                            httpConnection.setRequestProperty("Accept", "application/json");
+                                            httpConnection.setRequestProperty("Content-Type", "application/json");
+
+                                            JSONArray jsonArray = new JSONArray();
+
+                                            if (jArray != null) {
+
+                                                for (int i = 0; i <= jArray.length() - 1; i++) {
+
+                                                    if (i != position) {
+                                                        jsonArray.put(savedaddress[i]);
+                                                        Log.e("posting addresses", savedaddress[i]);
+                                                    }
+                                                }
+                                            } else {
+                                                Log.e("Addressconfirm activity", "no previous address found while posting");
+                                            }
+
+                                            JSONObject jsonObject = new JSONObject();
+                                            jsonObject.accumulate("Address", jsonArray);
+
+                                            String json = jsonObject.toString();
+
+                                            OutputStreamWriter out = new OutputStreamWriter(httpConnection.getOutputStream());
+                                            out.write(json);
+                                            out.flush();
+                                            out.close();
+
+                                            StringBuilder sb = new StringBuilder();
+                                            int HttpResult = httpConnection.getResponseCode();
+                                            if (HttpResult == HttpURLConnection.HTTP_OK) {
+                                                BufferedReader br = new BufferedReader(
+                                                        new InputStreamReader(httpConnection.getInputStream(), "utf-8"));
+                                                String line = null;
+                                                while ((line = br.readLine()) != null) {
+                                                    sb.append(line).append("\n");
+                                                }
+                                                br.close();
+                                                System.out.println("" + sb.toString());
+                                            } else {
+                                                System.out.println(httpConnection.getResponseMessage());
+                                            }
+
+                                            Log.e("testhehe", json);
+                                        } catch (IOException | JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        return null;
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(String s) {
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        context.startActivity(intent);
+                                    }
+                                }
+
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+                                    deleteAddress();
+                                }
+
+                                private void deleteAddress() {
+                                    new BackgrTask().execute();
+
+                                }
+
+
+                            }
+                    )
+
+
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert = alertbuilder.create();
+            alert.setTitle("Alert!");
+            alert.show();
+
+            return true;
+        }
+    }
+
+
+    AddressAdapter(ArrayList<Address> addressList) {
+        this.addressList = addressList;
+    }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.address_fragment_rowlayout, parent, false);
+
+        return new MyViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Address address = addressList.get(position);
+        holder.userAddress.setText(address.getUserAddress());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return addressList.size();
+    }
+
+}
