@@ -15,7 +15,6 @@ import android.widget.ImageView;
  */
 public class SplashScreen extends Activity {
 
-
     SharedPreferences shapre = null;
 
     @Override
@@ -24,7 +23,6 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.splash);
 
         shapre = getSharedPreferences("myshared", MODE_PRIVATE);
-
 
         final ImageView iv = (ImageView) findViewById(R.id.logo);
         Animation an = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
@@ -38,10 +36,11 @@ public class SplashScreen extends Activity {
                 iv.startAnimation(an2);
                 SplashScreen.this.finish();
 
+
                 if (shapre.getBoolean("firstrun", true)) {
                     Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                     startActivity(intent);
-                    shapre.edit().putBoolean("firstrun", false).commit();
+                    shapre.edit().putBoolean("firstrun", false).apply();
                 } else {
                     Log.e("im in", "launchhomescreen222");
                     launchHomeScreen();
@@ -67,16 +66,12 @@ public class SplashScreen extends Activity {
         String personDisplayName = sharedPref.getString("personDisplayName", null);
 
         if ((personEmail == null) || (personDisplayName == null) || (personId == null)) {
-            Log.e("Data status", "all are null");
+            Log.e("Data status", "some/all are null");
             Intent intent = new Intent(this, GoogleSignIn.class);
-            startActivity(intent);
-        } else if ((personEmail != null) && (personDisplayName != null) && (personId != null)) {
-            Log.e("Data status", "none is null");
-            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
-            Log.e("Data status", "complicated relation");
-            Intent intent = new Intent(this, GoogleSignIn.class);
+            Log.e("Data status", "none is null");
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 

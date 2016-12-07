@@ -33,10 +33,8 @@ public class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.
 
         }
 
-
         @Override
         public void onClick(View v) {
-
 
             int position = getAdapterPosition();
             Address addresscart = addressListInCart.get(position);

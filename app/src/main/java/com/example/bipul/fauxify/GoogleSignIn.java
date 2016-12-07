@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -53,17 +56,19 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
     Integer noOfAddress;
 
-
     private SignInButton signInButton;
     public GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.signin_google_layout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_googlesignin);
-        setSupportActionBar(toolbar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -170,7 +175,6 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                     SharedPreferences.Editor editor = sharedPref.edit();
 
 
-
                     editor.putString("personDisplayName", personDisplayName);
                     editor.putString("personFamilyName", personFamilyName);
                     editor.putString("personGivenName", personGivenName);
@@ -244,7 +248,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         protected void onPreExecute() {
 
             checkurl = personEmail.replace("@", "%40");
-            json_url = MainActivity.requestURL+"Fauxusers/";
+            json_url = MainActivity.requestURL + "Fauxusers/";
             json_checkurl = json_url + checkurl + "/exists";
             Log.e("checkurl", json_checkurl);
         }
@@ -351,10 +355,5 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         }
 
 
-
-
     }
-
-
-
 }

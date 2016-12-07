@@ -4,13 +4,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -37,18 +40,19 @@ public class RestaurantDetails extends AppCompatActivity {
     public static String resId, resName;
     TabLayout tabLayout;
     Toolbar toolbar;
+    CollapsingToolbarLayout collapsingToolbar;
     public static boolean isVeg;
     Switch switchVeg;
     RestaurantMenuAdapter restaurantMenuAdapter;
     private static final String TAG = "onclickeddd";
     FloatingActionButton fabCheckout;
-    TextView restName, restDelTime, restMinOrder, resType;
+    static String restMinimumOrder;
+    TextView restDelTime, restMinOrder, resType;
     //Button checkOutButton;
 
 
-    @Override
+    @Override //to modify the back pressing from this activity so that cart can be emptied before going to restaurants page
     public void onBackPressed() {
-
 
         if(DishesAdapter.currentOrders.size()!=0) {
             AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
@@ -84,9 +88,20 @@ public class RestaurantDetails extends AppCompatActivity {
 
     }
 
+    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_restaurant_details);
 
         viewPager = (ViewPager) findViewById(R.id.menu_viewpager);
@@ -98,17 +113,17 @@ public class RestaurantDetails extends AppCompatActivity {
         fabCheckout = (FloatingActionButton) findViewById(R.id.fabCheckout);
         switchVeg =(Switch) findViewById(R.id.switchVeg);
         resId = getIntent().getStringExtra("resId");
-        //restName = (TextView) findViewById(R.id.resname);
-        //restDelTime = (TextView) findViewById(R.id.resDelTime);
-        //restMinOrder = (TextView) findViewById(R.id.resMinOrder);
-        //resType = (TextView) findViewById(R.id.resType);
+        restDelTime = (TextView) findViewById(R.id.restDelTimeCollapse);
+        restMinOrder = (TextView) findViewById(R.id.restMinOrderCollapse);
+        resType = (TextView) findViewById(R.id.restTypeCollapse);
         resRating = Integer.valueOf(getIntent().getStringExtra("restaurantRating"));
         Log.e("resId", resId);
         resName = getIntent().getStringExtra("restaurantName");
-        //restName.setText(getIntent().getStringExtra("restaurantName"));
-        //restDelTime.setText(getIntent().getStringExtra("restaurantDeLTime"));
-        //restMinOrder.setText(getIntent().getStringExtra("restaurantMinOrder"));
-        //resType.setText(getIntent().getStringExtra("restaurantType"));
+        restDelTime.setText(getIntent().getStringExtra("restaurantDeLTime"));
+        restMinimumOrder = getIntent().getStringExtra("restaurantMinOrder");
+        String minOrder = "\u20B9 "+ restMinimumOrder;
+        restMinOrder.setText(minOrder);
+        resType.setText(getIntent().getStringExtra("restaurantType"));
 
         Log.e("log value check", String.valueOf(switchVeg.isChecked()));
 
@@ -130,9 +145,25 @@ public class RestaurantDetails extends AppCompatActivity {
 
         prepareMenu();
 
-        toolbar= (Toolbar) findViewById(R.id.toolbar_restaurantdetails);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(resName);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(resName);
+        collapsingToolbar.setExpandedTitleMarginBottom(130);
+        collapsingToolbar.setExpandedTitleMarginStart(50);
+        collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
+        collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        collapsingToolbar.setStatusBarScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+//        toolbar= (Toolbar) findViewById(R.id.toolbar_restaurantdetails);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle(resName);
 
 //        checkOutButton.setOnClickListener(new View.OnClickListener() {
 //            @Override

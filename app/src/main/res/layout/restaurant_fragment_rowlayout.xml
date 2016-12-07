@@ -5,13 +5,13 @@
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
 
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="5dp"
+    android:padding="5dp"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
     android:background="?android:attr/selectableItemBackground"
-
     cardView:cardElevation="2dp"
     cardView:cardCornerRadius="2dp"
   >
@@ -20,25 +20,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp">
+        android:paddingBottom="30dp"
+        android:paddingTop="30dp">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:id="@+id/res_image"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="03dp"
-            android:src="@drawable/ic_restaurant_black_48dp"
+            android:src="@drawable/muffin"
             android:contentDescription="Restaurant Image" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
+            android:textColor="#616161"
             android:ellipsize="end"
             android:text="French Loaf"
             android:id="@+id/res_name"
@@ -51,6 +50,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Desserts"
+            android:textColor="@color/colorAccent"
             android:id="@+id/res_type"
             android:layout_below="@+id/res_name"
             android:layout_alignStart="@+id/res_name" />
@@ -62,14 +62,14 @@
             android:text="2.9"
             android:id="@+id/res_rating"
             android:layout_alignTop="@+id/res_name"
-
+            android:textColor="@color/colorAccent"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:textSize="12sp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Delivers in 40 minutes"

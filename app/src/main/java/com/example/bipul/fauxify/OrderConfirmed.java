@@ -1,10 +1,15 @@
 package com.example.bipul.fauxify;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -15,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class OrderConfirmed extends AppCompatActivity {
@@ -24,6 +28,37 @@ public class OrderConfirmed extends AppCompatActivity {
     Handler handler = new Handler();
     int joOrderConfirmation = 0;
     int i = 0;
+    Toolbar toolbar;
+
+    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
+        alertbuilder.setMessage("You can always check your order in 'My Order'")
+                .setCancelable(true)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(OrderConfirmed.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+        AlertDialog alert = alertbuilder.create();
+        alert.setTitle("Redirecting to Restaurants");
+        alert.show();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +69,11 @@ public class OrderConfirmed extends AppCompatActivity {
         deliveryTime = (TextView) findViewById(R.id.deliverytime);
         orderId  = (TextView) findViewById(R.id.orderId_orderconfirmed);
         orderId.setText(CartActivity.orderid);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_confirmorder);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Order Confirmation");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         doTheAutoRefresh();
 
@@ -130,13 +170,7 @@ public class OrderConfirmed extends AppCompatActivity {
 
                 Log.e("result orderconfirm", String.valueOf(joOrderConfirmation));
 
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
 
@@ -147,8 +181,8 @@ public class OrderConfirmed extends AppCompatActivity {
         protected void onPostExecute(String s) {
 
             if(joOrderConfirmation==1) {
-                currentTime.setText("Order Confirmed");
-                deliveryTime.setText(joDeliveryTime + " Minutes");
+                currentTime.setText("Your Order is being prepared");
+                deliveryTime.setText("Delivery in " +joDeliveryTime + " Minutes");
             }
         }
     }

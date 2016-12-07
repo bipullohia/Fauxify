@@ -36,6 +36,7 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
         toolbar =(Toolbar) findViewById(R.id.toolbar_addaddressinfo);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Address");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         flatNo = (EditText) findViewById(R.id.flat_no);
         fullAdress = (EditText) findViewById(R.id.full_address);

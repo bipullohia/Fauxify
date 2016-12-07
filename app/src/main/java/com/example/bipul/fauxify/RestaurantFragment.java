@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -34,6 +33,14 @@ public class RestaurantFragment extends Fragment {
     private RecyclerView recyclerView;
     private RestaurantAdapter resAdapter;
     ProgressDialog pd;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ((MainActivity) getActivity())
+                .setActionBarTitle("Restaurants");
+    }
 
     @Override
 
@@ -70,7 +77,7 @@ public class RestaurantFragment extends Fragment {
 
             json_url = MainActivity.requestURL +"Restaurants";
             Log.e("json_url", json_url);
-            pd=ProgressDialog.show(getContext(),"","Please Wait",false);
+//            pd=ProgressDialog.show(getContext(),"","Please Wait",false);
 
         }
 
@@ -98,11 +105,7 @@ public class RestaurantFragment extends Fragment {
                 jsonArray = new JSONArray(resultjson);
 
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
 
@@ -127,7 +130,7 @@ public class RestaurantFragment extends Fragment {
                 }
 
                 resAdapter.notifyDataSetChanged();
-                pd.dismiss();
+//                pd.dismiss();
 
             } else Log.e("Jsonarray length", "is zero");
         }

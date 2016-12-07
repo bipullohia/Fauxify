@@ -49,6 +49,7 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
         toolbar = (Toolbar) findViewById(R.id.toolbar_addressconfirm);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Address Confirmation");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         confirmButton.setOnClickListener(this);
 

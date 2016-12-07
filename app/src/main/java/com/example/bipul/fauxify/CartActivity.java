@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,7 +29,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -44,7 +44,27 @@ public class CartActivity extends AppCompatActivity {
     public static String orderid, restaurantNameInCart;
     static String finaladdress = null;
     static int totaldishcount = 0, totalpricecount = 0;
-    private static TextView RestaurantNameInCart, TotalItemsInCart, TotalPriceInCart, selectedAddress;
+    static TextView RestaurantNameInCart;
+    static TextView TotalItemsInCart;
+    static TextView TotalPriceInCart;
+    static TextView selectedAddress;
+
+    @Override //this is to nullify the value of address selected by user (if selected) so if he returns, it isn't stored
+    public void onBackPressed() {
+
+        finaladdress = null;
+        super.onBackPressed();
+    }
+
+    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +84,7 @@ public class CartActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Checkout");
 
         RecyclerView addressRecyclerView;
@@ -111,16 +132,24 @@ public class CartActivity extends AppCompatActivity {
         confirmorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((finaladdress != null)&&(totaldishcount!=0)) {
-                    confirmOrder();
-                    Intent intent = new Intent(getApplicationContext(), OrderConfirmed.class);
-                    startActivity(intent);
-                } else if ((finaladdress == null)&&(totaldishcount!=0)){
+
+                if ((finaladdress != null)&&totaldishcount!=0) {
+
+                    if (totalpricecount >= Integer.parseInt(RestaurantDetails.restMinimumOrder)) {
+                        confirmOrder();
+                        DishesAdapter.currentOrders.clear();
+                        Intent intent = new Intent(getApplicationContext(), OrderConfirmed.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Minimum order value is Rs "
+                                + RestaurantDetails.restMinimumOrder, Toast.LENGTH_LONG).show();
+                    }
+                } else if((finaladdress==null)&&(totaldishcount!=0)) {
                     Toast.makeText(getApplicationContext(), "Select a delivery address", Toast.LENGTH_LONG).show();
                 }
 
-                else {
-                   Toast.makeText(getApplicationContext(), "Select Dishes to order", Toast.LENGTH_LONG).show();
+                else{
+                    Toast.makeText(getApplicationContext(), "Add dishes to cart", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -138,7 +167,7 @@ public class CartActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL+"Fauxorders";
+            json_url = MainActivity.requestURL + "Fauxorders";
 
         }
 
@@ -172,9 +201,9 @@ public class CartActivity extends AppCompatActivity {
                     jo.put("dishname", CartItemAdapter.itemSummaryList.get(j).currentdishName);
                     jo.put("dishprice", CartItemAdapter.itemSummaryList.get(j).currentdishPrice);
                     jo.put("dishquantity", CartItemAdapter.itemSummaryList.get(j).currentdishQuantity);
-                    jo.put("dishamount",(CartItemAdapter.itemSummaryList.get(j)
-                            .currentdishQuantity * Integer.parseInt(CartItemAdapter.itemSummaryList.get(j).currentdishPrice)) );
-                    jarrayDishesInfo.put(j,jo);
+                    jo.put("dishamount", (CartItemAdapter.itemSummaryList.get(j)
+                            .currentdishQuantity * Integer.parseInt(CartItemAdapter.itemSummaryList.get(j).currentdishPrice)));
+                    jarrayDishesInfo.put(j, jo);
                 }
 
                 JSONObject deliveryinfo = new JSONObject();
@@ -224,17 +253,12 @@ public class CartActivity extends AppCompatActivity {
                 }
 
                 Log.e("test", json);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;
 
         }
-
 
     }
 
@@ -253,7 +277,8 @@ public class CartActivity extends AppCompatActivity {
 
     public static void prepareDetails() {
 
-        totaldishcount=0; totalpricecount=0;
+        totaldishcount = 0;
+        totalpricecount = 0;
         for (int j = 0; j <= CartItemAdapter.itemSummaryList.size() - 1; j++) {
 
             totaldishcount = totaldishcount + CartItemAdapter.itemSummaryList.get(j).currentdishQuantity;
@@ -261,8 +286,7 @@ public class CartActivity extends AppCompatActivity {
                     .currentdishQuantity * Integer.parseInt(CartItemAdapter.itemSummaryList.get(j).currentdishPrice));
         }
 
-
-        restaurantNameInCart= RestaurantDetails.resName;
+        restaurantNameInCart = RestaurantDetails.resName;
         RestaurantNameInCart.setText(restaurantNameInCart);
         TotalItemsInCart.setText(String.valueOf(totaldishcount));
         TotalPriceInCart.setText(String.valueOf(totalpricecount));
@@ -305,7 +329,7 @@ public class CartActivity extends AppCompatActivity {
             email = sharedPref.getString("personEmail", null);
             Log.e("email local data", "exists");
             checkurl = email.replace("@", "%40");
-            json_url = MainActivity.requestURL+"Fauxusers/";
+            json_url = MainActivity.requestURL + "Fauxusers/";
             json_checkurl = json_url + checkurl;
             Log.e("checkurl", json_checkurl);
         }

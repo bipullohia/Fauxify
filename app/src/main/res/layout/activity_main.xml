@@ -15,8 +15,6 @@
         <include layout="@layout/toolbar"
             android:id="@+id/toolbar" />
 
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,6 +29,7 @@
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         app:headerLayout="@layout/nav_header"
+        app:theme="@style/NavigationTheme"
         app:menu="@menu/nav_menu"
         android:layout_gravity="start"
         app:itemBackground="@drawable/pressed_gray"
@@ -41,5 +40,5 @@
 
 
 
-    
+
 </android.support.v4.widget.DrawerLayout>
