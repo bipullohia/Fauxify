@@ -2,17 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single"
-        app:theme="@style/NavigationTheme">
+    <group android:checkableBehavior="single">
 
     <item android:id="@+id/nav_option_restaurants"
         android:title="Restaurants"
-        android:theme="@style/NavigationTheme"
         android:icon="@drawable/ic_restaurant_black_48dp"/>
 
     <item android:id="@+id/nav_option_addresses"
         android:title="Addresses"
-        android:theme="@style/NavigationTheme"
         android:icon="@drawable/ic_payment_black_48dp"/>
 
     <item android:id="@+id/nav_option_orders"

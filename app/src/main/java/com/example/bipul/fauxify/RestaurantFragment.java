@@ -55,6 +55,7 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(resAdapter);
 
+
         prepareMovieData();
 
 
@@ -93,7 +94,7 @@ public class RestaurantFragment extends Fragment {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 StringBuilder stringBuilder = new StringBuilder();
                 while ((JSON_STRING = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(JSON_STRING + "\n");
+                    stringBuilder.append(JSON_STRING).append("\n");
                 }
 
                 bufferedReader.close();
@@ -121,7 +122,7 @@ public class RestaurantFragment extends Fragment {
                         jobject = jsonArray.getJSONObject(j);
                         Restaurant restaurant = new Restaurant(jobject.getString("Restname"), jobject.getString("Resttype"),
                                 jobject.getString("Ordercapacity"), jobject.getString("Deliversin"), jobject.getString("Minorder"),
-                                jobject.getString("Restid"));
+                                jobject.getString("Restid"), jobject.getString("Deliveryfee"), jobject.getString("freeDeliveryAmount"));
                         restaurantList.add(restaurant);
                         Log.e("add", String.valueOf(jobject.getString("Restname")));
                     } catch (JSONException e) {

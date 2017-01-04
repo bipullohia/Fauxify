@@ -55,16 +55,16 @@
             android:layout_below="@+id/res_name"
             android:layout_alignStart="@+id/res_name" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="2.9"
-            android:id="@+id/res_rating"
-            android:layout_alignTop="@+id/res_name"
-            android:textColor="@color/colorAccent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text="2.9"-->
+            <!--android:id="@+id/res_rating"-->
+            <!--android:layout_alignTop="@+id/res_name"-->
+            <!--android:textColor="@color/colorAccent"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginEnd="15dp" />-->
 
         <TextView
             android:layout_width="wrap_content"

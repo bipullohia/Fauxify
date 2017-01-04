@@ -27,6 +27,7 @@ public class OrderConfirmed extends AppCompatActivity {
     TextView currentTime, deliveryTime, orderId;
     Handler handler = new Handler();
     int joOrderConfirmation = 0;
+    Runnable runnable;
     int i = 0;
     Toolbar toolbar;
 
@@ -49,6 +50,8 @@ public class OrderConfirmed extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        handler.removeCallbacks(runnable);
                         Intent intent = new Intent(OrderConfirmed.this, MainActivity.class);
                         startActivity(intent);
                     }
@@ -81,7 +84,7 @@ public class OrderConfirmed extends AppCompatActivity {
 
     private void doTheAutoRefresh() {
 
-        Runnable runnable = new Runnable() {
+        runnable = new Runnable() {
             @Override
             public void run() {
 
@@ -183,6 +186,7 @@ public class OrderConfirmed extends AppCompatActivity {
             if(joOrderConfirmation==1) {
                 currentTime.setText("Your Order is being prepared");
                 deliveryTime.setText("Delivery in " +joDeliveryTime + " Minutes");
+                handler.removeCallbacks(runnable);
             }
         }
     }

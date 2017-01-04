@@ -16,15 +16,19 @@
             android:layout_height="wrap_content"
             android:text="Multiple Payment Options"
             android:textAlignment="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_gravity="center_vertical"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_title"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
             android:layout_gravity="center_vertical"
             android:text="Pay via Paytm or by Cash On Delivery"
             android:textAlignment="center"

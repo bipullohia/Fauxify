@@ -29,13 +29,11 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
             context = view.getContext();
             view.setOnLongClickListener(this);
 
-
             dishNameInCart = (TextView) view.findViewById(R.id.dishname_incart);
             dishPriceInCart = (TextView) view.findViewById(R.id.dishprice_incart);
             dishQuantityInCart = (TextView) view.findViewById(R.id.dishquantity_incart);
             dishAmountInCart = (TextView) view.findViewById(R.id.dishamount_incart);
         }
-
 
         @Override
         public boolean onLongClick(View v) {
@@ -51,6 +49,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
                                     delete(getAdapterPosition());
 
                                     CartActivity.prepareDetails();
+                                    CartActivity.checkDeliveryFee();
                                 }
                             }
 

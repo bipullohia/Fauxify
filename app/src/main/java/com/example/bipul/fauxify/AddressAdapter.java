@@ -2,7 +2,6 @@ package com.example.bipul.fauxify;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -53,7 +52,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
         }
 
 
-
         @Override
         public boolean onLongClick(View v) {
 
@@ -75,7 +73,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                         urlEmail = sharedPref.getString("personEmail", null);
                                         assert urlEmail != null;
                                         urlEmail = urlEmail.replace("@", "%40");
-                                        urladdress = MainActivity.requestURL+"Fauxusers/";
+                                        urladdress = MainActivity.requestURL + "Fauxusers/";
                                         urlFinal = urladdress + urlEmail;
                                         Log.e("checkurl", urlFinal);
 
@@ -141,6 +139,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                                 for (int i = 0; i <= jArray.length() - 1; i++) {
 
                                                     if (i != position) {
+
+                                                        Address address = new Address(savedaddress[i]); //adding the new addresses to list
+                                                        addressList.add(address);
                                                         jsonArray.put(savedaddress[i]);
                                                         Log.e("posting addresses", savedaddress[i]);
                                                     }
@@ -184,8 +185,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
 
                                     @Override
                                     protected void onPostExecute(String s) {
-                                        Intent intent = new Intent(context, MainActivity.class);
-                                        context.startActivity(intent);
+
+                                        notifyDataSetChanged(); //it updates the new address adapter with new list
+
                                     }
                                 }
 
@@ -193,6 +195,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
+                                    addressList.clear(); //clearing the old address list
                                     Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                                     deleteAddress();
                                 }

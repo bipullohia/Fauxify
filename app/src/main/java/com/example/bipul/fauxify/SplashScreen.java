@@ -36,7 +36,7 @@ public class SplashScreen extends Activity {
                 iv.startAnimation(an2);
                 SplashScreen.this.finish();
 
-
+//
                 if (shapre.getBoolean("firstrun", true)) {
                     Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                     startActivity(intent);
@@ -45,7 +45,12 @@ public class SplashScreen extends Activity {
                     Log.e("im in", "launchhomescreen222");
                     launchHomeScreen();
                 }
+
+
+//                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+//                startActivity(intent);
             }
+
 
             public void onAnimationRepeat(Animation animation) {
             }

@@ -8,7 +8,7 @@
     <dimen name="dots_margin_bottom">20sp</dimen>
     <dimen name="img_width_height">120sp</dimen>
     <dimen name="slide_title">30sp</dimen>
-    <dimen name="slide_desc">16sp</dimen>
+    <dimen name="slide_desc">17sp</dimen>
     <dimen name="desc_padding">40sp</dimen>
 
 </resources>

@@ -3,16 +3,21 @@ package com.example.bipul.fauxify;
 /**
  * Created by bipul on 27-06-2016.
  */
-public class Restaurant {private String resName, resType, resRating, resDeliveryTime, resMinOrder, resId;
+public class Restaurant {
+    private String resName, resType, resRating, resDeliveryTime, resMinOrder, resId, deliveryFee, freeDeliveryAmount;
 
 
-    public Restaurant(String resName, String resType, String resRating, String resDeliveryTime, String resMinOrder, String resId) {
+    public Restaurant(String resName, String resType, String resRating, String resDeliveryTime,
+                      String resMinOrder, String resId, String deliveryFee, String freeDeliveryAmount) {
+
         this.resName = resName;
         this.resType = resType;
         this.resId = resId;
         this.resRating = resRating;
         this.resDeliveryTime = resDeliveryTime;
         this.resMinOrder = resMinOrder;
+        this.deliveryFee = deliveryFee;
+        this.freeDeliveryAmount = freeDeliveryAmount;
     }
 
     public String getResName() {
@@ -62,4 +67,22 @@ public class Restaurant {private String resName, resType, resRating, resDelivery
 
     public void setResMinOrder(String genre) {
         this.resMinOrder = genre;
-    }}
+    }
+
+    public String getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void setDeliveryFee(String genre) {
+        this.deliveryFee = genre;
+    }
+
+    public String getFreeDeliveryAmount() {
+        return freeDeliveryAmount;
+    }
+
+    public void setFreeDeliveryAmount(String genre) {
+        this.freeDeliveryAmount = genre;
+    }
+
+}

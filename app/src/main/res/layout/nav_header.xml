@@ -2,40 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="210dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/restaurantdetails"
+    android:background="@drawable/navheader"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp">
 
-        <TextView
-            android:id="@+id/navheadName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="16dp"
-            android:text="pqrs wxyz"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/navheadName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="16dp"
+        android:text="pqrs wxyz"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/navheademail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="16dp"
-            android:text="abc.xyz@gmail.com"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/navheademail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="16dp"
+        android:text="abc.xyz@gmail.com"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/navheadcontact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="16dp"
-            android:text="9999999999"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/navheadcontact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="16dp"
+        android:text="9999999999"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
 
-    </LinearLayout>
+</LinearLayout>

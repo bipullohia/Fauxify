@@ -30,9 +30,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             context = view.getContext();
             view.setOnClickListener(this);
 
+
             resName = (TextView) view.findViewById(R.id.res_name);
             restype = (TextView) view.findViewById(R.id.res_type);
-            resRating = (TextView) view.findViewById(R.id.res_rating);
+            //resRating = (TextView) view.findViewById(R.id.res_rating);
             resDeliveryTime = (TextView) view.findViewById(R.id.res_delivery_time);
             resMinimumOrder = (TextView) view.findViewById(R.id.res_min_order);
             resImage = (ImageView) view.findViewById(R.id.res_image);
@@ -42,19 +43,21 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         @Override
         public void onClick(View v) {
 
-                Intent intent;
-                int position = getAdapterPosition();
-                Restaurant restaurant = restaurantList.get(position);
+            Intent intent;
+            int position = getAdapterPosition();
+            Restaurant restaurant = restaurantList.get(position);
 
-                intent = new Intent(context, RestaurantDetails.class);
-                intent.putExtra("restaurantName", restaurant.getResName());
-                intent.putExtra("restaurantDeLTime", restaurant.getResDeliveryTime());
-                intent.putExtra("restaurantMinOrder", restaurant.getResMinOrder());
-                intent.putExtra("restaurantRating", restaurant.getResRating());
-                intent.putExtra("restaurantType", restaurant.getResType());
-                intent.putExtra("resId", restaurant.getResId());
+            intent = new Intent(context, RestaurantDetails.class);
+            intent.putExtra("restaurantName", restaurant.getResName());
+            intent.putExtra("restaurantDeLTime", restaurant.getResDeliveryTime());
+            intent.putExtra("restaurantMinOrder", restaurant.getResMinOrder());
+            intent.putExtra("restaurantRating", restaurant.getResRating());
+            intent.putExtra("restaurantType", restaurant.getResType());
+            intent.putExtra("resId", restaurant.getResId());
+            intent.putExtra("Deliveryfee", restaurant.getDeliveryFee());
+            intent.putExtra("freeDeliveryAmount", restaurant.getFreeDeliveryAmount());
 
-                context.startActivity(intent);
+            context.startActivity(intent);
 
         }
     }
@@ -74,14 +77,18 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         Restaurant restaurant = restaurantList.get(position);
         holder.resName.setText(restaurant.getResName());
         holder.restype.setText(restaurant.getResType());
-        holder.resRating.setText(restaurant.getResRating());
+        //holder.resRating.setText(restaurant.getResRating());
         holder.resDeliveryTime.setText(restaurant.getResDeliveryTime());
-        holder.resMinimumOrder.setText(restaurant.getResMinOrder());
+        holder.resMinimumOrder.setText("Min Order  " + MainActivity.rupeesymbol + restaurant.getResMinOrder());
+
+        // holder.itemView.setEnabled(false);
 
     }
+
 
     @Override
     public int getItemCount() {

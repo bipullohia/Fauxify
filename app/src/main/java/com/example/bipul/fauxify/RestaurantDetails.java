@@ -37,7 +37,7 @@ public class RestaurantDetails extends AppCompatActivity {
 
     ViewPager viewPager;
     Integer resRating, noOfCategories;
-    public static String resId, resName;
+    public static String resId, resName, restMinimumOrder, resDeliveryFee, resFreeDelAmount;
     TabLayout tabLayout;
     Toolbar toolbar;
     CollapsingToolbarLayout collapsingToolbar;
@@ -46,7 +46,6 @@ public class RestaurantDetails extends AppCompatActivity {
     RestaurantMenuAdapter restaurantMenuAdapter;
     private static final String TAG = "onclickeddd";
     FloatingActionButton fabCheckout;
-    static String restMinimumOrder;
     TextView restDelTime, restMinOrder, resType;
     //Button checkOutButton;
 
@@ -104,26 +103,39 @@ public class RestaurantDetails extends AppCompatActivity {
 
         setContentView(R.layout.activity_restaurant_details);
 
-        viewPager = (ViewPager) findViewById(R.id.menu_viewpager);
+        viewPager = (ViewPager) findViewById(R.id .menu_viewpager);
         assert viewPager != null;
         viewPager.setOffscreenPageLimit(10);
         tabLayout = (TabLayout) findViewById(R.id.menu_tabs);
 
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window w = getWindow(); // in Activity's onCreate() for instance
+//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        }
+
         //checkOutButton = (Button)findViewById(R.id.checkout_button);
         fabCheckout = (FloatingActionButton) findViewById(R.id.fabCheckout);
         switchVeg =(Switch) findViewById(R.id.switchVeg);
+
         resId = getIntent().getStringExtra("resId");
+        resName = getIntent().getStringExtra("restaurantName");
+        restMinimumOrder = getIntent().getStringExtra("restaurantMinOrder");
+        resDeliveryFee = getIntent().getStringExtra("Deliveryfee");
+        resFreeDelAmount = getIntent().getStringExtra("freeDeliveryAmount");
+
+        Log.i("delfee freedelamount", resDeliveryFee + "  " + resFreeDelAmount);
         restDelTime = (TextView) findViewById(R.id.restDelTimeCollapse);
         restMinOrder = (TextView) findViewById(R.id.restMinOrderCollapse);
         resType = (TextView) findViewById(R.id.restTypeCollapse);
         resRating = Integer.valueOf(getIntent().getStringExtra("restaurantRating"));
         Log.e("resId", resId);
-        resName = getIntent().getStringExtra("restaurantName");
+
         restDelTime.setText(getIntent().getStringExtra("restaurantDeLTime"));
-        restMinimumOrder = getIntent().getStringExtra("restaurantMinOrder");
         String minOrder = "\u20B9 "+ restMinimumOrder;
         restMinOrder.setText(minOrder);
         resType.setText(getIntent().getStringExtra("restaurantType"));
+
+
 
         Log.e("log value check", String.valueOf(switchVeg.isChecked()));
 

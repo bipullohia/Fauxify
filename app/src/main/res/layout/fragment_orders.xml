@@ -1,16 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bipul.fauxify.OrdersFragment">
+    android:orientation="vertical"
+    android:clickable="true">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myOrdersRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Orders"
-        android:gravity="center"
-        android:textSize="35sp"/>
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:scrollbars="vertical" />
 
-
-</FrameLayout>
+</LinearLayout>

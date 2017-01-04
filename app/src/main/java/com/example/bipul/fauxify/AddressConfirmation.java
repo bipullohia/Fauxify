@@ -60,6 +60,7 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
 
         sendAddress();
 
+
         Toast.makeText(getBaseContext(), "Address added successfully", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

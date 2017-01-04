@@ -9,8 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="3dp"
-        android:text="Dish Name"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorAccent"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:text="XXXX XXXX"
+       android:textSize="16sp"
         android:id="@+id/dishname_incart"/>
 
     <LinearLayout
@@ -29,18 +32,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="15dp"
+                android:paddingStart="15dp"
                 android:text="Price" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="3dp"
+                android:paddingStart="3dp"
                 android:text="@string/Rs" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="110"
+                android:text="XXX"
                 android:id="@+id/dishprice_incart"/>
 
 
@@ -57,12 +62,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="15dp"
+                android:paddingStart="15dp"
                 android:text="Quantity" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
+                android:text="X"
                 android:id="@+id/dishquantity_incart"/>
 
 
@@ -80,22 +86,19 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="15dp"
                 android:paddingStart="15dp"
-                android:text="Amount"
-                android:textSize="16sp" />
+                android:text="Amount" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="5dp"
                 android:paddingStart="5dp"
-                android:text="@string/Rs"
-                android:textSize="16sp" />
+                android:text="@string/Rs" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="440"
-                android:textSize="16sp"
+                android:text="XXX"
                 android:id="@+id/dishamount_incart"/>
 
 

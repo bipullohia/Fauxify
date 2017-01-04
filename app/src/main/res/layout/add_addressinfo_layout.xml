@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="130dp"
-        android:text="Where do you reside?"
+        android:text="Where do you live?"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Spinner

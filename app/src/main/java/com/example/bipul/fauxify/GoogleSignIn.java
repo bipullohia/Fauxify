@@ -38,7 +38,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -248,7 +247,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         protected void onPreExecute() {
 
             checkurl = personEmail.replace("@", "%40");
-            json_url = MainActivity.requestURL + "Fauxusers/";
+            json_url = "http://192.168.0.103:3000/api/Fauxusers/";  //here is undefined aaddress
             json_checkurl = json_url + checkurl + "/exists";
             Log.e("checkurl", json_checkurl);
         }
@@ -279,22 +278,18 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
                 Log.e("if exists", ifEmailExists);
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
 
 
-            if (ifEmailExists == "true") {
+            if (ifEmailExists.equals("true")) {
 
 
                 Log.e("checkemailexistence", "email exists: redirecting to main activity");
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-            } else if (ifEmailExists == "false") {
+            } else if (ifEmailExists.equals("false")) {
 
                 Log.e("checkemailexistence", "Email doesnot exist, give the post request");
                 try {
@@ -340,11 +335,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
 
                     Log.e("test", json);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
 

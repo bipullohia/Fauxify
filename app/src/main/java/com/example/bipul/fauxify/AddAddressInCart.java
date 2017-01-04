@@ -12,12 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  * Created by Bipul Lohia on 9/17/2016.
  */
-public class AddAddressInCart extends AppCompatActivity implements View.OnClickListener {
 
+public class AddAddressInCart extends AppCompatActivity implements View.OnClickListener {
 
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
@@ -111,11 +112,19 @@ public class AddAddressInCart extends AppCompatActivity implements View.OnClickL
         }
         Log.e("flat no", flatNum);
 
-        totalAddress = inputAddress + "\n" + defaultAddress;
+        if(!inputAddress.equals("")) {
+            totalAddress = inputAddress + "\n" + defaultAddress;
 
-        Intent intent = new Intent(this, AddressConfirmationInCart.class);
-        intent.putExtra("Address", totalAddress);
-        startActivity(intent);
+            Intent intent = new Intent(this, AddressConfirmationInCart.class);
+            intent.putExtra("Address", totalAddress);
+            startActivity(intent);
+        }
+
+        else{
+
+            Toast.makeText(getApplicationContext(), "House/Flat no. cannot be empty", Toast.LENGTH_LONG).show();
+
+        }
 
     }
 }

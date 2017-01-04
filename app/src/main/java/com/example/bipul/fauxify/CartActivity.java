@@ -31,6 +31,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 public class CartActivity extends AppCompatActivity {
@@ -43,17 +44,17 @@ public class CartActivity extends AppCompatActivity {
     Toolbar toolbar;
     public static String orderid, restaurantNameInCart;
     static String finaladdress = null;
-    static int totaldishcount = 0, totalpricecount = 0;
-    static TextView RestaurantNameInCart;
-    static TextView TotalItemsInCart;
-    static TextView TotalPriceInCart;
-    static TextView selectedAddress;
+    static int totaldishcount = 0, totalitempricecount = 0, deliveryfee = 0, grandtotalamount = 0;
+    static TextView RestaurantNameInCart, TotalItemsInCart, TotalItemPriceInCart, GrandTotalAmount, DeliveryFee, selectedAddress;
 
-    @Override //this is to nullify the value of address selected by user (if selected) so if he returns, it isn't stored
+
+    @Override
+    //this is to nullify the value of address selected by user (if selected) so if he returns, it isn't stored
     public void onBackPressed() {
 
         finaladdress = null;
         super.onBackPressed();
+
     }
 
     @Override   //this is to duplicate the effect of back button on UP button of actionbar
@@ -85,7 +86,7 @@ public class CartActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Checkout");
+        getSupportActionBar().setTitle("Review Order");
 
         RecyclerView addressRecyclerView;
         addressRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_addresscart);
@@ -103,6 +104,9 @@ public class CartActivity extends AppCompatActivity {
         selectedAddress = (TextView) findViewById(R.id.cart_selectedaddress);
         addNewAddress = (Button) findViewById(R.id.button_addnewaddress_cart);
         confirmorder = (Button) findViewById(R.id.button_confirmorder);
+
+        DeliveryFee = (TextView) findViewById(R.id.deliveryfee_incart);
+        GrandTotalAmount = (TextView) findViewById(R.id.grandtotalprice_incart);
 
         addNewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,19 +127,27 @@ public class CartActivity extends AppCompatActivity {
 
         RestaurantNameInCart = (TextView) findViewById(R.id.restname_incart);
         TotalItemsInCart = (TextView) findViewById(R.id.totalitems_incart);
-        TotalPriceInCart = (TextView) findViewById(R.id.totalprice_incart);
+        TotalItemPriceInCart = (TextView) findViewById(R.id.totalitemprice_incart);
 
         prepareCartData();
         prepareDetails();
+
+        // after preparation of details, now we will check for deivery fee implementation
+
+        checkDeliveryFee();
+
+
         prepareAddressDetails();
 
         confirmorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if ((finaladdress != null)&&totaldishcount!=0) {
+                if ((finaladdress != null) && totaldishcount != 0) {
 
-                    if (totalpricecount >= Integer.parseInt(RestaurantDetails.restMinimumOrder)) {
+                    if (totalitempricecount >= Integer.parseInt(RestaurantDetails.restMinimumOrder)) {
+
+
                         confirmOrder();
                         DishesAdapter.currentOrders.clear();
                         Intent intent = new Intent(getApplicationContext(), OrderConfirmed.class);
@@ -144,11 +156,9 @@ public class CartActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Minimum order value is Rs "
                                 + RestaurantDetails.restMinimumOrder, Toast.LENGTH_LONG).show();
                     }
-                } else if((finaladdress==null)&&(totaldishcount!=0)) {
+                } else if ((finaladdress == null) && (totaldishcount != 0)) {
                     Toast.makeText(getApplicationContext(), "Select a delivery address", Toast.LENGTH_LONG).show();
-                }
-
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Add dishes to cart", Toast.LENGTH_LONG).show();
                 }
             }
@@ -156,9 +166,40 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
+    public static void checkDeliveryFee() {
+
+        Log.i("totalitempricecount", String.valueOf(totalitempricecount));
+        Log.i("resFreedelAmount", String.valueOf(Integer.valueOf(RestaurantDetails.resFreeDelAmount)));
+
+        if (totalitempricecount < Integer.valueOf(RestaurantDetails.resFreeDelAmount)) {
+
+            deliveryfee = Integer.valueOf(RestaurantDetails.resDeliveryFee);
+
+        }
+
+        else {
+            deliveryfee = 0;
+        }
+
+        DeliveryFee.setText(String.valueOf(deliveryfee));
+        grandtotalamount = totalitempricecount + deliveryfee;
+        GrandTotalAmount.setText(String.valueOf(grandtotalamount));
+
+    }
+
     private void confirmOrder() {
         Log.e("confirm order", "order confirmed");
         new BackgroundTask().execute();
+    }
+
+    public String convertTime(int x) {
+
+        if (x < 10) {
+            return "0" + String.valueOf(x);
+        } else {
+            return String.valueOf(x);
+        }
+
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String> {
@@ -193,6 +234,40 @@ public class CartActivity extends AppCompatActivity {
                 //String mydate =java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                 String date = (DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
 
+                String hours, minutes, seconds, days, months, yearshort, timestamp;
+                Random random = new Random();
+
+                int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                int min = Calendar.getInstance().get(Calendar.MINUTE);
+                int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                int second = Calendar.getInstance().get(Calendar.SECOND);
+                int month = Calendar.getInstance().get(Calendar.MONTH);
+                int year = Calendar.getInstance().get(Calendar.YEAR);
+                int randomno = random.nextInt(89) + 10;
+
+                hours = convertTime(hour);
+                minutes = convertTime(min);
+                days = convertTime(day);
+                seconds = convertTime(second);
+                months = convertTime(month);
+                String years = convertTime(year);
+                String randomnos = String.valueOf(randomno);
+
+
+                yearshort = years.substring(2, 4);
+                timestamp = yearshort + months + days + hours + minutes + seconds + randomnos;
+
+                Log.i("hour", hours);
+                Log.i("min", minutes);
+                Log.i("day", days);
+                Log.i("sec", seconds);
+                Log.i("month", months);
+                Log.i("year", yearshort);
+                Log.i("random", randomnos);
+
+                Log.i("timestamp", timestamp);
+
+
                 JSONArray jarrayDishesInfo = new JSONArray();
 
                 for (int j = 0; j <= CartItemAdapter.itemSummaryList.size() - 1; j++) {
@@ -215,16 +290,20 @@ public class CartActivity extends AppCompatActivity {
 
                 JSONObject orderinfo = new JSONObject();
                 orderinfo.put("totalitems", totaldishcount);
-                orderinfo.put("totalitemprice", totalpricecount);
+                orderinfo.put("totalitemprice", totalitempricecount);
                 orderinfo.put("dishesinfo", jarrayDishesInfo);
+                orderinfo.put("deliveryfee", deliveryfee);
 
-                Random r = new Random();
-                orderid = RestaurantDetails.resId + (r.nextInt(8999) + 1000);
+//                Random r = new Random();
+//                orderid = RestaurantDetails.resId + (r.nextInt(8999) + 1000);
+
+                orderid = timestamp;
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("Orderid", orderid);
                 jsonObject.accumulate("Restid", RestaurantDetails.resId);
-                jsonObject.accumulate("ordertotal", totalpricecount);
+                jsonObject.accumulate("RestName", RestaurantDetails.resName);
+                jsonObject.accumulate("ordertotal", grandtotalamount);
                 jsonObject.accumulate("customeraddress", finaladdress);
                 jsonObject.accumulate("customeremail", email);
                 jsonObject.accumulate("customername", customername);
@@ -278,18 +357,19 @@ public class CartActivity extends AppCompatActivity {
     public static void prepareDetails() {
 
         totaldishcount = 0;
-        totalpricecount = 0;
+        totalitempricecount = 0;
         for (int j = 0; j <= CartItemAdapter.itemSummaryList.size() - 1; j++) {
 
             totaldishcount = totaldishcount + CartItemAdapter.itemSummaryList.get(j).currentdishQuantity;
-            totalpricecount = totalpricecount + (CartItemAdapter.itemSummaryList.get(j)
+            totalitempricecount = totalitempricecount + (CartItemAdapter.itemSummaryList.get(j)
                     .currentdishQuantity * Integer.parseInt(CartItemAdapter.itemSummaryList.get(j).currentdishPrice));
         }
+
 
         restaurantNameInCart = RestaurantDetails.resName;
         RestaurantNameInCart.setText(restaurantNameInCart);
         TotalItemsInCart.setText(String.valueOf(totaldishcount));
-        TotalPriceInCart.setText(String.valueOf(totalpricecount));
+        TotalItemPriceInCart.setText(String.valueOf(totalitempricecount));
 
     }
 
