@@ -99,17 +99,38 @@
                     android:background="@color/lightGray" />
 
 
-                <TextView
-                    android:id="@+id/restname_incart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/colorAccent"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:text="Restaurant Name"
-                    android:textSize="16sp" />
+                   android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_weight="1"
+                        android:text="Restaurant Name" />
+
+                    <TextView
+                        android:id="@+id/restname_incart"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="XXXXX" />
+
+
+
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,21 +145,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:layout_weight="1"
                             android:text="Total Items" />
 
                         <TextView
                             android:id="@+id/totalitems_incart"
                             android:layout_width="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorAccent"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="end"
                             android:text="X" />
-
-
-
-
 
                 </LinearLayout>
 
@@ -147,80 +166,87 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="15sp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Total Items Amount" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="5dp"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorAccent"
+                            android:paddingStart="5dp"
+                            android:text="@string/Rs" />
+
+                        <TextView
+                            android:id="@+id/totalitemprice_incart"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="15sp"
+                            android:layout_height="wrap_content"
+                            android:text="XXX" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingTop="5dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:paddingTop="5dp">
-
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Items Amount" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
                             android:layout_weight="1"
-                            android:gravity="center">
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingEnd="5dp"
-                                android:text="@string/Rs" />
-
-                            <TextView
-                                android:id="@+id/totalitemprice_incart"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="XXX" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:paddingTop="5dp">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Delivery Fee" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center">
+                            android:gravity="end">
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:paddingStart="5dp"
+                                android:textSize="15sp"
+                                android:textColor="@color/colorAccent"
                                 android:paddingEnd="5dp"
                                 android:text="@string/Rs" />
 
                             <TextView
                                 android:id="@+id/deliveryfee_incart"
                                 android:layout_width="wrap_content"
+                                android:textSize="15sp"
+                                android:textColor="@color/colorAccent"
                                 android:layout_height="wrap_content"
                                 android:text="XX" />
                         </LinearLayout>
-
-
-                    </LinearLayout>
 
 
 
@@ -247,7 +273,6 @@
                         android:layout_width="wrap_content"
                         android:textSize="16sp"
                         android:textColor="@color/colorAccent"
-                        android:gravity="center"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Final Amount to be paid" />
@@ -256,6 +281,7 @@
                         android:layout_width="wrap_content"
                         android:orientation="horizontal"
                         android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -275,9 +301,7 @@
                             android:text="XXX" />
                     </LinearLayout>
 
-
                 </LinearLayout>
-
 
             </LinearLayout>
 
@@ -347,7 +371,6 @@
             android:layout_width="match_parent"
                 android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_marginTop="5dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
@@ -367,6 +390,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:text="Selected Address"
                     android:textAppearance="?android:attr/textAppearanceMedium" />

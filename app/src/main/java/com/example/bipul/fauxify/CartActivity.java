@@ -249,7 +249,7 @@ public class CartActivity extends AppCompatActivity {
                 minutes = convertTime(min);
                 days = convertTime(day);
                 seconds = convertTime(second);
-                months = convertTime(month);
+                months = convertTime(month) ;
                 String years = convertTime(year);
                 String randomnos = String.valueOf(randomno);
 

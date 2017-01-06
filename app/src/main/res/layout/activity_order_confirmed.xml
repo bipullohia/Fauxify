@@ -2,42 +2,226 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
 
     <include
         android:id="@+id/toolbar_confirmorder"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/current_time"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:padding="20dp"
-        android:text="Awaiting Confirmaiton by Restaurant..."
-        android:textAlignment="center"
-        android:textSize="28sp" />
+        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        cardView:cardCornerRadius="2dp"
+        cardView:cardElevation="2dp">
 
-    <TextView
-        android:id="@+id/deliverytime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:padding="20dp"
-        android:text="_ _  Minutes"
-        android:textAlignment="center"
-        android:textSize="28sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-    <TextView
-        android:id="@+id/orderId_orderconfirmed"
-        android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:text="Order Status"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray" />
+
+            <TextView
+                android:id="@+id/current_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="15dp"
+                android:textStyle="italic"
+                android:text="Awaiting Confirmaiton by Restaurant..."
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:id="@+id/orderrefresh"
+                android:textStyle="italic"
+                android:paddingBottom="5dp"
+                android:text="This auto-refreshes every 5 seconds "
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/colorAccent"
+                android:id="@+id/deliverytime"
+                android:textStyle="italic"
+               android:padding="7dp"
+                android:textSize="17sp"/>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="Order ID"
-        android:textSize="24sp" />
+        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        cardView:cardCornerRadius="2dp"
+        cardView:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:text="Order Details"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Order Id" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:id="@+id/orderId_orderconfirmed"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXXXXXXXXXX" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Restaurant Name" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:id="@+id/restNameOrderConfirm"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/colorAccent"
+                        android:layout_height="wrap_content"
+                        android:text="XXXXXX XXXXXX" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                   android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Final Amount to be paid" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="5dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:text="@string/Rs" />
+
+                    <TextView
+
+                        android:id="@+id/totalpriceOrderConfirm"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_height="wrap_content"
+                        android:text="XXX" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

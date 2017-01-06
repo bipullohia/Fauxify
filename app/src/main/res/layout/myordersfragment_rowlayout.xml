@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginRight="10dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
     cardView:cardCornerRadius="2dp"
-    cardView:cardElevation="1dp">
+    cardView:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +31,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:text="Order Id: "
                 android:textSize="16sp" />
 
@@ -38,12 +43,7 @@
                 android:textSize="16sp"
                 android:id="@+id/orderrow_orderid"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:id="@+id/orderrow_timestamp"
-                android:text="00.00.0000 00.00.00 PM" />
+
         </LinearLayout>
 
         <TextView
@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="Restaurant Name"
             android:textAlignment="center"
+            android:textColor="@color/colorAccent"
             android:layout_marginTop="5dp"
             android:id="@+id/orderrow_restname"
             android:textSize="18sp"/>
@@ -97,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:text="000"
                     android:id="@+id/orderrow_totalprice"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
 
             </LinearLayout>
 
@@ -115,8 +117,7 @@
                 android:textSize="16sp"
                 android:textAlignment="center"
                 android:layout_weight="1"
-                android:id="@+id/orderrow_orderconfirmed"
-                android:textColor="@color/colorPrimary"/>
+                android:id="@+id/orderrow_orderconfirmed" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,8 +126,7 @@
                 android:textAlignment="center"
                 android:id="@+id/orderrow_orderdelivered"
                 android:textSize="16sp"
-                android:layout_weight="1"
-                android:textColor="@color/colorPrimary"/>
+                android:layout_weight="1"/>
 
         </LinearLayout>
 

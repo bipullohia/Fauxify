@@ -111,7 +111,7 @@ public class MyOrdersFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo;
+            String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
             if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
@@ -131,6 +131,7 @@ public class MyOrdersFragment extends Fragment {
                             totalitems = joOrderinfo.getString("totalitems");
                             totalitemprice = joOrderinfo.getString("totalitemprice");
                             dishesinfo = joOrderinfo.getString("dishesinfo");
+                            deliveryfee = joOrderinfo.getString("deliveryfee");
 
                             ordertiming = joDelivery.getString("ordertiming");
 
@@ -151,7 +152,8 @@ public class MyOrdersFragment extends Fragment {
 
                             MyOrders orders = new MyOrders(jobject.getString("Orderid"), totalitems,
                                     jobject.getString("ordertotal"), ordertiming, orderconfirmed,
-                                    orderdelivered, totalitemprice, dishesinfo, jobject.getString("customeraddress"), jobject.getString("RestName"));
+                                    orderdelivered, totalitemprice, dishesinfo, jobject.getString("customeraddress"),
+                                    jobject.getString("RestName"), deliveryfee);
 
                             orderList.add(orders);
 

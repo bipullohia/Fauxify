@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ public class AddAddressInCart extends AppCompatActivity implements View.OnClickL
     EditText flatNo, fullAdress;
     Toolbar toolbar;
     String flatNum, fullAdd;
+    CardView housenoCardview;
     Button submitButton;
     Integer addPosition;
     String inputAddress, defaultAddress, totalAddress;
@@ -34,13 +36,15 @@ public class AddAddressInCart extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_addressinfo_layout);
 
-        toolbar =(Toolbar) findViewById(R.id.toolbar_addaddressinfo);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_addaddressinfo);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Address");
 
         flatNo = (EditText) findViewById(R.id.flat_no);
         fullAdress = (EditText) findViewById(R.id.full_address);
         submitButton = (Button) findViewById(R.id.submit_button);
+        housenoCardview = (CardView) findViewById(R.id.houseno_cardview);
+
 
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.Areas, android.R.layout.simple_spinner_item);
@@ -56,18 +60,21 @@ public class AddAddressInCart extends AppCompatActivity implements View.OnClickL
                 if (position == 0) {
                     flatNo.setVisibility(View.GONE);
                     fullAdress.setVisibility(View.GONE);
-                    submitButton.setVisibility(View.GONE);
+                    housenoCardview.setVisibility(View.GONE);
+
+
                 } else if ((position == 1) || (position == 2) || (position == 3)) {
                     flatNo.setVisibility(View.VISIBLE);
+                    housenoCardview.setVisibility(View.VISIBLE);
                     fullAdress.setVisibility(View.GONE);
-                    submitButton.setVisibility(View.VISIBLE);
+
 
                 } else if (((position == 4))) {
+                    housenoCardview.setVisibility(View.VISIBLE);
                     fullAdress.setVisibility(View.VISIBLE);
                     flatNo.setVisibility(View.GONE);
-                    submitButton.setVisibility(View.VISIBLE);
-                }
 
+                }
 
                 Log.e("this is selected", String.valueOf(parent.getItemAtPosition(position)));
 
@@ -112,15 +119,13 @@ public class AddAddressInCart extends AppCompatActivity implements View.OnClickL
         }
         Log.e("flat no", flatNum);
 
-        if(!inputAddress.equals("")) {
+        if (!inputAddress.equals("")) {
             totalAddress = inputAddress + "\n" + defaultAddress;
 
             Intent intent = new Intent(this, AddressConfirmationInCart.class);
             intent.putExtra("Address", totalAddress);
             startActivity(intent);
-        }
-
-        else{
+        } else {
 
             Toast.makeText(getApplicationContext(), "House/Flat no. cannot be empty", Toast.LENGTH_LONG).show();
 

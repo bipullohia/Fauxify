@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -24,7 +26,7 @@ import java.net.URL;
 
 public class OrderConfirmed extends AppCompatActivity {
 
-    TextView currentTime, deliveryTime, orderId;
+    TextView currentStatus, deliveryTime, orderId, restName, totalOrderAmount, orderRefresh;
     Handler handler = new Handler();
     int joOrderConfirmation = 0;
     Runnable runnable;
@@ -44,7 +46,7 @@ public class OrderConfirmed extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
-        alertbuilder.setMessage("You can always check your order in 'My Order'")
+        alertbuilder.setMessage("You can always check your order in 'My Orders'")
                 .setCancelable(true)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
@@ -68,10 +70,19 @@ public class OrderConfirmed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirmed);
 
-        currentTime = (TextView) findViewById(R.id.current_time);
+        currentStatus = (TextView) findViewById(R.id.current_time);
         deliveryTime = (TextView) findViewById(R.id.deliverytime);
         orderId  = (TextView) findViewById(R.id.orderId_orderconfirmed);
-        orderId.setText(CartActivity.orderid);
+        if (orderId != null) {
+            orderId.setText(CartActivity.orderid);
+        }
+
+        restName = (TextView) findViewById(R.id.restNameOrderConfirm);
+        totalOrderAmount = (TextView) findViewById(R.id.totalpriceOrderConfirm);
+        orderRefresh = (TextView) findViewById(R.id.orderrefresh);
+
+        restName.setText(CartActivity.restaurantNameInCart);
+        totalOrderAmount.setText(String.valueOf(CartActivity.grandtotalamount));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_confirmorder);
         setSupportActionBar(toolbar);
@@ -110,7 +121,7 @@ public class OrderConfirmed extends AppCompatActivity {
 //                else {
 //                    Toast.makeText(getApplicationContext(), "It's 5 second already", Toast.LENGTH_SHORT).show();
 //                    i++;
-//                    currentTime.setText("no is : "+ i);
+//                    currentStatus.setText("no is : "+ i);
 //                    handler.postDelayed(this, 5000);
 //                }
             }
@@ -184,8 +195,13 @@ public class OrderConfirmed extends AppCompatActivity {
         protected void onPostExecute(String s) {
 
             if(joOrderConfirmation==1) {
-                currentTime.setText("Your Order is being prepared");
-                deliveryTime.setText("Delivery in " +joDeliveryTime + " Minutes");
+                currentStatus.setText("Your Order has been confirmed and is being prepared by the Restaurant");
+                currentStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                //currentStatus.setTypeface(null, Typeface.NORMAL);
+                deliveryTime.setVisibility(View.VISIBLE);
+                orderRefresh.setVisibility(View.GONE);
+                deliveryTime.setText("Your order will be delivered in approximately " +joDeliveryTime + " Minutes");
+                //deliveryTime.setTypeface(null, Typeface.NORMAL);
                 handler.removeCallbacks(runnable);
             }
         }
