@@ -48,11 +48,10 @@ public class RestaurantMenuFragment extends Fragment {
         Bundle bundle = getArguments();
 
         String message = bundle.getString("data");
-        Log.e("message", message);
 
         try {
             JSONObject jo = new JSONObject(message);
-            Log.e("result", String.valueOf(jo));
+            Log.e("result1", String.valueOf(jo));
 
             ArrayList<String> dishDetails = new ArrayList<>();
             ArrayList<String> dishId = new ArrayList<>();
@@ -63,36 +62,32 @@ public class RestaurantMenuFragment extends Fragment {
                 dishId.add(key);
                 dishDetails.add(jo.getString(key));
             }
-            Log.e("subresult id", String.valueOf(dishId));
-            Log.e("subresult content", String.valueOf(dishDetails));
+
+            Log.e("subresult content1", String.valueOf(dishDetails));
 
             if (dishId.size() != dishesList.size()) {
                 for (int j = 0; j <= (dishId.size() - 1); j++) {
 
-
-                    if(RestaurantDetails.isVeg) {
+                    if(RestaurantDetails.isVeg) {   //this is only for the case when VEGETARIAN option is switched on by user
 
                         JSONObject jsob = new JSONObject(dishDetails.get(j));
 
                         if(jsob.getInt("isveg")==1) {
-                            Log.e("JSONOBject", String.valueOf(jsob));
+
                             Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"), dishId.get(j), jsob.getInt("isveg"));
                             dishesList.add(dishes);
                         }
 
                     }
 
-                    else{
+                    else{   // this option is for general case by default
 
                         JSONObject jsob = new JSONObject(dishDetails.get(j));
-
                         Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"), dishId.get(j), jsob.getInt("isveg"));
                         dishesList.add(dishes);
                     }
                 }
             }
-
-            Log.e("DishIds", String.valueOf(dishId));
 
             dishesAdapter.notifyDataSetChanged();
 

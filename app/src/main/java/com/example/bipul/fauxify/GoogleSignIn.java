@@ -1,11 +1,13 @@
 package com.example.bipul.fauxify;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -37,8 +40,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by Bipul Lohia on 8/26/2016.
@@ -46,17 +51,42 @@ import java.net.URL;
 public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private static final int RC_SIGN_IN = 0;
-    private static final int PROFILE_PIC_SIZE = 400;
+    ProgressDialog processdialog;
+    //private static final int PROFILE_PIC_SIZE = 400;
     private static final String TAG = "data ";
-    String personDisplayName, personGivenName, personFamilyName, personId, personEmail, personGender;
+    public static String personDisplayName, personGivenName, personFamilyName, personId, personEmail, personGender;
     //private ImageView profile_pic;
     String result_checkjson;
     Toolbar toolbar;
 
+    boolean doubleBackToExitPressedOnce = false;
     Integer noOfAddress;
-
+    boolean ifUserEmailExists;
     private SignInButton signInButton;
     public GoogleApiClient mGoogleApiClient;
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            finish();
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Tap 'back' again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +98,9 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -98,6 +130,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         switch (view.getId()) {
             case R.id.sign_in_button:
 
+                // processdialog = ProgressDialog.show(this, "", "Logging In", false);
                 Log.e("SignINbutton Onclick", "clicked");
                 signIn();
 
@@ -127,21 +160,14 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        //Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 
-            String person_email = acct.getEmail();
-            personEmail = person_email;
-            String ppersonid = acct.getId();
-            String ppersondn = acct.getDisplayName();
-            String ppersonfn = acct.getFamilyName();
-            String ppersongn = acct.getGivenName();
+            assert acct != null;   // person's google data cannot be null
 
-            Log.e("data", ppersondn + ppersonfn + ppersongn + ppersonid);
-
-            Log.e(TAG, "Email:" + personEmail);
+            personEmail = acct.getEmail();
 
             Plus.PeopleApi.load(mGoogleApiClient, acct.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
 
@@ -149,12 +175,13 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                 public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
 
                     Person person = loadPeopleResult.getPersonBuffer().get(0);
+
                     personDisplayName = person.getDisplayName();
                     personGivenName = person.getName().getGivenName();
                     personFamilyName = person.getName().getFamilyName();
                     personId = person.getId();
                     int pg = person.getGender();
-                    String personUrl = person.getImage().getUrl();
+                    // String personUrl = person.getImage().getUrl();
 
                     switch (pg) {
                         case 0:
@@ -166,13 +193,15 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                         case 2:
                             personGender = "Other";
                             break;
+
+                        default:
+                            personGender = "Unknown";
                     }
 
                     SharedPreferences sharedPref;
 
                     sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-
 
                     editor.putString("personDisplayName", personDisplayName);
                     editor.putString("personFamilyName", personFamilyName);
@@ -182,19 +211,23 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                     editor.putString("personGender", personGender);
                     editor.apply();
 
-
-
                     /*personUrl = personUrl.substring(0,
                             personUrl.length() - 2)
                             + PROFILE_PIC_SIZE;*/
 
                     //new LoadProfileImage(profile_pic).execute(personUrl);
 
-                    Log.e("Data check", personDisplayName + personGender);
-                    sendData();
+                    //Log.e("Data check", personDisplayName + personGender);
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                    checkIfExists();
+
+
+//
+//                    sendData();
+//
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(intent);
+                    // processdialog.dismiss();
 
                 }
             });
@@ -205,6 +238,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+        Toast.makeText(this, "Login failed- onconnecfailed", Toast.LENGTH_SHORT).show();
     }
 
    /* private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
@@ -232,31 +266,39 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         }
     }*/
 
-
-    private void sendData() {
-        new BackgroundTask().execute();
+    private void checkIfExists() {
+        new BGTaskCheckIfExists().execute();
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
-        String json_url;
-        String json_checkurl, checkurl;
+    private class BGTaskCheckIfExists extends AsyncTask<Void, Void, String> {
+
+// personEmail.replace("@", "%40")
+
+        //String postconcat = personId.substring(3, 6);
+
         String JSON_STRING;
-        String ifEmailExists;
+        boolean exceptioncaught = false;
+        String urlfind;
+        String emm;
 
         @Override
-        protected void onPreExecute() {
+        protected String doInBackground(Void... params) {
 
-            checkurl = personEmail.replace("@", "%40");
-            json_url = "http://192.168.0.103:3000/api/Fauxusers/";  //here is undefined aaddress
-            json_checkurl = json_url + checkurl + "/exists";
-            Log.e("checkurl", json_checkurl);
-        }
+            String url = "http://fauxify.com/api/Fauxusers/";
 
-        @Override
-        protected String doInBackground(Void... voids) {
+            try {
+                urlfind = URLEncoder.encode(personEmail, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            String jsonUrl = url + urlfind + "/exists";
+
+            Log.i("url", jsonUrl);
+
             try {
 
-                URL urll = new URL(json_checkurl);
+                URL urll = new URL(jsonUrl);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
                 InputStream inputStream = httpConnection.getInputStream();
@@ -274,77 +316,227 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
 
                 JSONObject jobject = new JSONObject(result_checkjson);
-                ifEmailExists = jobject.getString("exists");
+                ifUserEmailExists = jobject.getBoolean("exists");
 
-                Log.e("if exists", ifEmailExists);
+                Log.e("if exists", String.valueOf(ifUserEmailExists));
 
             } catch (JSONException | IOException e) {
+
+                exceptioncaught = true;
+                Log.i("status", "Login failed");
                 e.printStackTrace();
             }
 
 
-            if (ifEmailExists.equals("true")) {
+            return null;
+        }
 
+        @Override
+        protected void onPostExecute(String s) {
+            if (!exceptioncaught) {
+                if (!ifUserEmailExists) {
+                    postUserData();
+                    Log.i("user doesnt exist", "Posting needed");
+                } else {
+                    LoginUser();
+                    Log.i("user exists", "Login required");
+                }
+            } else Toast.makeText(GoogleSignIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-                Log.e("checkemailexistence", "email exists: redirecting to main activity");
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            } else if (ifEmailExists.equals("false")) {
+    private void LoginUser() {
 
-                Log.e("checkemailexistence", "Email doesnot exist, give the post request");
-                try {
+        //Log.i("Status", "Develop the login genius!");
+        new BackGroundTaskLoginUser().execute();
+    }
 
-                    URL url = new URL(json_url);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+    private class BackGroundTaskLoginUser extends AsyncTask<Void, Void, String> {
 
-                    httpURLConnection.setDoOutput(true);
-                    httpURLConnection.setDoInput(true);
+        String jsonUrl = "http://fauxify.com/api/Fauxusers/login"; // undefined url
+        boolean exceptioncaught = false;
+        boolean issuccess = true;
 
-                    httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setRequestProperty("Accept", "application/json");
-                    httpURLConnection.setRequestProperty("Content-Type", "application/json");
+        @Override
+        protected String doInBackground(Void... params) {
 
+            //post login data
 
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("Lastname", personFamilyName);
-                    jsonObject.accumulate("Firstname", personGivenName);
-                    jsonObject.accumulate("Email", personEmail);
-                    jsonObject.accumulate("Socialid", personId);
-                    jsonObject.accumulate("Gender", personGender);
+            try {
 
-                    String json = jsonObject.toString();
-                    OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
-                    out.write(json);
-                    out.flush();
-                    out.close();
+                URL url = new URL(jsonUrl);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-                    StringBuilder sb = new StringBuilder();
-                    int HttpResult = httpURLConnection.getResponseCode();
-                    if (HttpResult == HttpURLConnection.HTTP_OK) {
-                        BufferedReader br = new BufferedReader(
-                                new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
-                        String line = null;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
-                        br.close();
-                        System.out.println("" + sb.toString());
-                    } else {
-                        System.out.println(httpURLConnection.getResponseMessage());
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Accept", "application/json");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+
+                JSONObject jsonObject = new JSONObject();
+
+                String preconcat = personId.substring(8, 12);
+                String postconcat = personId.substring(3, 6);
+
+                jsonObject.accumulate("email", personEmail);
+                jsonObject.accumulate("password", preconcat + personId + postconcat);
+
+                String json = jsonObject.toString();
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                out.write(json);
+                out.flush();
+                out.close();
+
+                StringBuilder sb = new StringBuilder();
+                int HttpResult = httpURLConnection.getResponseCode();
+                if (HttpResult == HttpURLConnection.HTTP_OK) {
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line).append("\n");
                     }
 
+                    br.close();
 
-                    Log.e("test", json);
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
+                    String ss = String.valueOf(sb);
+
+                    JSONObject jsoDetails = new JSONObject(ss);
+
+                    String token = String.valueOf(jsoDetails.get("id"));
+                    String userId = String.valueOf(jsoDetails.get("userId"));
+
+
+                    // saving essential info
+                    SharedPreferences sharedPref;
+                    sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+
+                    editor.putString("userToken", token);
+                    editor.putString("userId", userId);
+                    editor.apply();
+
+
+                    Log.i("details", token + "   " + userId);
+
+                    System.out.println("" + sb.toString());
+                } else {
+                    System.out.println(httpURLConnection.getResponseMessage());
+                    issuccess = false;
                 }
 
+                Log.e("test", json);
 
+            } catch (IOException | JSONException e) {
+
+                exceptioncaught = true;
+                Log.i("Status", "loginfailed3");
+                e.printStackTrace();
             }
 
             return null;
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+           if(!exceptioncaught && issuccess){
 
+               Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+               startActivity(intent);
+
+           } else if(!issuccess){
+               Toast.makeText(GoogleSignIn.this, "Unauthorised User, Login failed", Toast.LENGTH_SHORT).show();
+           }
+        }
+    }
+
+    private void postUserData() {
+        new BackgroundTaskPostNewUser().execute();
+    }
+
+    private class BackgroundTaskPostNewUser extends AsyncTask<Void, Void, String> {
+
+        String jsonUrl = "http://fauxify.com/api/Fauxusers"; // undefined url
+        boolean exceptioncaught = false;
+        boolean issuccess = true;
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            // post new user data
+            try {
+
+                Log.i("jsonurl", jsonUrl);
+
+                URL url = new URL(jsonUrl);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Accept", "application/json");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+
+                JSONObject jsonObject = new JSONObject();
+
+                String preconcat = personId.substring(8, 12);
+                String postconcat = personId.substring(3, 6);
+
+                jsonObject.accumulate("email", personEmail);
+                jsonObject.accumulate("password", preconcat + personId + postconcat);
+                jsonObject.accumulate("Firstname", personGivenName);
+                jsonObject.accumulate("SecureX", "radhchdfhhsncfmd");
+                jsonObject.accumulate("Socialid", personId);
+                jsonObject.accumulate("Gender", personGender);
+                jsonObject.accumulate("username", personDisplayName);
+                //jsonObject.accumulate("id", personId + "afr");
+
+                if (!personFamilyName.equals("")) {
+                    jsonObject.accumulate("Lastname", personFamilyName);
+                }
+
+                String json = jsonObject.toString();
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                out.write(json);
+                out.flush();
+                out.close();
+
+                StringBuilder sb = new StringBuilder();
+                int HttpResult = httpURLConnection.getResponseCode();
+                if (HttpResult == HttpURLConnection.HTTP_OK) {
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+                    System.out.println("" + sb.toString());
+                } else {
+                    System.out.println(httpURLConnection.getResponseMessage());
+                    issuccess = false;
+                }
+
+                Log.e("test", json);
+
+            } catch (IOException | JSONException e) {
+
+                exceptioncaught = true;
+                Log.i("status", "loginfailed2");
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if (!exceptioncaught && issuccess) {
+                LoginUser();
+            } else Toast.makeText(GoogleSignIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+        }
     }
 }

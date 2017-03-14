@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +21,11 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
 
     private ArrayList<Dishes> dishesList;
     public static ArrayList<CurrentOrder> currentOrders = new ArrayList<>();
-   public ArrayList<String> currentDish = new ArrayList<>();
+    public ArrayList<String> currentDish = new ArrayList<>();
 
     private Button addDish, removeDish, addToCart;
     ImageView imgVeg, imgNonveg;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -55,8 +57,12 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
         addDish = (Button) itemView.findViewById(R.id.add_dish);
         removeDish = (Button) itemView.findViewById(R.id.remove_dish);
         addToCart = (Button) itemView.findViewById(R.id.addtocart);
+        LinearLayout linearLayoutButtons = (LinearLayout) itemView.findViewById(R.id.linearlayoutbuttons);
 
-
+        if (!RestaurantDetails.restStatus.equals("open")) {
+            linearLayoutButtons.setVisibility(View.INVISIBLE);
+            addToCart.setVisibility(View.INVISIBLE);
+        }
 
         return new MyViewHolder(itemView);
     }
@@ -64,42 +70,36 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
+
+        //holder.setIsRecyclable(false);
+
+
         final Integer[] count = {0};
-        final Integer num = 1;
         final Dishes dishes = dishesList.get(position);
         holder.dishName.setText(dishes.getDishName());
         holder.dishPrice.setText(dishes.getDishPrice());
 
-if (position==getItemCount()-1){
-
-
-
-}
-
-
-        if(dishes.getIsVeg()==1){
-            Log.e("isveg", dishes.getIsVeg().toString());
+        if (dishes.getIsVeg() == 1) {
 
             imgNonveg.setVisibility(View.GONE);
             imgVeg.setVisibility(View.VISIBLE);
 
-        }
-        else if(dishes.getIsVeg()==0){
+        } else {
 
             imgVeg.setVisibility(View.GONE);
             imgNonveg.setVisibility(View.VISIBLE);
         }
 
-
         Log.e("clicked", "check " + String.valueOf(dishes.getDishName() + dishes.getDishPrice()));
-        Log.e("dishId", dishes.getDishId());
 
         addDish.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
 
                 count[0]++;
-                holder.dishCount.setText(Integer.toString(count[0]));
+                holder.dishCount.setText(String.valueOf(count[0]));
 
             }
         });
@@ -108,10 +108,9 @@ if (position==getItemCount()-1){
             @Override
             public void onClick(View v) {
 
-                if (count[0] != 0) {
+                if (count[0] > 0) {
                     count[0]--;
-                    holder.dishCount.setText(Integer.toString(count[0]));
-
+                    holder.dishCount.setText(String.valueOf(count[0]));
                 }
             }
         });
@@ -120,13 +119,12 @@ if (position==getItemCount()-1){
             @Override
             public void onClick(View v) {
 
-                if (count[0] != 0){
-                CurrentOrder currentOrder = new CurrentOrder(dishes.getDishName(), dishes.getDishPrice(), count[0]);
-                currentOrders.add(currentOrder);
-                Log.e("the count:", String.valueOf(currentOrder));
-                }
-            else {
-                    Toast.makeText(v.getContext(), "Please add atleast one item", Toast.LENGTH_SHORT).show();
+                if (count[0] > 0) {
+                    CurrentOrder currentOrder = new CurrentOrder(dishes.getDishName(), dishes.getDishPrice(), count[0]);
+                    currentOrders.add(currentOrder);
+                    Log.e("the count:", String.valueOf(currentOrder));
+                } else {
+                    Toast.makeText(v.getContext(), "Select/Reselect the Item quantity to be added", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -137,6 +135,12 @@ if (position==getItemCount()-1){
     @Override
     public int getItemCount() {
         return dishesList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
     }
 
 }

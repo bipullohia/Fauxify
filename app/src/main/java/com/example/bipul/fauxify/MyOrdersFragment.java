@@ -22,8 +22,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
@@ -74,7 +76,20 @@ public class MyOrdersFragment extends Fragment {
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Fauxorders";
+            SharedPreferences sharedPref;
+            String userId, userToken;
+            sharedPref = MyOrdersFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("userId", null);
+            userToken = sharedPref.getString("userToken", null);
+
+            String utfUserId = null;
+            try {
+                utfUserId = URLEncoder.encode(userId, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            json_url = MainActivity.requestURL + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
             Log.e("json_url", json_url);
         }
 
@@ -119,45 +134,37 @@ public class MyOrdersFragment extends Fragment {
                     try {
                         jobject = jsonArray.getJSONObject(j);
 
-                        SharedPreferences sharedPref = getContext().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
-                        String personEmail = sharedPref.getString("personEmail", null);
+                        JSONObject joDelivery;
+                        joDelivery = jobject.getJSONObject("delivery");
+                        JSONObject joOrderinfo;
+                        joOrderinfo = jobject.getJSONObject("orderinfo");
 
-                        if (jobject.getString("customeremail").equals(personEmail)) {
-                            JSONObject joDelivery;
-                            joDelivery = jobject.getJSONObject("delivery");
-                            JSONObject joOrderinfo;
-                            joOrderinfo = jobject.getJSONObject("orderinfo");
+                        totalitems = joOrderinfo.getString("totalitems");
+                        totalitemprice = joOrderinfo.getString("totalitemprice");
+                        dishesinfo = joOrderinfo.getString("dishesinfo");
+                        deliveryfee = joOrderinfo.getString("deliveryfee");
 
-                            totalitems = joOrderinfo.getString("totalitems");
-                            totalitemprice = joOrderinfo.getString("totalitemprice");
-                            dishesinfo = joOrderinfo.getString("dishesinfo");
-                            deliveryfee = joOrderinfo.getString("deliveryfee");
+                        String oconfirmed = joDelivery.getString("orderconfirmed");
+                        String odelivered = joDelivery.getString("orderdelivered");
 
-                            ordertiming = joDelivery.getString("ordertiming");
-
-                            String oconfirmed = joDelivery.getString("orderconfirmed");
-                            String odelivered = joDelivery.getString("orderdelivered");
-
-                            if (oconfirmed.equals("1")) {
-                                orderconfirmed = "Confirmed";
-                            } else {
-                                orderconfirmed = "Not Confirmed";
-                            }
-
-                            if (odelivered.equals("1")) {
-                                orderdelivered = "Delivered";
-                            } else {
-                                orderdelivered = "Not Delivered";
-                            }
-
-                            MyOrders orders = new MyOrders(jobject.getString("Orderid"), totalitems,
-                                    jobject.getString("ordertotal"), ordertiming, orderconfirmed,
-                                    orderdelivered, totalitemprice, dishesinfo, jobject.getString("customeraddress"),
-                                    jobject.getString("RestName"), deliveryfee);
-
-                            orderList.add(orders);
-
+                        if (oconfirmed.equals("1")) {
+                            orderconfirmed = "Confirmed";
+                        } else {
+                            orderconfirmed = "Not Confirmed";
                         }
+
+                        if (odelivered.equals("1")) {
+                            orderdelivered = "Delivered";
+                        } else {
+                            orderdelivered = "Not Delivered";
+                        }
+
+                        MyOrders orders = new MyOrders(jobject.getString("orderid"), totalitems,
+                                jobject.getString("ordertotal"), jobject.getString("ordertiming"), orderconfirmed,
+                                orderdelivered, totalitemprice, dishesinfo, jobject.getString("customeraddress"),
+                                jobject.getString("restName"), deliveryfee);
+
+                        orderList.add(orders);
 
 
                     } catch (JSONException e) {

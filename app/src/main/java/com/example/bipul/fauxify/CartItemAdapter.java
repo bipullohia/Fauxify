@@ -64,7 +64,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
                     });
 
             AlertDialog alert = alertbuilder.create();
-            alert.setTitle("Alert!");
             alert.show();
 
 

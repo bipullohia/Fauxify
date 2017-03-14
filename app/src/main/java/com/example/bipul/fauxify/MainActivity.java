@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -89,8 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            getWindow().setStatusBarColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
 //        }
 
-
-        requestURL = "http://192.168.0.103:3000/api/";
+        requestURL = "http://fauxify.com/api/";
 
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
@@ -99,10 +97,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
         assert navigationView != null;
@@ -112,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        fragmentTransaction.add(R.id.main_container, new RestaurantFragment(), "RestFragment");
 //        fragmentTransaction.commit();
 //        getSupportActionBar().setTitle("Restaurants");
-
 
         View header = navigationView.getHeaderView(0);
         headName = (TextView) header.findViewById(R.id.navheadName);
@@ -126,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         headName.setText(personDisplayName);
         headEmail.setText(personEmail);
         //headNumber.setText("9176907049");
-
 
         // below code is to implement default fragment of Restaurants by default when app is started
         if (savedInstanceState == null) {
@@ -196,6 +190,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         Log.e("pref ", "cleared");
                         Intent intent = new Intent(getApplicationContext(), GoogleSignIn.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("EXIT", true);
                         startActivity(intent);
 
 

@@ -1,6 +1,7 @@
 package com.example.bipul.fauxify;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,10 +26,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +71,7 @@ public class AddressesFragment extends Fragment {
             }
         });
 
-        addAddresses();
+       addAddresses();
         return view;
 
     }
@@ -80,24 +82,34 @@ public class AddressesFragment extends Fragment {
 
     class bgroundtask extends AsyncTask<Void, Void, String> {
 
-        String json_url;
-        String json_checkurl, checkurl;
+        String urlFinal;
         String JSON_STRING;
-        String email;
+
         JSONArray jsonArray;
         String jsonString;
+        int status;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
+            pd = ProgressDialog.show(getContext(), "", "Loading Address info", false);
+
             SharedPreferences sharedPref;
+            String userId, userToken;
             sharedPref = AddressesFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
-            email = sharedPref.getString("personEmail", null);
-            Log.e("email local data", "exists");
-            checkurl = email.replace("@", "%40");
-            json_url = MainActivity.requestURL+"Fauxusers/";
-            json_checkurl = json_url+ "/"+ checkurl;
-            Log.e("checkurl", json_checkurl);
+            userId = sharedPref.getString("userId", null);
+            userToken = sharedPref.getString("userToken", null);
+
+            String utfUserId = null;
+            try {
+            utfUserId = URLEncoder.encode(userId, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            Log.e("json_url", urlFinal);
         }
 
         @Override
@@ -105,7 +117,7 @@ public class AddressesFragment extends Fragment {
 
             try {
 
-                URL urll = new URL(json_checkurl);
+                URL urll = new URL(urlFinal);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
                 InputStream inputStream = httpConnection.getInputStream();
@@ -133,10 +145,12 @@ public class AddressesFragment extends Fragment {
                     Log.e("Jsonarray length", "is zero");
                 }
 
-
+                status = 1;
 
 
             } catch (IOException | JSONException e) {
+
+                status = 0;
                 e.printStackTrace();
             }
 
@@ -146,7 +160,7 @@ public class AddressesFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            if (jsonArray != null) {
+            if (jsonArray != null && status == 1) {
                 Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
@@ -159,11 +173,25 @@ public class AddressesFragment extends Fragment {
                 }
 
                 addressAdapter.notifyDataSetChanged();
+                // pd.dismiss();
+
+            }
 
 
-            } else Log.e("Jsonarray length", "is zero");
+            pd.dismiss();
+
+
+//            else if(status==0) {
+//
+//                pd.dismiss();
+//                Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            else {
+//                pd.dismiss();
+//                Toast.makeText(getContext(), "Couldn't load Address info", Toast.LENGTH_SHORT).show();
+//            }
         }
-
 
     }
 

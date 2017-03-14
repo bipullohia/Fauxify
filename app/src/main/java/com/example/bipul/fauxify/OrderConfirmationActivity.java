@@ -1,7 +1,9 @@
 package com.example.bipul.fauxify;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,10 +23,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
-public class OrderConfirmed extends AppCompatActivity {
+public class OrderConfirmationActivity extends AppCompatActivity {
 
     TextView currentStatus, deliveryTime, orderId, restName, totalOrderAmount, orderRefresh;
     Handler handler = new Handler();
@@ -54,7 +58,7 @@ public class OrderConfirmed extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         handler.removeCallbacks(runnable);
-                        Intent intent = new Intent(OrderConfirmed.this, MainActivity.class);
+                        Intent intent = new Intent(OrderConfirmationActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -72,7 +76,7 @@ public class OrderConfirmed extends AppCompatActivity {
 
         currentStatus = (TextView) findViewById(R.id.current_time);
         deliveryTime = (TextView) findViewById(R.id.deliverytime);
-        orderId  = (TextView) findViewById(R.id.orderId_orderconfirmed);
+        orderId = (TextView) findViewById(R.id.orderId_orderconfirmed);
         if (orderId != null) {
             orderId.setText(CartActivity.orderid);
         }
@@ -99,18 +103,15 @@ public class OrderConfirmed extends AppCompatActivity {
             @Override
             public void run() {
 
-                if(joOrderConfirmation==0) {
+                if (joOrderConfirmation == 0) {
                     checkConfirmationStatus();
                     Log.e("checking", "again");
                     handler.postDelayed(this, 5000);
 
-                }
-                else if(joOrderConfirmation==1){
+                } else if (joOrderConfirmation == 1) {
                     Log.e("Runnable Stopped", "No longer Running");
                     handler.removeCallbacks(this);
-                }
-
-                else {
+                } else {
                     Log.e("invalid", "value of orderconfirmation");
                 }
 //                if(i==5){
@@ -137,7 +138,6 @@ public class OrderConfirmed extends AppCompatActivity {
     class bgroundtask extends AsyncTask<Void, Void, String> {
 
         String json_url;
-        String json_checkurl;
         String JSON_STRING;
         String orderId;
         String joDeliveryTime;
@@ -146,9 +146,22 @@ public class OrderConfirmed extends AppCompatActivity {
         protected void onPreExecute() {
 
             orderId = CartActivity.orderid;
-            json_url = MainActivity.requestURL+"Fauxorders/";
-            json_checkurl = json_url + orderId;
-            Log.e("url", json_checkurl);
+
+            SharedPreferences sharedPref;
+            String userId, userToken;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("userId", null);
+            userToken = sharedPref.getString("userToken", null);
+
+            String utfUserId = null;
+            try {
+                utfUserId = URLEncoder.encode(userId, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            json_url = MainActivity.requestURL + "fauxusers/" + utfUserId + "/fauxorders/" + orderId + "?access_token=" + userToken;
+            Log.e("json_url", json_url);
         }
 
         @Override
@@ -156,7 +169,7 @@ public class OrderConfirmed extends AppCompatActivity {
 
             try {
 
-                URL urll = new URL(json_checkurl);
+                URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
                 InputStream inputStream = httpConnection.getInputStream();
@@ -194,13 +207,13 @@ public class OrderConfirmed extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
 
-            if(joOrderConfirmation==1) {
+            if (joOrderConfirmation == 1) {
                 currentStatus.setText("Your Order has been confirmed and is being prepared by the Restaurant");
                 currentStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
                 //currentStatus.setTypeface(null, Typeface.NORMAL);
                 deliveryTime.setVisibility(View.VISIBLE);
                 orderRefresh.setVisibility(View.GONE);
-                deliveryTime.setText("Your order will be delivered in approximately " +joDeliveryTime + " Minutes");
+                deliveryTime.setText("Your order will be delivered in approximately " + joDeliveryTime + " Minutes");
                 //deliveryTime.setTypeface(null, Typeface.NORMAL);
                 handler.removeCallbacks(runnable);
             }

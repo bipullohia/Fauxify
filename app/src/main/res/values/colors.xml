@@ -9,17 +9,22 @@
     <color name="colorDivider">#B6B6B6</color>
     <color name="colorTextIcons">#FFFFFF</color>
 
+
+
     <color name="orangeonblack">#F99426</color>
     <color name="orangeonblack2">#F98F10</color>
     <color name="white">#ffffff</color>
     <color name="lightGray">#E0E0E0</color>
+    <color name="verylightgray">#EEEEEE</color>
     <color name="collapse_status_color">#F57C00</color>
     <color name="collapse_toolbar_color">#F57C00</color>
     <color name="darkGray">#9E9E9E</color>
+    <color name="fadetext">#BDBDBD</color>
     <color name="transparent">#00ffffff</color>
 
     <color name="red">#F44336</color>
     <color name="green">#4CAF50</color>
+    <color name="lightgreen"> #64DD17</color>
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#424242</color>
     <color name="dot_dark_screen2">#424242</color>

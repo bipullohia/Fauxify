@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,8 +27,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -57,15 +58,15 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    @Override   //this is to duplicate the effect of back button on UP button of actionbar
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                onBackPressed();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,7 +151,7 @@ public class CartActivity extends AppCompatActivity {
 
                         confirmOrder();
                         DishesAdapter.currentOrders.clear();
-                        Intent intent = new Intent(getApplicationContext(), OrderConfirmed.class);
+                        Intent intent = new Intent(getApplicationContext(), OrderConfirmationActivity.class);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getApplicationContext(), "Minimum order value is Rs "
@@ -175,9 +176,7 @@ public class CartActivity extends AppCompatActivity {
 
             deliveryfee = Integer.valueOf(RestaurantDetails.resDeliveryFee);
 
-        }
-
-        else {
+        } else {
             deliveryfee = 0;
         }
 
@@ -189,7 +188,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void confirmOrder() {
         Log.e("confirm order", "order confirmed");
-        new BackgroundTask().execute();
+        new BTaskConfirmOrder().execute();
     }
 
     public String convertTime(int x) {
@@ -202,21 +201,35 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
-        String json_url;
+    class BTaskConfirmOrder extends AsyncTask<Void, Void, String> {
+        String urlFinal;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Fauxorders";
 
+            SharedPreferences sharedPref;
+            String userId, userToken;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("userId", null);
+            userToken = sharedPref.getString("userToken", null);
+
+            String utfUserId = null;
+            try {
+                utfUserId = URLEncoder.encode(userId, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            urlFinal = MainActivity.requestURL + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
+            Log.e("json_url", urlFinal);
         }
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
 
-                URL url = new URL(json_url);
+                URL url = new URL(urlFinal);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 httpURLConnection.setDoOutput(true);
@@ -249,7 +262,7 @@ public class CartActivity extends AppCompatActivity {
                 minutes = convertTime(min);
                 days = convertTime(day);
                 seconds = convertTime(second);
-                months = convertTime(month) ;
+                months = convertTime(month);
                 String years = convertTime(year);
                 String randomnos = String.valueOf(randomno);
 
@@ -257,15 +270,15 @@ public class CartActivity extends AppCompatActivity {
                 yearshort = years.substring(2, 4);
                 timestamp = yearshort + months + days + hours + minutes + seconds + randomnos;
 
-                Log.i("hour", hours);
-                Log.i("min", minutes);
-                Log.i("day", days);
-                Log.i("sec", seconds);
-                Log.i("month", months);
-                Log.i("year", yearshort);
-                Log.i("random", randomnos);
-
-                Log.i("timestamp", timestamp);
+//                Log.i("hour", hours);
+//                Log.i("min", minutes);
+//                Log.i("day", days);
+//                Log.i("sec", seconds);
+//                Log.i("month", months);
+//                Log.i("year", yearshort);
+//                Log.i("random", randomnos);
+//
+//                Log.i("timestamp", timestamp);
 
 
                 JSONArray jarrayDishesInfo = new JSONArray();
@@ -283,7 +296,6 @@ public class CartActivity extends AppCompatActivity {
 
                 JSONObject deliveryinfo = new JSONObject();
                 deliveryinfo.put("orderdelivery", 1);
-                deliveryinfo.put("ordertiming", date);
                 deliveryinfo.put("orderconfirmed", 0);
                 deliveryinfo.put("orderdelivered", 0);
                 deliveryinfo.put("deliverytime", "Not Available");
@@ -300,13 +312,20 @@ public class CartActivity extends AppCompatActivity {
                 orderid = timestamp;
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("Orderid", orderid);
-                jsonObject.accumulate("Restid", RestaurantDetails.resId);
-                jsonObject.accumulate("RestName", RestaurantDetails.resName);
-                jsonObject.accumulate("ordertotal", grandtotalamount);
+
+                jsonObject.accumulate("orderid", orderid);
+                jsonObject.accumulate("fauxuserId", email);
+                jsonObject.accumulate("restaurantId", RestaurantDetails.resId);
+
+                jsonObject.accumulate("restName", RestaurantDetails.resName);
+
+                jsonObject.accumulate("customernumber", "9999999999");
                 jsonObject.accumulate("customeraddress", finaladdress);
                 jsonObject.accumulate("customeremail", email);
                 jsonObject.accumulate("customername", customername);
+
+                jsonObject.accumulate("ordertiming", date);
+                jsonObject.accumulate("ordertotal", grandtotalamount);
                 jsonObject.accumulate("orderinfo", orderinfo);
                 jsonObject.accumulate("delivery", deliveryinfo);
 
@@ -389,29 +408,38 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void prepareAddressDetails() {
-        new bgroundtask().execute();
+        new btaskPrepareAddDetails().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    class btaskPrepareAddDetails extends AsyncTask<Void, Void, String> {
 
-        String json_url;
-        String json_checkurl, checkurl;
+        String urlFinal;
         String JSON_STRING;
-        String email;
+        String userId, userToken;
         JSONArray jsonArray;
         String jsonString;
 
         @Override
         protected void onPreExecute() {
 
+
             SharedPreferences sharedPref;
-            sharedPref = CartActivity.this.getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
-            email = sharedPref.getString("personEmail", null);
-            Log.e("email local data", "exists");
-            checkurl = email.replace("@", "%40");
-            json_url = MainActivity.requestURL + "Fauxusers/";
-            json_checkurl = json_url + checkurl;
-            Log.e("checkurl", json_checkurl);
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("userId", null);
+
+            userToken = sharedPref.getString("userToken", null);
+            String utfUserId = null;
+            try {
+                utfUserId = URLEncoder.encode(userId, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+
+            Log.e("checkurl", urlFinal);
+
+
         }
 
         @Override
@@ -419,7 +447,7 @@ public class CartActivity extends AppCompatActivity {
 
             try {
 
-                URL urll = new URL(json_checkurl);
+                URL urll = new URL(urlFinal);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
                 InputStream inputStream = httpConnection.getInputStream();

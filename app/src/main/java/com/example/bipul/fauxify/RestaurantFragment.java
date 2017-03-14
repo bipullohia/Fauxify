@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,8 +35,8 @@ public class RestaurantFragment extends Fragment {
 
     private ArrayList<Restaurant> restaurantList = new ArrayList<>();
     private RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     private RestaurantAdapter resAdapter;
-    ProgressDialog pd;
 
     @Override
     public void onResume() {
@@ -55,9 +59,20 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(resAdapter);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                restaurantList.clear();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(RestaurantFragment.this).attach(RestaurantFragment.this).commit();
+
+            }
+        });
 
         prepareMovieData();
-
 
         return rootview;
     }
@@ -72,13 +87,21 @@ public class RestaurantFragment extends Fragment {
         String JSON_STRING;
         JSONArray jsonArray;
         JSONObject jobject;
+        int status;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL +"Restaurants";
+//
+//            SharedPreferences sharedPref = getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+//            String token = sharedPref.getString("UserToken", null);
+//            String userid = sharedPref.getString("userId", null);
+
+
+            json_url = MainActivity.requestURL + "restaurants" ;
             Log.e("json_url", json_url);
-//            pd=ProgressDialog.show(getContext(),"","Please Wait",false);
+            pd = ProgressDialog.show(getContext(), "", "Fetching Restaurants", false);
 
         }
 
@@ -103,10 +126,14 @@ public class RestaurantFragment extends Fragment {
                 String resultjson = stringBuilder.toString().trim();
                 Log.e("result", resultjson);
 
+                status = 1;
                 jsonArray = new JSONArray(resultjson);
 
 
             } catch (IOException | JSONException e) {
+
+
+                status = 0;
                 e.printStackTrace();
             }
 
@@ -115,14 +142,16 @@ public class RestaurantFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            if (jsonArray != null) {
+
+            if (jsonArray != null && status == 1) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
                         jobject = jsonArray.getJSONObject(j);
                         Restaurant restaurant = new Restaurant(jobject.getString("Restname"), jobject.getString("Resttype"),
                                 jobject.getString("Ordercapacity"), jobject.getString("Deliversin"), jobject.getString("Minorder"),
-                                jobject.getString("Restid"), jobject.getString("Deliveryfee"), jobject.getString("freeDeliveryAmount"));
+                                jobject.getString("restaurantId"), jobject.getString("Deliveryfee"),
+                                jobject.getString("freeDeliveryAmount"), jobject.getString("RestaurantStatus"));
                         restaurantList.add(restaurant);
                         Log.e("add", String.valueOf(jobject.getString("Restname")));
                     } catch (JSONException e) {
@@ -131,10 +160,23 @@ public class RestaurantFragment extends Fragment {
                 }
 
                 resAdapter.notifyDataSetChanged();
-//                pd.dismiss();
+                pd.dismiss();
 
-            } else Log.e("Jsonarray length", "is zero");
+            } else if (status == 0) {
+
+                pd.dismiss();
+                Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                pd.dismiss();
+                Toast.makeText(getContext(), "Couldn't load Restaurant data", Toast.LENGTH_SHORT).show();
+
+            }
+
+            swipeRefreshLayout.setRefreshing(false);
         }
+
 
     }
 

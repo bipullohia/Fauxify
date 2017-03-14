@@ -22,8 +22,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -64,17 +66,26 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
 
                                 class BackgrTask extends AsyncTask<Void, Void, String> {
 
-                                    String urladdress, urlEmail, urlFinal, JSON_STRING;
+                                    String userId, userToken, urlFinal, JSON_STRING;
                                     String[] savedaddress;
 
                                     @Override
                                     protected void onPreExecute() {
                                         SharedPreferences sharedPref = context.getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
-                                        urlEmail = sharedPref.getString("personEmail", null);
-                                        assert urlEmail != null;
-                                        urlEmail = urlEmail.replace("@", "%40");
-                                        urladdress = MainActivity.requestURL + "Fauxusers/";
-                                        urlFinal = urladdress + urlEmail;
+                                        userId = sharedPref.getString("userId", null);
+                                        userToken = sharedPref.getString("userToken", null);
+
+
+                                        String utfUserId = null;
+                                        try {
+                                            utfUserId = URLEncoder.encode(userId, "utf-8");
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+                                        urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+
                                         Log.e("checkurl", urlFinal);
 
                                     }

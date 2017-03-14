@@ -1,227 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.example.bipul.fauxify.CartActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:cardView="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <include
+        android:id="@+id/toolbar_cartactivity"
+        layout="@layout/toolbar" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context="com.example.bipul.fauxify.CartActivity">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
 
-        <include layout="@layout/toolbar"
-            android:id="@+id/toolbar_cartactivity" />
-
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="5dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
             android:orientation="vertical"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:text="Item Summary"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/cart_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:longClickable="true"
-                    android:scrollbars="vertical">
-
-                </android.support.v7.widget.RecyclerView>
-
-
-            </LinearLayout>
-
-
-        </android.support.v7.widget.CardView>
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="5dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:text="Other Details"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                   android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="Item Summary"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightGray" />
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_weight="1"
-                        android:text="Restaurant Name" />
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Long press on a specific item to delete it"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
 
-                    <TextView
-                        android:id="@+id/restname_incart"
-                        android:layout_width="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorAccent"
-                        android:layout_weight="1"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightGray" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/cart_recyclerview"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="XXXXX" />
+                        android:layout_marginTop="10dp"
+                        android:longClickable="true"
+                        android:scrollbars="vertical">
 
-
-
+                    </android.support.v7.widget.RecyclerView>
 
 
                 </LinearLayout>
 
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:paddingTop="5dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:text="Other Details"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightGray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
                             android:layout_weight="1"
-                            android:text="Total Items" />
+                            android:text="Restaurant Name"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/restname_incart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="XXXXX"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="5dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Items"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/totalitems_incart"
                             android:layout_width="wrap_content"
-                            android:textSize="15sp"
-                            android:textColor="@color/colorAccent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content"
                             android:gravity="end"
-                            android:text="X" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="15sp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="Total Items Amount" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingEnd="5dp"
-                            android:textSize="15sp"
+                            android:text="X"
                             android:textColor="@color/colorAccent"
-                            android:paddingStart="5dp"
-                            android:text="@string/Rs" />
+                            android:textSize="15sp" />
 
-                        <TextView
-                            android:id="@+id/totalitemprice_incart"
-                            android:layout_width="wrap_content"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="15sp"
-                            android:layout_height="wrap_content"
-                            android:text="XXX" />
                     </LinearLayout>
 
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="5dp">
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
                             android:layout_weight="1"
-                            android:text="Delivery Fee" />
+                            android:text="Total Items Amount"
+                            android:textSize="15sp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -233,217 +206,264 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingStart="5dp"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorAccent"
                                 android:paddingEnd="5dp"
-                                android:text="@string/Rs" />
+                                android:paddingStart="5dp"
+                                android:text="@string/Rs"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/totalitemprice_incart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="XXX"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="5dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Delivery Fee"
+                            android:textSize="15sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="5dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/Rs"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="15sp" />
 
                             <TextView
                                 android:id="@+id/deliveryfee_incart"
                                 android:layout_width="wrap_content"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorAccent"
                                 android:layout_height="wrap_content"
-                                android:text="XX" />
+                                android:text="XX"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="15sp" />
                         </LinearLayout>
 
 
+                    </LinearLayout>
 
 
-                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightGray" />
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorAccent"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="Final Amount to be paid" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="5dp"
+                            android:layout_weight="1"
+                            android:text="Final Amount to be paid"
                             android:textColor="@color/colorAccent"
-                            android:textSize="16sp"
-                            android:text="@string/Rs" />
+                            android:textSize="16sp" />
 
-                        <TextView
-                            android:id="@+id/grandtotalprice_incart"
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorAccent"
                             android:layout_height="wrap_content"
-                            android:text="XXX" />
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="5dp"
+                                android:text="@string/Rs"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/grandtotalprice_incart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="XXX"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cart_toselectaddress_cardview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="5dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
-
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cart_toselectaddress_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:text="Select Delivery Address"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerview_addresscart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:longClickable="true"
-                    android:scrollbars="vertical" />
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:text="Select Delivery Address"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightGray" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerview_addresscart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:longClickable="true"
+                        android:scrollbars="vertical" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/button_addnewaddress_cart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="0dp"
+                            android:text="Add new Address"
+                            android:textAllCaps="false" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cart_selectedaddress_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:visibility="gone"
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Selected Address"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightGray" />
+
+                    <TextView
+                        android:id="@+id/cart_selectedaddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingEnd="24dp"
+                        android:paddingStart="24dp"
+                        android:paddingTop="10dp"
+                        android:text="Your address"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightGray" />
 
                     <Button
-                        android:id="@+id/button_addnewaddress_cart"
+                        android:id="@+id/button_selectanotheraddress_cart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="0dp"
-                        android:textAllCaps="false"
-                        android:text="Add new Address" />
+                        android:text="Select Another Address"
+                        android:textAllCaps="false" />
 
 
                 </LinearLayout>
 
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cart_selectedaddress_cardview"
-            android:layout_width="match_parent"
+            <Button
+                android:id="@+id/button_confirmorder"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:visibility="gone"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
+                android:text="Confirm Order"
+                android:textAllCaps="false"
 
-            >
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Selected Address"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-                <TextView
-                    android:id="@+id/cart_selectedaddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:textColor="@color/colorAccent"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="24dp"
-                    android:paddingTop="10dp"
-                    android:text="Your address"
-                    android:textSize="16sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-                <Button
-                    android:id="@+id/button_selectanotheraddress_cart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="0dp"
-                    android:textAllCaps="false"
-                    android:text="Select Another Address" />
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <Button
-            android:id="@+id/button_confirmorder"
-            android:layout_width="wrap_content"
-            android:paddingRight="70dp"
-            android:paddingLeft="70dp"
-            android:textSize="18sp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:textAllCaps="false"
-            android:text="Confirm Order"
-
-            android:background="@color/colorPrimary"
-            android:textColor="#ffffff"/>
-    </LinearLayout>
-</ScrollView>

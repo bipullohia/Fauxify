@@ -43,6 +43,7 @@ public class RestaurantDetails extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbar;
     public static boolean isVeg;
     Switch switchVeg;
+    static String restStatus;
     RestaurantMenuAdapter restaurantMenuAdapter;
     private static final String TAG = "onclickeddd";
     FloatingActionButton fabCheckout;
@@ -50,12 +51,14 @@ public class RestaurantDetails extends AppCompatActivity {
     //Button checkOutButton;
 
 
-    @Override //to modify the back pressing from this activity so that cart can be emptied before going to restaurants page
+    @Override
+    //to modify the back pressing from this activity so that cart can be emptied before going to restaurants page
     public void onBackPressed() {
 
-        if(DishesAdapter.currentOrders.size()!=0) {
+        isVeg = false;
+        if (DishesAdapter.currentOrders.size() != 0) {
             AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
-            alertbuilder.setMessage("You cart has items from this restaurants. It needs to be emptied to browse other restaurants. Agree?")
+            alertbuilder.setMessage("You cart has items from this restaurants. It needs to be emptied to be able to browse other restaurants. Agree?")
                     .setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
@@ -78,16 +81,13 @@ public class RestaurantDetails extends AppCompatActivity {
             alert.setTitle("Oops!");
             alert.show();
 
-        }
-
-        else
-        {
+        } else {
             super.onBackPressed();
         }
 
     }
 
-    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    @Override   //this is to duplicate the effect of back button on HOME (UP) button of actionbar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -103,7 +103,7 @@ public class RestaurantDetails extends AppCompatActivity {
 
         setContentView(R.layout.activity_restaurant_details);
 
-        viewPager = (ViewPager) findViewById(R.id .menu_viewpager);
+        viewPager = (ViewPager) findViewById(R.id.menu_viewpager);
         assert viewPager != null;
         viewPager.setOffscreenPageLimit(10);
         tabLayout = (TabLayout) findViewById(R.id.menu_tabs);
@@ -115,13 +115,14 @@ public class RestaurantDetails extends AppCompatActivity {
 
         //checkOutButton = (Button)findViewById(R.id.checkout_button);
         fabCheckout = (FloatingActionButton) findViewById(R.id.fabCheckout);
-        switchVeg =(Switch) findViewById(R.id.switchVeg);
+        switchVeg = (Switch) findViewById(R.id.switchVeg);
 
         resId = getIntent().getStringExtra("resId");
         resName = getIntent().getStringExtra("restaurantName");
         restMinimumOrder = getIntent().getStringExtra("restaurantMinOrder");
         resDeliveryFee = getIntent().getStringExtra("Deliveryfee");
         resFreeDelAmount = getIntent().getStringExtra("freeDeliveryAmount");
+        restStatus = getIntent().getStringExtra("restStatus");
 
         Log.i("delfee freedelamount", resDeliveryFee + "  " + resFreeDelAmount);
         restDelTime = (TextView) findViewById(R.id.restDelTimeCollapse);
@@ -131,11 +132,13 @@ public class RestaurantDetails extends AppCompatActivity {
         Log.e("resId", resId);
 
         restDelTime.setText(getIntent().getStringExtra("restaurantDeLTime"));
-        String minOrder = "\u20B9 "+ restMinimumOrder;
+        String minOrder = "\u20B9 " + restMinimumOrder;
         restMinOrder.setText(minOrder);
         resType.setText(getIntent().getStringExtra("restaurantType"));
 
-
+        if(!restStatus.equals("open")){
+            fabCheckout.setVisibility(View.GONE);
+        }
 
         Log.e("log value check", String.valueOf(switchVeg.isChecked()));
 
@@ -143,12 +146,11 @@ public class RestaurantDetails extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked){
+                if (isChecked) {
 
                     isVeg = true;
                     prepareMenu();
-                }
-                else {
+                } else {
                     isVeg = false;
                     prepareMenu();
                 }
@@ -194,12 +196,10 @@ public class RestaurantDetails extends AppCompatActivity {
         fabCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DishesAdapter.currentOrders.size()!=0)
-                {
+                if (DishesAdapter.currentOrders.size() != 0) {
                     Intent intent = new Intent(RestaurantDetails.this, CartActivity.class);
-                    startActivity(intent);}
-
-                else {
+                    startActivity(intent);
+                } else {
                     Toast.makeText(getApplicationContext(), "Select Dishes to order", Toast.LENGTH_LONG).show();
                 }
             }
@@ -222,7 +222,7 @@ public class RestaurantDetails extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL+"Restaurants/" + resId;
+            json_url = MainActivity.requestURL + "restaurants/" + resId;
             Log.e("json_url", json_url);
         }
 
@@ -247,7 +247,7 @@ public class RestaurantDetails extends AppCompatActivity {
                 String resultjson = stringBuilder.toString().trim();
 
 
-                 categories = new ArrayList<String>();
+                categories = new ArrayList<String>();
 
                 jobject = new JSONObject(resultjson);
                 JSONObject job = jobject.getJSONObject("Menu");
@@ -263,7 +263,6 @@ public class RestaurantDetails extends AppCompatActivity {
                     String key = (String) x.next();
                     categories.add(key);
                     jsonArray.put(job.get(key));
-                    Log.e("sdkjb", key);
                     noOfCategories++;
                 }
 
@@ -283,10 +282,8 @@ public class RestaurantDetails extends AppCompatActivity {
             restaurantMenuAdapter = new RestaurantMenuAdapter(getSupportFragmentManager());
             for (int i = 0; i <= noOfCategories - 1; i++) {
 
-
                 try {
-                    restaurantMenuAdapter.addFragments(new RestaurantMenuFragment(), categories.get(i),jsonArray.getJSONObject(i) );
-                    Log.e("dhdv", String.valueOf(jsonArray.getJSONObject(i)));
+                    restaurantMenuAdapter.addFragments(new RestaurantMenuFragment(), categories.get(i), jsonArray.getJSONObject(i));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

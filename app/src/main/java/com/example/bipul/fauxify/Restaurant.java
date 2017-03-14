@@ -4,11 +4,11 @@ package com.example.bipul.fauxify;
  * Created by bipul on 27-06-2016.
  */
 public class Restaurant {
-    private String resName, resType, resRating, resDeliveryTime, resMinOrder, resId, deliveryFee, freeDeliveryAmount;
+    private String resName, resType, resRating, resDeliveryTime, resMinOrder, resId, deliveryFee, freeDeliveryAmount, restStatus;
 
 
     public Restaurant(String resName, String resType, String resRating, String resDeliveryTime,
-                      String resMinOrder, String resId, String deliveryFee, String freeDeliveryAmount) {
+                      String resMinOrder, String resId, String deliveryFee, String freeDeliveryAmount, String restStatus) {
 
         this.resName = resName;
         this.resType = resType;
@@ -18,6 +18,7 @@ public class Restaurant {
         this.resMinOrder = resMinOrder;
         this.deliveryFee = deliveryFee;
         this.freeDeliveryAmount = freeDeliveryAmount;
+        this.restStatus = restStatus;
     }
 
     public String getResName() {
@@ -83,6 +84,15 @@ public class Restaurant {
 
     public void setFreeDeliveryAmount(String genre) {
         this.freeDeliveryAmount = genre;
+    }
+
+
+    public String getRestStatus() {
+        return restStatus;
+    }
+
+    public void setRestStatus(String genre) {
+        this.restStatus = genre;
     }
 
 }

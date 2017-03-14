@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 /**
  * Created by bipul on 22-04-2016.
@@ -18,47 +15,50 @@ public class SplashScreen extends Activity {
     SharedPreferences shapre = null;
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
+
+        //setContentView(R.layout.splash);
 
         shapre = getSharedPreferences("myshared", MODE_PRIVATE);
 
-        final ImageView iv = (ImageView) findViewById(R.id.logo);
-        Animation an = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
-        final Animation an2 = AnimationUtils.loadAnimation(getBaseContext(), R.anim.abc_fade_out);
-        iv.startAnimation(an);
-        an.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation animation) {
-            }
+//        final ImageView iv = (ImageView) findViewById(R.id.logo);
+//        Animation an = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
+//        final Animation an2 = AnimationUtils.loadAnimation(getBaseContext(), R.anim.abc_fade_out);
+//        iv.startAnimation(an);
+//        an.setAnimationListener(new Animation.AnimationListener() {
+//            public void onAnimationStart(Animation animation) {
+//            }
+//            public void onAnimationEnd(Animation animation) {
+//                iv.startAnimation(an2);
+//                SplashScreen.this.finish();
 
-            public void onAnimationEnd(Animation animation) {
-                iv.startAnimation(an2);
-                SplashScreen.this.finish();
+        if (shapre.getBoolean("firstrun", true)) {
+            Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+            startActivity(intent);
+            shapre.edit().putBoolean("firstrun", false).apply();
+        } else {
+            Intent intent = new Intent(this, GoogleSignIn.class);
+            startActivity(intent);
+            launchHomeScreen();
+        }
 
-//
-                if (shapre.getBoolean("firstrun", true)) {
-                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                    startActivity(intent);
-                    shapre.edit().putBoolean("firstrun", false).apply();
-                } else {
-                    Log.e("im in", "launchhomescreen222");
-                    launchHomeScreen();
-                }
-
-
-//                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-//                startActivity(intent);
-            }
-
-
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-
+//        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+//        startActivity(intent);
 
     }
-
 
     private void launchHomeScreen() {
 
@@ -69,17 +69,27 @@ public class SplashScreen extends Activity {
         String personFamilyName = sharedPref.getString("personFamilyName", null);
         String personGivenName = sharedPref.getString("personGivenName", null);
         String personDisplayName = sharedPref.getString("personDisplayName", null);
+        String personUserId = sharedPref.getString("userId", null);
+        String personToken = sharedPref.getString("userToken", null);
 
-        if ((personEmail == null) || (personDisplayName == null) || (personId == null)) {
+        if ((personEmail == null) || (personDisplayName == null) || (personId == null) || (personUserId == null) || (personToken) == null) {
             Log.e("Data status", "some/all are null");
+
             Intent intent = new Intent(this, GoogleSignIn.class);
             startActivity(intent);
         } else {
             Log.e("Data status", "none is null");
+
+            Log.i("token", personToken);
+            Log.i("id", personUserId);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
-        finish();
+
+//
+//        Intent intent = new Intent(this, GoogleSignIn.class);
+//        startActivity(intent);
+//        finish();
     }
 }

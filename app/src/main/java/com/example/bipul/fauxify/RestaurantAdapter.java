@@ -2,6 +2,7 @@ package com.example.bipul.fauxify;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private static final String TAG = "error";
-        public TextView resName, restype, resRating, resDeliveryTime, resMinimumOrder;
+        public TextView resName, restype, resStatus, resDeliveryTime, resMinimumOrder;
         public ImageView resImage;
         Context context;
 
@@ -33,7 +34,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
 
             resName = (TextView) view.findViewById(R.id.res_name);
             restype = (TextView) view.findViewById(R.id.res_type);
-            //resRating = (TextView) view.findViewById(R.id.res_rating);
+            resStatus = (TextView) view.findViewById(R.id.res_status);
             resDeliveryTime = (TextView) view.findViewById(R.id.res_delivery_time);
             resMinimumOrder = (TextView) view.findViewById(R.id.res_min_order);
             resImage = (ImageView) view.findViewById(R.id.res_image);
@@ -56,6 +57,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             intent.putExtra("resId", restaurant.getResId());
             intent.putExtra("Deliveryfee", restaurant.getDeliveryFee());
             intent.putExtra("freeDeliveryAmount", restaurant.getFreeDeliveryAmount());
+            intent.putExtra("restStatus", restaurant.getRestStatus());
 
             context.startActivity(intent);
 
@@ -85,6 +87,18 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         holder.resDeliveryTime.setText(restaurant.getResDeliveryTime());
         holder.resMinimumOrder.setText("Min Order  " + MainActivity.rupeesymbol + restaurant.getResMinOrder());
 
+        if (!restaurant.getRestStatus().equals("open")) {
+
+            holder.resStatus.setVisibility(View.VISIBLE);
+            holder.resImage.setAlpha(0.2f);
+            holder.resName.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
+            holder.restype.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
+            holder.resDeliveryTime.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
+            holder.resMinimumOrder.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
+
+        }
+
+
         // holder.itemView.setEnabled(false);
 
     }
@@ -93,6 +107,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     @Override
     public int getItemCount() {
         return restaurantList.size();
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
     }
 
 }
