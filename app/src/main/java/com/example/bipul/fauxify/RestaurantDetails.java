@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +41,7 @@ public class RestaurantDetails extends AppCompatActivity {
     public static String resId, resName, restMinimumOrder, resDeliveryFee, resFreeDelAmount;
     TabLayout tabLayout;
     Toolbar toolbar;
+     CoordinatorLayout restaurantDetailCoordinatorLayout;
     CollapsingToolbarLayout collapsingToolbar;
     public static boolean isVeg;
     Switch switchVeg;
@@ -64,7 +66,7 @@ public class RestaurantDetails extends AppCompatActivity {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Cart Emptied!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Cart Emptied", Toast.LENGTH_SHORT).show();
                             DishesAdapter.currentOrders.clear();
                             RestaurantDetails.super.onBackPressed();
                         }
@@ -117,6 +119,8 @@ public class RestaurantDetails extends AppCompatActivity {
         fabCheckout = (FloatingActionButton) findViewById(R.id.fabCheckout);
         switchVeg = (Switch) findViewById(R.id.switchVeg);
 
+        restaurantDetailCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.restaurantDetailsCoordinatorLayout);
+
         resId = getIntent().getStringExtra("resId");
         resName = getIntent().getStringExtra("restaurantName");
         restMinimumOrder = getIntent().getStringExtra("restaurantMinOrder");
@@ -136,7 +140,7 @@ public class RestaurantDetails extends AppCompatActivity {
         restMinOrder.setText(minOrder);
         resType.setText(getIntent().getStringExtra("restaurantType"));
 
-        if(!restStatus.equals("open")){
+        if (!restStatus.equals("open")) {
             fabCheckout.setVisibility(View.GONE);
         }
 
@@ -222,7 +226,7 @@ public class RestaurantDetails extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "restaurants/" + resId;
+            json_url = "http://fauxify.com/api/restaurants/" + resId;
             Log.e("json_url", json_url);
         }
 
@@ -295,6 +299,16 @@ public class RestaurantDetails extends AppCompatActivity {
 
         }
     }
+
+//    public void snackbarMessage(String message){
+//
+//        Snackbar snackbar = Snackbar
+//                .make(restaurantDetailCoordinatorLayout, message, Snackbar.LENGTH_SHORT);
+//        View snackbarView = snackbar.getView();
+//        snackbarView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+//        snackbar.show();
+//
+//    }
 
 
 }

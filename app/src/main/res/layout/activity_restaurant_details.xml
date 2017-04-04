@@ -1,6 +1,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/restaurantDetailsCoordinatorLayout"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
@@ -164,20 +165,20 @@
 
             -->
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabCheckout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginEnd="25dp"
-            android:clickable="true"
-            android:src="@drawable/ic_shoppingcart"
-            app:backgroundTint="@color/colorAccent"
-            app:fabSize="normal"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCheckout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_shoppingcart"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"/>
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
 
 </android.support.design.widget.CoordinatorLayout>

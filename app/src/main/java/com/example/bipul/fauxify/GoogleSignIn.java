@@ -279,7 +279,6 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         String JSON_STRING;
         boolean exceptioncaught = false;
         String urlfind;
-        String emm;
 
         @Override
         protected String doInBackground(Void... params) {
@@ -335,7 +334,12 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         protected void onPostExecute(String s) {
             if (!exceptioncaught) {
                 if (!ifUserEmailExists) {
-                    postUserData();
+
+                    Intent intent = new Intent(getApplicationContext(), OTPActivity.class);
+                    startActivity(intent);
+
+                    //postUserData();
+
                     Log.i("user doesnt exist", "Posting needed");
                 } else {
                     LoginUser();
@@ -440,14 +444,14 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
         @Override
         protected void onPostExecute(String s) {
-           if(!exceptioncaught && issuccess){
+            if (!exceptioncaught && issuccess) {
 
-               Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
 
-           } else if(!issuccess){
-               Toast.makeText(GoogleSignIn.this, "Unauthorised User, Login failed", Toast.LENGTH_SHORT).show();
-           }
+            } else if (!issuccess) {
+                Toast.makeText(GoogleSignIn.this, "Unauthorised User, Login failed", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

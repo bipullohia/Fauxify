@@ -99,7 +99,7 @@ public class RestaurantFragment extends Fragment {
 //            String userid = sharedPref.getString("userId", null);
 
 
-            json_url = MainActivity.requestURL + "restaurants" ;
+            json_url = MainActivity.requestURL + "restaurants";
             Log.e("json_url", json_url);
             pd = ProgressDialog.show(getContext(), "", "Fetching Restaurants", false);
 
@@ -160,20 +160,20 @@ public class RestaurantFragment extends Fragment {
                 }
 
                 resAdapter.notifyDataSetChanged();
-                pd.dismiss();
+
 
             } else if (status == 0) {
 
-                pd.dismiss();
-                Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
+                //pd.dismiss();
+                Toast.makeText(getContext(), "Error Ocurred. Try Again", Toast.LENGTH_SHORT).show();
 
             } else {
 
-                pd.dismiss();
+                //pd.dismiss();
                 Toast.makeText(getContext(), "Couldn't load Restaurant data", Toast.LENGTH_SHORT).show();
 
             }
-
+            pd.dismiss();
             swipeRefreshLayout.setRefreshing(false);
         }
 

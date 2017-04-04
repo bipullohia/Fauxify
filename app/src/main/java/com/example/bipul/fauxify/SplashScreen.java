@@ -30,20 +30,9 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.splash);
+        //setContentView(R.layout.splash); dont uncomment this
 
         shapre = getSharedPreferences("myshared", MODE_PRIVATE);
-
-//        final ImageView iv = (ImageView) findViewById(R.id.logo);
-//        Animation an = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
-//        final Animation an2 = AnimationUtils.loadAnimation(getBaseContext(), R.anim.abc_fade_out);
-//        iv.startAnimation(an);
-//        an.setAnimationListener(new Animation.AnimationListener() {
-//            public void onAnimationStart(Animation animation) {
-//            }
-//            public void onAnimationEnd(Animation animation) {
-//                iv.startAnimation(an2);
-//                SplashScreen.this.finish();
 
         if (shapre.getBoolean("firstrun", true)) {
             Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
@@ -55,7 +44,7 @@ public class SplashScreen extends Activity {
             launchHomeScreen();
         }
 
-//        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), OTPActivity.class);
 //        startActivity(intent);
 
     }

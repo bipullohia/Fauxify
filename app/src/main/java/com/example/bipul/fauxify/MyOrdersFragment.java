@@ -1,6 +1,7 @@
 package com.example.bipul.fauxify;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -72,9 +73,12 @@ public class MyOrdersFragment extends Fragment {
         String JSON_STRING;
         JSONArray jsonArray;
         JSONObject jobject;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
+
+            pd = ProgressDialog.show(getContext(), "", "Loading Orders", false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -175,6 +179,8 @@ public class MyOrdersFragment extends Fragment {
                 myOrderAdapter.notifyDataSetChanged();
 
             } else Log.e("Jsonarray length", "is zero");
+
+            pd.dismiss();
         }
 
     }

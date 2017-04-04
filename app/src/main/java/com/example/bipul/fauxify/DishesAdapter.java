@@ -1,6 +1,8 @@
 package com.example.bipul.fauxify;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -122,6 +124,16 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
                 if (count[0] > 0) {
                     CurrentOrder currentOrder = new CurrentOrder(dishes.getDishName(), dishes.getDishPrice(), count[0]);
                     currentOrders.add(currentOrder);
+
+                    //adding the snackbar to display how many items have been added to cart
+                    Snackbar snackbar = Snackbar
+                            .make(holder.itemView, count[0] + " " + dishes.getDishName() + " added to Cart", Snackbar.LENGTH_LONG);
+                    View snackbarView = snackbar.getView();
+                    snackbarView.setBackgroundColor(ContextCompat.getColor(holder.context, R.color.colorPrimary));
+                    TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    textView.setTextColor(ContextCompat.getColor(holder.context, R.color.colorAccent));
+                    snackbar.show();
+
                     Log.e("the count:", String.valueOf(currentOrder));
                 } else {
                     Toast.makeText(v.getContext(), "Select/Reselect the Item quantity to be added", Toast.LENGTH_SHORT).show();

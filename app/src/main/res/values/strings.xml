@@ -50,6 +50,8 @@
     <string name="Rs">\u20B9</string>
     <string name="rs">\u20A8</string>
 
+    <string name="verified">Verification successful</string>
+    <string name="failed">Verification failed</string>
 
     <string-array name="Areas">
         <item>Select a Location</item>

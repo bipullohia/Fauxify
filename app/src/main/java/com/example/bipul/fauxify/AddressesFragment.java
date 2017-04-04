@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,12 +72,12 @@ public class AddressesFragment extends Fragment {
             }
         });
 
-       addAddresses();
+        getAddresses();
         return view;
 
     }
 
-    private void addAddresses() {
+    private void getAddresses() {
         new bgroundtask().execute();
     }
 
@@ -103,7 +104,7 @@ public class AddressesFragment extends Fragment {
 
             String utfUserId = null;
             try {
-            utfUserId = URLEncoder.encode(userId, "utf-8");
+                utfUserId = URLEncoder.encode(userId, "utf-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -173,24 +174,18 @@ public class AddressesFragment extends Fragment {
                 }
 
                 addressAdapter.notifyDataSetChanged();
-                // pd.dismiss();
 
+
+            } else if (status == 0) {
+
+
+                Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(getContext(), "Couldn't load Address info", Toast.LENGTH_SHORT).show();
             }
 
-
             pd.dismiss();
-
-
-//            else if(status==0) {
-//
-//                pd.dismiss();
-//                Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            else {
-//                pd.dismiss();
-//                Toast.makeText(getContext(), "Couldn't load Address info", Toast.LENGTH_SHORT).show();
-//            }
         }
 
     }

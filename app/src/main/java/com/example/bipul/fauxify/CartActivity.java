@@ -1,5 +1,6 @@
 package com.example.bipul.fauxify;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,8 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements View.OnKeyListener {
 
     private ArrayList<CurrentOrder> itemSummaryList = new ArrayList<>();
     private ArrayList<Address> addressList = new ArrayList<>();
@@ -43,11 +47,24 @@ public class CartActivity extends AppCompatActivity {
     static CardView cardViewSelectedAdd, cardViewToSelectAdd;
     Button selectAnotherAdd, addNewAddress, confirmorder;
     Toolbar toolbar;
+    EditText userMessage;
     public static String orderid, restaurantNameInCart;
     static String finaladdress = null;
     static int totaldishcount = 0, totalitempricecount = 0, deliveryfee = 0, grandtotalamount = 0;
     static TextView RestaurantNameInCart, TotalItemsInCart, TotalItemPriceInCart, GrandTotalAmount, DeliveryFee, selectedAddress;
 
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+        if(keyCode== KeyEvent.KEYCODE_ENTER ){
+
+            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+        }
+        return false;
+    }
 
     @Override
     //this is to nullify the value of address selected by user (if selected) so if he returns, it isn't stored
@@ -105,6 +122,9 @@ public class CartActivity extends AppCompatActivity {
         selectedAddress = (TextView) findViewById(R.id.cart_selectedaddress);
         addNewAddress = (Button) findViewById(R.id.button_addnewaddress_cart);
         confirmorder = (Button) findViewById(R.id.button_confirmorder);
+
+        userMessage = (EditText) findViewById(R.id.userMessage);
+        userMessage.setOnKeyListener(this);
 
         DeliveryFee = (TextView) findViewById(R.id.deliveryfee_incart);
         GrandTotalAmount = (TextView) findViewById(R.id.grandtotalprice_incart);
@@ -169,6 +189,7 @@ public class CartActivity extends AppCompatActivity {
 
     public static void checkDeliveryFee() {
 
+
         Log.i("totalitempricecount", String.valueOf(totalitempricecount));
         Log.i("resFreedelAmount", String.valueOf(Integer.valueOf(RestaurantDetails.resFreeDelAmount)));
 
@@ -201,12 +222,16 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
+
+
     class BTaskConfirmOrder extends AsyncTask<Void, Void, String> {
         String urlFinal;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
+            //pd = ProgressDialog.show(getApplicationContext(), "", "Sending Order info", false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -266,8 +291,8 @@ public class CartActivity extends AppCompatActivity {
                 String years = convertTime(year);
                 String randomnos = String.valueOf(randomno);
 
-
                 yearshort = years.substring(2, 4);
+
                 timestamp = yearshort + months + days + hours + minutes + seconds + randomnos;
 
 //                Log.i("hour", hours);
@@ -357,7 +382,6 @@ public class CartActivity extends AppCompatActivity {
             return null;
 
         }
-
     }
 
 
@@ -418,10 +442,12 @@ public class CartActivity extends AppCompatActivity {
         String userId, userToken;
         JSONArray jsonArray;
         String jsonString;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
+            //pd = ProgressDialog.show(getBaseContext(), "", "Loading Address info", false);
 
             SharedPreferences sharedPref;
             sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
@@ -501,6 +527,8 @@ public class CartActivity extends AppCompatActivity {
 
 
             } else Log.e("Jsonarray length", "is zero");
+
+            //pd.dismiss();
         }
 
 
