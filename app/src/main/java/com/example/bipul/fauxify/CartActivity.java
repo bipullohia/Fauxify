@@ -25,6 +25,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
     public static String orderid, restaurantNameInCart;
     static String finaladdress = null;
     static int totaldishcount = 0, totalitempricecount = 0, deliveryfee = 0, grandtotalamount = 0;
-    static TextView RestaurantNameInCart, TotalItemsInCart, TotalItemPriceInCart, GrandTotalAmount, DeliveryFee, selectedAddress;
+    static TextView RestaurantNameInCart, TotalItemPriceInCart, GrandTotalAmount, DeliveryFee, selectedAddress, noSavedAddCart;
 
 
     @Override
@@ -122,6 +123,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         selectedAddress = (TextView) findViewById(R.id.cart_selectedaddress);
         addNewAddress = (Button) findViewById(R.id.button_addnewaddress_cart);
         confirmorder = (Button) findViewById(R.id.button_confirmorder);
+        noSavedAddCart = (TextView) findViewById(R.id.noSavedAddCartTextview);
 
         userMessage = (EditText) findViewById(R.id.userMessage);
         userMessage.setOnKeyListener(this);
@@ -147,7 +149,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         });
 
         RestaurantNameInCart = (TextView) findViewById(R.id.restname_incart);
-        TotalItemsInCart = (TextView) findViewById(R.id.totalitems_incart);
         TotalItemPriceInCart = (TextView) findViewById(R.id.totalitemprice_incart);
 
         prepareCartData();
@@ -270,8 +271,8 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 String customername = sharedPref.getString("personDisplayName", null);
 
                 //String mydate =java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-                String date = (DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
-
+                String date = (DateFormat.format("dd-MM-yyyy hh:mm:ss a", new java.util.Date()).toString());
+                Log.d("date", date);
                 String hours, minutes, seconds, days, months, yearshort, timestamp;
                 Random random = new Random();
 
@@ -281,6 +282,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 int second = Calendar.getInstance().get(Calendar.SECOND);
                 int month = Calendar.getInstance().get(Calendar.MONTH);
                 int year = Calendar.getInstance().get(Calendar.YEAR);
+                int ampm = Calendar.getInstance().get(Calendar.AM_PM);
                 int randomno = random.nextInt(89) + 10;
 
                 hours = convertTime(hour);
@@ -411,7 +413,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
         restaurantNameInCart = RestaurantDetails.resName;
         RestaurantNameInCart.setText(restaurantNameInCart);
-        TotalItemsInCart.setText(String.valueOf(totaldishcount));
         TotalItemPriceInCart.setText(String.valueOf(totalitempricecount));
 
     }
@@ -511,7 +512,11 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         @Override
         protected void onPostExecute(String s) {
 
-            if (jsonArray != null) {
+            if(jsonArray==null || jsonArray.length()==0){
+
+                noSavedAddCart.setVisibility(View.VISIBLE);
+            }
+            else if (jsonArray != null) {
                 Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {

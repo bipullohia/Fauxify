@@ -10,6 +10,8 @@
     <color name="colorTextIcons">#FFFFFF</color>
 
 
+    <color name="headingSeparatorCardView">@color/lightGray</color>
+    <color name="sectionSeparatorCardView">@color/lightGray</color>
 
     <color name="orangeonblack">#F99426</color>
     <color name="orangeonblack2">#F98F10</color>

@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            super.onBackPressed();
 //        }
 //    }
-    // 192.168.0.100 ip for use in mobile
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,14 +207,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         drawerLayout.closeDrawers();
                         break;
 
-                    case R.id.nav_option_help:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.main_container, new HelpFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Help");
-                        getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
-                        break;
+//                    case R.id.nav_option_help:
+//                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                        fragmentTransaction.replace(R.id.main_container, new HelpFragment());
+//                        fragmentTransaction.commit();
+//                        getSupportActionBar().setTitle("Help");
+//                        getSupportActionBar().setSubtitle(null);
+//                        drawerLayout.closeDrawers();
+//                        break;
 
                     case R.id.logout:
                         Log.i("Sign out button clicked", " success");

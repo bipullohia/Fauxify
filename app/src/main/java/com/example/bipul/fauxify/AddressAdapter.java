@@ -34,7 +34,6 @@ import java.util.ArrayList;
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
 
     private ArrayList<Address> addressList;
-    JSONArray jArray;
     Integer position;
 
 
@@ -68,6 +67,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
 
                                     String userId, userToken, urlFinal, JSON_STRING;
                                     String[] savedaddress;
+                                    JSONArray jArrayOldAddresses;
+                                    JSONArray jArrayNewAddresses;
 
                                     @Override
                                     protected void onPreExecute() {
@@ -112,17 +113,19 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                             Log.e("result", result_checkjson);
 
                                             JSONObject jobject = new JSONObject(result_checkjson);
-                                            jArray = jobject.getJSONArray("Address");
 
+                                            //jArrayOldAddresses stores the initial number of addresses
+                                            jArrayOldAddresses = jobject.getJSONArray("Address");
 
-                                            if (jArray != null) {
+                                            if (jArrayOldAddresses != null && jArrayOldAddresses.length()!=0) {
 
-                                                savedaddress = new String[jArray.length()];
+                                                savedaddress = new String[jArrayOldAddresses.length()];
 
-                                                for (int j = 0; j <= (jArray.length() - 1); j++) {
-                                                    savedaddress[j] = jArray.getString(j);
+                                                for (int j = 0; j <= (jArrayOldAddresses.length() - 1); j++) {
+                                                    savedaddress[j] = jArrayOldAddresses.getString(j);
                                                     Log.e("saved addresses", savedaddress[j]);
                                                 }
+
                                             } else {
                                                 Log.e("Addressconfirm activity", "no previous address found");
                                             }
@@ -143,17 +146,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                             httpConnection.setRequestProperty("Accept", "application/json");
                                             httpConnection.setRequestProperty("Content-Type", "application/json");
 
-                                            JSONArray jsonArray = new JSONArray();
+                                            jArrayNewAddresses = new JSONArray();
 
-                                            if (jArray != null) {
+                                            if (jArrayOldAddresses != null && jArrayOldAddresses.length()!=0) {
 
-                                                for (int i = 0; i <= jArray.length() - 1; i++) {
+                                                for (int i = 0; i <= jArrayOldAddresses.length() - 1; i++) {
 
                                                     if (i != position) {
 
                                                         Address address = new Address(savedaddress[i]); //adding the new addresses to list
                                                         addressList.add(address);
-                                                        jsonArray.put(savedaddress[i]);
+                                                        jArrayNewAddresses.put(savedaddress[i]);
                                                         Log.e("posting addresses", savedaddress[i]);
                                                     }
                                                 }
@@ -162,7 +165,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                             }
 
                                             JSONObject jsonObject = new JSONObject();
-                                            jsonObject.accumulate("Address", jsonArray);
+                                            jsonObject.accumulate("Address", jArrayNewAddresses);
 
                                             String json = jsonObject.toString();
 
@@ -187,6 +190,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                             }
 
                                             Log.e("testhehe", json);
+
                                         } catch (IOException | JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -198,7 +202,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                     protected void onPostExecute(String s) {
 
                                         notifyDataSetChanged(); //it updates the new address adapter with new list
-
+                                        if(jArrayNewAddresses.length()==0){ //it will update the textview which says no saved
+                                            AddressesFragment.noSavedAdd.setVisibility(View.VISIBLE); //addresses since no of Add is zero
+                                        }
+                                        Log.e("JsonArraylength", String.valueOf(jArrayNewAddresses.length()));
                                     }
                                 }
 
@@ -207,7 +214,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     addressList.clear(); //clearing the old address list
-                                    Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Address Deleted!", Toast.LENGTH_SHORT).show();
                                     deleteAddress();
                                 }
 

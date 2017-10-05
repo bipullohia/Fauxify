@@ -13,16 +13,16 @@
         android:icon="@drawable/ic_payment_black_48dp"/>
 
     <item android:id="@+id/nav_option_orders"
-        android:title="My Orders"
+        android:title="Orders"
         android:icon="@drawable/ic_restaurant_menu_black_48dp"/>
 
     <item android:id="@+id/nav_option_offers"
         android:title="Offers"
         android:icon="@drawable/ic_local_offer_black_48dp"/>
 
-    <item android:id="@+id/nav_option_help"
+   <!-- <item android:id="@+id/nav_option_help"
         android:title="Help"
-        android:icon="@drawable/ic_feedback_black_48dp"/>
+        android:icon="@drawable/ic_feedback_black_48dp"/> -->
 
     <item android:id="@+id/logout"
         android:title="Logout"

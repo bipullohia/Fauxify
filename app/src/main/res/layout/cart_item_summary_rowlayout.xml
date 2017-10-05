@@ -5,40 +5,34 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="3dp"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        android:text="XXXX XXXX"
-       android:textSize="16sp"
-        android:id="@+id/dishname_incart"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
+
+        <TextView
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="XXXX XXXX"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="14sp"
+            android:id="@+id/dishname_incart"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="end">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:text="Price" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="3dp"
-                android:paddingStart="3dp"
+                android:paddingEnd="2dp"
+                android:paddingStart="2dp"
                 android:text="@string/Rs" />
 
             <TextView
@@ -47,22 +41,13 @@
                 android:text="XXX"
                 android:id="@+id/dishprice_incart"/>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:text="Quantity" />
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:gravity="center_vertical"
+                android:text="x"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,24 +59,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:text="Amount" />
+            android:gravity="end">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="5dp"
-                android:paddingStart="5dp"
+                android:paddingEnd="2dp"
+                android:paddingStart="2dp"
                 android:text="@string/Rs" />
 
             <TextView
@@ -102,6 +79,15 @@
 
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+
+
 
 
     </LinearLayout>

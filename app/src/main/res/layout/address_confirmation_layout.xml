@@ -32,37 +32,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
-                android:text="Check your address :"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="Check your address"
+                android:textSize="@dimen/headingCardView"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightGray" />
+                android:layout_height="@dimen/headingSeparatorCardView"
+                android:background="@color/headingSeparatorCardView" />
 
             <TextView
                 android:id="@+id/confirm_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-               android:layout_margin="20dp"
+               android:layout_margin="15dp"
+                android:textAlignment="center"
                 android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorAccent" />
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightGray" />
-
+                android:layout_height="@dimen/sectionSeparatorCardView"
+                android:background="@color/sectionSeparatorCardView" />
 
             <Button
                 android:id="@+id/confirm_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingLeft="120dp"
-                android:paddingRight="120dp"
+                android:gravity="center"
+                android:paddingLeft="90dp"
+                android:minHeight="0dp"
+                android:paddingRight="90dp"
                 android:text="Confirm"
                 android:textAllCaps="false" />
 

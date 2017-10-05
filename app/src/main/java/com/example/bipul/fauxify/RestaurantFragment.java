@@ -101,7 +101,7 @@ public class RestaurantFragment extends Fragment {
 
             json_url = MainActivity.requestURL + "restaurants";
             Log.e("json_url", json_url);
-            pd = ProgressDialog.show(getContext(), "", "Fetching Restaurants", false);
+            pd = ProgressDialog.show(getContext(), "", "Fetching Restaurants...", false);
 
         }
 

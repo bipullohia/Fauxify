@@ -17,11 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +45,7 @@ public class AddressesFragment extends Fragment {
     private RecyclerView addressRecyclerView;
     FloatingActionButton fabAddAddress;
     private AddressAdapter addressAdapter;
-    JSONArray jsonArray;
+    static TextView noSavedAdd;
 
     public AddressesFragment() {
         // Required empty public constructor
@@ -57,6 +59,7 @@ public class AddressesFragment extends Fragment {
 
         addressRecyclerView = (RecyclerView) view.findViewById(R.id.address_recycler_view);
 
+        noSavedAdd = (TextView) view.findViewById(R.id.noSavedAddTextview);
         addressAdapter = new AddressAdapter(addressList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
         addressRecyclerView.setLayoutManager(mLayoutManager);
@@ -94,7 +97,7 @@ public class AddressesFragment extends Fragment {
         @Override
         protected void onPreExecute() {
 
-            pd = ProgressDialog.show(getContext(), "", "Loading Address info", false);
+            pd = ProgressDialog.show(getContext(), "", "Loading Address info...", false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -161,7 +164,12 @@ public class AddressesFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            if (jsonArray != null && status == 1) {
+            if(jsonArray==null || jsonArray.length()==0){
+
+                noSavedAdd.setVisibility(View.VISIBLE);
+                addressRecyclerView.setVisibility(View.GONE);
+            }
+            else if (jsonArray != null && status == 1) {
                 Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
@@ -176,11 +184,9 @@ public class AddressesFragment extends Fragment {
                 addressAdapter.notifyDataSetChanged();
 
 
-            } else if (status == 0) {
+            }
 
-
-                Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
-            } else {
+            else {
 
                 Toast.makeText(getContext(), "Couldn't load Address info", Toast.LENGTH_SHORT).show();
             }

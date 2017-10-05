@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +40,8 @@ public class MyOrdersFragment extends Fragment {
     private ArrayList<MyOrders> orderList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MyOrdersAdapter myOrderAdapter;
+    //TextView noOrder;
+    CardView noOrder;
 
     public MyOrdersFragment() {
         // Required empty public constructor
@@ -52,6 +56,7 @@ public class MyOrdersFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_orders, container, false);
         recyclerView = (RecyclerView) rootview.findViewById(R.id.myOrdersRecyclerView);
 
+        noOrder = (CardView) rootview.findViewById(R.id.noOrderscardView);
         myOrderAdapter = new MyOrdersAdapter(orderList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rootview.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -78,7 +83,7 @@ public class MyOrdersFragment extends Fragment {
         @Override
         protected void onPreExecute() {
 
-            pd = ProgressDialog.show(getContext(), "", "Loading Orders", false);
+            pd = ProgressDialog.show(getContext(), "", "Loading Orders...", false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -131,7 +136,13 @@ public class MyOrdersFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
-            if (jsonArray != null) {
+
+            if(jsonArray==null || jsonArray.length()==0){
+
+                noOrder.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+            else if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
 

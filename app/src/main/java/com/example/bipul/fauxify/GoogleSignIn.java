@@ -102,14 +102,14 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
             finish();
         }
         // Configure sign-in to request the user's ID, email address, and basic
-// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.PLUS_LOGIN))
                 .requestEmail()
                 .build();
 
         // Build a GoogleApiClient with access to the Google Sign-In API and the
-// options specified by gso.
+        // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Plus.API)
@@ -131,7 +131,6 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
             case R.id.sign_in_button:
 
                 // processdialog = ProgressDialog.show(this, "", "Logging In", false);
-                Log.e("SignINbutton Onclick", "clicked");
                 signIn();
 
                 break;
@@ -160,9 +159,13 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
 
     private void handleSignInResult(GoogleSignInResult result) {
-        //Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        Log.d(TAG, "handlesignInResult:" + result.getStatus());
+
+
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
+
             GoogleSignInAccount acct = result.getSignInAccount();
 
             assert acct != null;   // person's google data cannot be null
@@ -218,7 +221,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                     //new LoadProfileImage(profile_pic).execute(personUrl);
 
                     //Log.e("Data check", personDisplayName + personGender);
-
+                    Log.e("i reached", "here");
                     checkIfExists();
 
 
@@ -313,7 +316,6 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                 result_checkjson = stringBuilder.toString().trim();
                 Log.e("result", result_checkjson);
 
-
                 JSONObject jobject = new JSONObject(result_checkjson);
                 ifUserEmailExists = jobject.getBoolean("exists");
 
@@ -335,10 +337,10 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
             if (!exceptioncaught) {
                 if (!ifUserEmailExists) {
 
-                    Intent intent = new Intent(getApplicationContext(), OTPActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), P.class);
+//                    startActivity(intent);
 
-                    //postUserData();
+                    postUserData();
 
                     Log.i("user doesnt exist", "Posting needed");
                 } else {

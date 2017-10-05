@@ -49,12 +49,12 @@
                         android:gravity="center"
                         android:paddingBottom="5dp"
                         android:text="Item Summary"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/headingCardView"/>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
 
 
                     <TextView
@@ -68,8 +68,8 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/sectionSeparatorCardView"
+                        android:background="@color/sectionSeparatorCardView" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/cart_recyclerview"
@@ -77,6 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:longClickable="true"
+                        android:overScrollMode="never"
                         android:scrollbars="vertical">
 
                     </android.support.v7.widget.RecyclerView>
@@ -114,13 +115,13 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="Other Details"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/headingCardView"/>
 
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView"/>
 
 
                     <LinearLayout
@@ -137,7 +138,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Restaurant Name"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/restname_incart"
@@ -146,37 +147,8 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:text="XXXXX"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp"
-                        android:orientation="horizontal"
-                        android:paddingTop="5dp">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Total Items"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/totalitems_incart"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="X"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -194,7 +166,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Total Items Amount"
-                            android:textSize="15sp" />
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -209,16 +181,14 @@
                                 android:paddingEnd="5dp"
                                 android:paddingStart="5dp"
                                 android:text="@string/Rs"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="15sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/totalitemprice_incart"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="XXX"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="15sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
 
@@ -240,7 +210,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Delivery Fee"
-                            android:textSize="15sp" />
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -255,16 +225,14 @@
                                 android:paddingEnd="5dp"
                                 android:paddingStart="5dp"
                                 android:text="@string/Rs"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="15sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/deliveryfee_incart"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="XX"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="15sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
 
@@ -273,8 +241,8 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/sectionSeparatorCardView"
+                        android:background="@color/sectionSeparatorCardView" />
 
 
                     <LinearLayout
@@ -291,8 +259,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Final Amount to be paid"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -306,16 +273,14 @@
                                 android:layout_height="wrap_content"
                                 android:paddingEnd="5dp"
                                 android:text="@string/Rs"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="16sp" />
+                                android:textSize="15sp" />
 
                             <TextView
                                 android:id="@+id/grandtotalprice_incart"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="XXX"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="16sp" />
+                                android:textSize="15sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -323,8 +288,6 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
-
-
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cart_toselectaddress_cardview"
@@ -352,19 +315,31 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:text="Select Delivery Address"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/headingCardView"/>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerview_addresscart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:minHeight="80dp"
                         android:longClickable="true"
+                        android:overScrollMode="never"
                         android:scrollbars="vertical" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="No saved Address found"
+                        android:visibility="gone"
+                        android:id="@+id/noSavedAddCartTextview"/>
 
 
                     <LinearLayout
@@ -378,7 +353,6 @@
                             android:minHeight="0dp"
                             android:text="Add new Address"
                             android:textAllCaps="false" />
-
 
                     </LinearLayout>
 
@@ -396,45 +370,42 @@
                 android:orientation="vertical"
                 android:visibility="gone"
                 cardView:cardCornerRadius="2dp"
-                cardView:cardElevation="2dp"
-
-                >
+                cardView:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
                         android:text="Selected Address"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/headingCardView"/>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView"/>
 
                     <TextView
                         android:id="@+id/cart_selectedaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
-                        android:paddingEnd="24dp"
-                        android:paddingStart="24dp"
                         android:paddingTop="10dp"
                         android:text="Your address"
+                        android:textAlignment="center"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
 
                     <Button
                         android:id="@+id/button_selectanotheraddress_cart"
@@ -475,13 +446,13 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="Any Message for the Chef?"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/headingCardView"/>
 
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lightGray" />
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
 
 
                     <EditText
@@ -489,7 +460,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:id="@+id/userMessage"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:inputType="textShortMessage"
                         android:layout_gravity="center"
                         android:gravity="center"
@@ -511,7 +482,6 @@
                 android:paddingRight="70dp"
                 android:text="Confirm Order"
                 android:textAllCaps="false"
-
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
 

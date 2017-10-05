@@ -1,5 +1,6 @@
 package com.example.bipul.fauxify;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -60,13 +61,13 @@ public class RestaurantDetails extends AppCompatActivity {
         isVeg = false;
         if (DishesAdapter.currentOrders.size() != 0) {
             AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
-            alertbuilder.setMessage("You cart has items from this restaurants. It needs to be emptied to be able to browse other restaurants. Agree?")
+            alertbuilder.setMessage("You cart has items from this restaurant. It needs to be emptied for you to be able to browse other restaurants. Agree?")
                     .setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Cart Emptied", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Cart Emptied!", Toast.LENGTH_SHORT).show();
                             DishesAdapter.currentOrders.clear();
                             RestaurantDetails.super.onBackPressed();
                         }
@@ -222,12 +223,14 @@ public class RestaurantDetails extends AppCompatActivity {
         JSONArray jsonArray;
         JSONObject jobject;
         ArrayList<String> categories;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
             json_url = "http://fauxify.com/api/restaurants/" + resId;
             Log.e("json_url", json_url);
+            pd = ProgressDialog.show(RestaurantDetails.this, "", "Loading Restaurant Menu...", false);
         }
 
         @Override
@@ -296,7 +299,7 @@ public class RestaurantDetails extends AppCompatActivity {
             viewPager.setAdapter(restaurantMenuAdapter);
             tabLayout.setupWithViewPager(viewPager);
 
-
+            pd.dismiss();
         }
     }
 

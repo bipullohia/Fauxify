@@ -78,15 +78,15 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
 
                 switch (addPosition) {
                     case 1:
-                        defaultAddress = "Abode Valley,\n54 Kakkan Street,\nPotheri, Kanchipuram,\nTamil Nadu 603203";
+                        defaultAddress = "Abode Valley,\n54 Kakkan Street, Potheri-603203";
                         break;
 
                     case 2:
-                        defaultAddress = "Estancia,\nGrand Southern Trunk Rd,\nPotheri, Guduvanchery,\nTamil Nadu 603203";
+                        defaultAddress = "Estancia,\nGrand Southern Trunk Rd, Potheri-603203";
                         break;
 
                     case 3:
-                        defaultAddress = "SRM Green Pearl,\nAmman Koil Street,\nPotheri, Guduvanchery,\nTamil Nadu 603203";
+                        defaultAddress = "SRM Green Pearl,\nAmman Koil Street, Potheri-603203";
                         break;
                     default:
                         defaultAddress = "";
@@ -119,7 +119,7 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
 
         if(!inputAddress.equals("")) {
 
-            totalAddress = inputAddress + "\n" + defaultAddress;
+            totalAddress = inputAddress + ", " + defaultAddress;
 
             Intent intent = new Intent(this, AddressConfirmation.class);
             intent.putExtra("Address", totalAddress);

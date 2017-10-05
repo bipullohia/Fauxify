@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#616161"
+            android:textColor="@color/colorPrimaryText"
             android:ellipsize="end"
             android:text="French Loaf"
             android:id="@+id/res_name"

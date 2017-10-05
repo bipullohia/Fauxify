@@ -46,7 +46,7 @@ public class MyOrderDetails extends AppCompatActivity {
         orderId = (TextView) findViewById(R.id.orderdetails_orderid);
         orderTime = (TextView) findViewById(R.id.orderdetails_ordertime);
         totalItemPrice = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
-        totalItems = (TextView) findViewById(R.id.orderdetails_totalitems);
+        //totalItems = (TextView) findViewById(R.id.orderdetails_totalitems);
         totalPrice = (TextView) findViewById(R.id.orderdetails_totalprice);
         deliveryTime = (TextView) findViewById(R.id.deliverytime);
         restName = (TextView) findViewById(R.id.orderdetails_restname);
@@ -57,7 +57,7 @@ public class MyOrderDetails extends AppCompatActivity {
         orderTime.setText(getIntent().getStringExtra("ordertime"));
         totalItemPrice.setText(getIntent().getStringExtra("totalitemprice"));
         totalPrice.setText(getIntent().getStringExtra("totalprice"));
-        totalItems.setText(getIntent().getStringExtra("totalitems"));
+        //totalItems.setText(getIntent().getStringExtra("totalitems"));
         restName.setText(getIntent().getStringExtra("RestName"));
         deliveryFee.setText(getIntent().getStringExtra("deliveryfee"));
         customeremail = getIntent().getStringExtra("ordercustemail");
