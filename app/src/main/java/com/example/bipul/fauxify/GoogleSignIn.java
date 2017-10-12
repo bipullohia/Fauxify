@@ -121,7 +121,6 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         signInButton.setScopes(gso.getScopeArray());
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-
     }
 
 
@@ -130,7 +129,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         switch (view.getId()) {
             case R.id.sign_in_button:
 
-                // processdialog = ProgressDialog.show(this, "", "Logging In", false);
+                processdialog = ProgressDialog.show(this, "", "Logging In...", false);
                 signIn();
 
                 break;
@@ -220,28 +219,24 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
                     //new LoadProfileImage(profile_pic).execute(personUrl);
 
-                    //Log.e("Data check", personDisplayName + personGender);
                     Log.e("i reached", "here");
                     checkIfExists();
 
-
-//
-//                    sendData();
-//
-//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent);
                     // processdialog.dismiss();
 
                 }
             });
 
         }
+
+        processdialog.dismiss();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
         Toast.makeText(this, "Login failed- onconnecfailed", Toast.LENGTH_SHORT).show();
+        processdialog.dismiss();
     }
 
    /* private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
@@ -279,9 +274,16 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
         //String postconcat = personId.substring(3, 6);
 
+        ProgressDialog pd;
         String JSON_STRING;
         boolean exceptioncaught = false;
         String urlfind;
+
+        @Override
+        protected void onPreExecute() {
+
+            pd = ProgressDialog.show(GoogleSignIn.this, "", "Checking user...", false);
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -342,18 +344,20 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
                     postUserData();
 
-                    Log.i("user doesnt exist", "Posting needed");
+                    Log.i("user doesnot exist", "Posting needed");
                 } else {
+
                     LoginUser();
                     Log.i("user exists", "Login required");
                 }
             } else Toast.makeText(GoogleSignIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+
+            pd.dismiss();
         }
     }
 
     private void LoginUser() {
 
-        //Log.i("Status", "Develop the login genius!");
         new BackGroundTaskLoginUser().execute();
     }
 
@@ -362,6 +366,13 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         String jsonUrl = "http://fauxify.com/api/Fauxusers/login"; // undefined url
         boolean exceptioncaught = false;
         boolean issuccess = true;
+        ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+
+            pd = ProgressDialog.show(GoogleSignIn.this, "", "Logging In...", false);
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -448,12 +459,15 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         protected void onPostExecute(String s) {
             if (!exceptioncaught && issuccess) {
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                checkIfContactNumberExists();
+                //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                //startActivity(intent);
 
             } else if (!issuccess) {
-                Toast.makeText(GoogleSignIn.this, "Unauthorised User, Login failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoogleSignIn.this, "Login failed", Toast.LENGTH_SHORT).show();
             }
+
+            pd.dismiss();
         }
     }
 
@@ -466,6 +480,13 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         String jsonUrl = "http://fauxify.com/api/Fauxusers"; // undefined url
         boolean exceptioncaught = false;
         boolean issuccess = true;
+        ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+
+            pd = ProgressDialog.show(GoogleSignIn.this, "", "Logging In...", false);
+        }
 
         @Override
         protected String doInBackground(Void... voids) {
@@ -497,6 +518,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                 jsonObject.accumulate("Socialid", personId);
                 jsonObject.accumulate("Gender", personGender);
                 jsonObject.accumulate("username", personDisplayName);
+                jsonObject.accumulate("Contact", "");
                 //jsonObject.accumulate("id", personId + "afr");
 
                 if (!personFamilyName.equals("")) {
@@ -542,7 +564,113 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
             if (!exceptioncaught && issuccess) {
                 LoginUser();
-            } else Toast.makeText(GoogleSignIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(GoogleSignIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                Log.e("login failed", "while posting info");
+            }
+
+            pd.dismiss();
         }
     }
+
+    private void checkIfContactNumberExists() {
+
+        new bgTaskCheckContactNo().execute();
+    }
+
+    private class bgTaskCheckContactNo extends AsyncTask<Void, Void, String> {
+
+        String urlFinal;
+        String JSON_STRING;
+        int status;
+        ProgressDialog pd;
+        String phoneNumber;
+
+        @Override
+        protected void onPreExecute() {
+
+            pd = ProgressDialog.show(GoogleSignIn.this, "", "Checking contact info...", false);
+
+            SharedPreferences sharedPref;
+            String userId, userToken;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("userId", null);
+            userToken = sharedPref.getString("userToken", null);
+
+            String utfUserId = null;
+            try {
+                utfUserId = URLEncoder.encode(userId, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            urlFinal = "http://fauxify.com/api/" + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            Log.e("json_url", urlFinal);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            try {
+
+                URL urll = new URL(urlFinal);
+                HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
+
+                InputStream inputStream = httpConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((JSON_STRING = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(JSON_STRING + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpConnection.disconnect();
+                String resultjson = stringBuilder.toString().trim();
+                Log.e("result", resultjson);
+
+                JSONObject jobject = new JSONObject(resultjson);
+                phoneNumber = jobject.getString("Contact");
+
+                status = 1;
+
+
+            } catch (IOException | JSONException e) {
+
+                status = 0;
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if(status==0){ //during development, if any account was registered without contact no., that will show status code = 0
+                           // and not redirect to Otpavtivity class. Fix it or keep that in mind.
+
+                Toast.makeText(GoogleSignIn.this, "Login failed!", Toast.LENGTH_SHORT).show();
+                Log.e("Login failed", "while enquiring about contact number existence");
+            }
+            else if(status==1 && phoneNumber != null && !phoneNumber.matches("")){
+
+                SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("personContactNumber", phoneNumber);
+                editor.apply();
+                startActivity(new Intent(GoogleSignIn.this, MainActivity.class));
+
+            }else if(status==1 && (phoneNumber==null || phoneNumber.matches(""))){
+
+               startActivity(new Intent(GoogleSignIn.this, OtpActivity.class));
+            }
+
+            pd.dismiss();
+        }
+
+    }
+
+
+
 }

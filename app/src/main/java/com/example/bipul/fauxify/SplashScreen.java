@@ -30,21 +30,25 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.splash); dont uncomment this
+        //setContentView(R.layout.splash); don't uncomment this
 
         shapre = getSharedPreferences("myshared", MODE_PRIVATE);
 
         if (shapre.getBoolean("firstrun", true)) {
+
+            Log.i("firstrun", "true");
             Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(intent);
             shapre.edit().putBoolean("firstrun", false).apply();
         } else {
+
+            Log.i("firstrun", "false");
             Intent intent = new Intent(this, GoogleSignIn.class);
             startActivity(intent);
             launchHomeScreen();
         }
 
-//        Intent intent = new Intent(getApplicationContext(), OTPActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), OtpActivity.class);
 //        startActivity(intent);
 
     }
@@ -60,9 +64,11 @@ public class SplashScreen extends Activity {
         String personDisplayName = sharedPref.getString("personDisplayName", null);
         String personUserId = sharedPref.getString("userId", null);
         String personToken = sharedPref.getString("userToken", null);
+        String personContactNumber = sharedPref.getString("personContactNumber", null);
 
-        if ((personEmail == null) || (personDisplayName == null) || (personId == null) || (personUserId == null) || (personToken) == null) {
-            Log.e("Data status", "some/all are null");
+        if ((personEmail == null) || (personDisplayName == null) || (personId == null) || (personUserId == null)
+                || (personToken == null) || (personContactNumber == null)) {
+            Log.e("Data status", "some/all info are null");
 
             Intent intent = new Intent(this, GoogleSignIn.class);
             startActivity(intent);
@@ -71,6 +77,7 @@ public class SplashScreen extends Activity {
 
             Log.i("token", personToken);
             Log.i("id", personUserId);
+            Log.i("number", personContactNumber);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

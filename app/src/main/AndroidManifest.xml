@@ -5,11 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -26,33 +26,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".GoogleSignIn" />
+
         <activity
             android:name=".AddAddressInfo"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
+
         <activity
             android:name=".AddressConfirmation"
             android:parentActivityName=".AddAddressInfo" />
+
         <activity android:name=".WelcomeActivity" />
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop" />
+
         <activity
             android:name=".RestaurantDetails"
             android:launchMode="singleTop" />
+
         <activity
             android:name=".CartActivity"
             android:parentActivityName=".RestaurantDetails" />
+
         <activity android:name=".AddAddressInCart" />
+
         <activity android:name=".AddressConfirmationInCart" />
+
         <activity android:name=".OrderConfirmationActivity" />
+
         <activity
             android:name=".MyOrderDetails"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".OTPActivity" />
-        <activity android:name=".VerificationActivity"></activity>
+
+       <activity android:name=".OtpActivity"
+           android:exported="true"/>
+
     </application>
 
 </manifest>

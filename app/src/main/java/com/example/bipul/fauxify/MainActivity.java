@@ -144,17 +144,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         headName = (TextView) header.findViewById(R.id.navheadName);
         headEmail = (TextView) header.findViewById(R.id.navheademail);
         headNumber = (TextView) header.findViewById(R.id.navheadcontact);
-        headNumber.setVisibility(View.GONE);
+        //headNumber.setVisibility(View.GONE);
 
         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
         String personEmail = sharedPref.getString("personEmail", null);
         String personDisplayName = sharedPref.getString("personDisplayName", null);
         String personContactNumber = sharedPref.getString("personContactNumber", null);
+        Log.i("defaultpersonContactNo", personContactNumber);
         headName.setText(personDisplayName);
         headEmail.setText(personEmail);
+        headNumber.setText(personContactNumber);
 
-        //if contact no. isn't there in sharedpref, get it from DB
+
+        //if contact no. isn't there in sharedpref, get it from DB (although it should definitely be there)
         if (personContactNumber == null || personContactNumber.matches("")) {
+
+            Log.i("unmarked", "territory");
             new bgroundtask().execute();
         }
 
@@ -335,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             if (phoneNumber != null && !phoneNumber.matches("")) {
                 headNumber.setVisibility(View.VISIBLE);
-                headNumber.setText("+91" + phoneNumber);
+                headNumber.setText(phoneNumber);
 
                 SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();

@@ -54,7 +54,7 @@
                 android:padding="10dp"
                 android:layout_height="wrap_content"
                 android:text="No Order found. Order something now!"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="14sp"
                 android:gravity="center"/>
 
         </LinearLayout>
