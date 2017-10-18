@@ -14,16 +14,17 @@ import java.util.ArrayList;
 /**
  * Created by Bipul Lohia on 9/12/2016.
  */
-public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyViewHolder> {
 
-    public static ArrayList<CurrentOrder> itemSummaryList;
+class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyViewHolder> {
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    static ArrayList<CurrentOrder> itemSummaryList;
 
-        public TextView dishNameInCart, dishPriceInCart, dishQuantityInCart, dishAmountInCart;
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+
+        TextView dishNameInCart, dishPriceInCart, dishQuantityInCart, dishAmountInCart;
         Context context;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             context = view.getContext();
@@ -52,9 +53,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
                                     CartActivity.checkDeliveryFee();
                                 }
                             }
-
                     )
-
 
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
@@ -66,7 +65,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
             AlertDialog alert = alertbuilder.create();
             alert.show();
 
-
             return true;
         }
     }
@@ -77,8 +75,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
         notifyItemRemoved(position);
     }
 
-
-    public CartItemAdapter(ArrayList<CurrentOrder> itemSummaryList) {
+    CartItemAdapter(ArrayList<CurrentOrder> itemSummaryList) {
         CartItemAdapter.itemSummaryList = itemSummaryList;
     }
 
@@ -104,6 +101,5 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
     public int getItemCount() {
         return itemSummaryList.size();
     }
-
 }
 

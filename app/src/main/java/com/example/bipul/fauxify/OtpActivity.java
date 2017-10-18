@@ -43,36 +43,35 @@ import static com.example.bipul.fauxify.R.id.verifyButton;
 
 public class OtpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText otpInput, numberInput;
-    Button submit, verify;
-    LinearLayout otpInputLL, numberInputLL;
+    EditText mOtpInputEditText, mNumberInputEditText;
+    Button mSubmitButton, mVerifyButton;
+    LinearLayout mOtpInputLinearLayout, mNumberInputLinearLayout;
 
     private FirebaseAuth mAuth;
-    String phoneNumber;
+    String mPhoneNumber;
 
     private static final String TAG = "PhoneAuthActivity";
     private String mVerificationId;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
-    ProgressDialog pd;
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
 
-        otpInput = (EditText) findViewById(R.id.OTPEdittext);
-        numberInput = (EditText) findViewById(R.id.phoneNumberEdittext);
-        submit = (Button) findViewById(submitButton);
-        verify = (Button) findViewById(R.id.verifyButton);
-        otpInputLL = (LinearLayout) findViewById(R.id.OTPInputLinearLayout);
-        numberInputLL = (LinearLayout) findViewById(R.id.numberInputLinearLayout);
+        mOtpInputEditText = (EditText) findViewById(R.id.OTPEdittext);
+        mNumberInputEditText = (EditText) findViewById(R.id.phoneNumberEdittext);
+        mSubmitButton = (Button) findViewById(submitButton);
+        mVerifyButton = (Button) findViewById(R.id.verifyButton);
+        mOtpInputLinearLayout = (LinearLayout) findViewById(R.id.OTPInputLinearLayout);
+        mNumberInputLinearLayout = (LinearLayout) findViewById(R.id.numberInputLinearLayout);
 
         mAuth = FirebaseAuth.getInstance();
 
-        submit.setOnClickListener(this);
-        verify.setOnClickListener(this);
-
+        mSubmitButton.setOnClickListener(this);
+        mVerifyButton.setOnClickListener(this);
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
@@ -93,7 +92,6 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
             public void onVerificationFailed(FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
-
                 Log.w(TAG, "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
@@ -105,10 +103,10 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                     // The SMS quota for the project has been exceeded
                 }
 
-                numberInputLL.setVisibility(View.VISIBLE);
-                otpInputLL.setVisibility(View.GONE);
+                mNumberInputLinearLayout.setVisibility(View.VISIBLE);
+                mOtpInputLinearLayout.setVisibility(View.GONE);
 
-                pd.dismiss();
+                mProgressDialog.dismiss();
             }
 
             @Override
@@ -123,10 +121,10 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 //mResendToken = token;
-                numberInputLL.setVisibility(View.GONE);
-                otpInputLL.setVisibility(View.VISIBLE);
+                mNumberInputLinearLayout.setVisibility(View.GONE);
+                mOtpInputLinearLayout.setVisibility(View.VISIBLE);
 
-                pd.dismiss();
+                mProgressDialog.dismiss();
             }
         };
     }
@@ -137,25 +135,20 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         switch (v.getId()){
 
             case submitButton:
-
-                phoneNumber = numberInput.getText().toString();
-
-                pd = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
+                mPhoneNumber = mNumberInputEditText.getText().toString();
+                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        "+91"+phoneNumber,        // Phone number to verify
+                        "+91"+ mPhoneNumber,        // Phone number to verify
                         60,                 // Timeout duration
                         TimeUnit.SECONDS,   // Unit of timeout
                         OtpActivity.this,  // Activity (for callback binding)
                         mCallbacks);        // OnVerificationStateChangedCallbacks
-
                 break;
 
             case verifyButton:
-
-                pd = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
-                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otpInput.getText().toString());
+                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mOtpInputEditText.getText().toString());
                 signInWithPhoneAuthCredential(credential);
-
                 break;
         }
     }
@@ -168,14 +161,13 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                         if (task.isSuccessful()) {
 
                             Toast.makeText(OtpActivity.this, "Phone number verification is successful!", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
+                            mProgressDialog.dismiss();
                             mAuth.signOut();
 
                             PostUserContactDetails();
 
                         } else {
-
-                            pd.dismiss();
+                            mProgressDialog.dismiss();
                             // Sign in failed, display a message and update the UI
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
 
@@ -189,11 +181,10 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private void PostUserContactDetails() {
-
-        new bgTaskPostUserContactDetail().execute();
+        new BGTaskPostUserContactDetail().execute();
     }
 
-    private class bgTaskPostUserContactDetail extends AsyncTask<Void, Void, String> {
+    private class BGTaskPostUserContactDetail extends AsyncTask<Void, Void, String> {
 
         boolean exceptioncaught = false;
         boolean issuccess = true;
@@ -224,7 +215,6 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         protected String doInBackground(Void... voids) {
 
             try {
-
                 URL url = new URL(urlFinal);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -236,7 +226,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("Contact", phoneNumber);
+                jsonObject.accumulate("Contact", mPhoneNumber);
 
                 String json = jsonObject.toString();
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
@@ -260,7 +250,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                     issuccess = false;
                 }
 
-                Log.e("test", json);
+                Log.e("test-otpActivity", json);
 
             } catch (IOException | JSONException e) {
 
@@ -281,10 +271,11 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
 
-                editor.putString("personContactNumber", phoneNumber);
+                editor.putString("personContactNumber", mPhoneNumber);
                 editor.apply();
 
                 startActivity(new Intent(OtpActivity.this, MainActivity.class));
+                finish();
 
             } else {
                 Toast.makeText(OtpActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -294,6 +285,4 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
             pd.dismiss();
         }
     }
-
-
 }

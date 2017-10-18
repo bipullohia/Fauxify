@@ -13,43 +13,40 @@ import java.util.ArrayList;
 /**
  * Created by Bipul Lohia on 9/15/2016.
  */
-public class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.MyViewHolder> {
 
-    private ArrayList<Address> addressListInCart;
+class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.MyViewHolder> {
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private ArrayList<Address> mAddressListInCart;
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private static final String TAG = "error";
-        public TextView userAddress;
+        TextView userAddress;
         Context context;
 
-
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             context = view.getContext();
 
             view.setOnClickListener(this);
             userAddress = (TextView) view.findViewById(R.id.useraddress_incart);
-
         }
 
         @Override
         public void onClick(View v) {
 
             int position = getAdapterPosition();
-            Address addresscart = addressListInCart.get(position);
+            Address addresscart = mAddressListInCart.get(position);
 
             Log.d(TAG, "onClick " + getAdapterPosition());
 
             CartActivity.checkAddressCondition();
             CartActivity.setCurrentAddress(addresscart.getUserAddress());
         }
-
     }
 
-
-    public CartAddressAdapter(ArrayList<Address> addressListInCart) {
-        this.addressListInCart = addressListInCart;
+    CartAddressAdapter(ArrayList<Address> addressListInCart) {
+        this.mAddressListInCart = addressListInCart;
     }
 
     @Override
@@ -62,16 +59,13 @@ public class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Address address = addressListInCart.get(position);
+        Address address = mAddressListInCart.get(position);
         holder.userAddress.setText(address.getUserAddress());
-
-
     }
 
     @Override
     public int getItemCount() {
-        return addressListInCart.size();
+        return mAddressListInCart.size();
     }
-
 }
 

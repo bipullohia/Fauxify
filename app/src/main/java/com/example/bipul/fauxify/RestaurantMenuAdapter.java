@@ -12,21 +12,21 @@ import java.util.ArrayList;
 /**
  * Created by Bipul Lohia on 9/4/2016.
  */
-public class RestaurantMenuAdapter extends FragmentStatePagerAdapter {
 
-    ArrayList<Fragment> fragments = new ArrayList<>();
-    ArrayList<String> tabtitles = new ArrayList<>();
-    ArrayList<JSONObject> jobject = new ArrayList<>();
+class RestaurantMenuAdapter extends FragmentStatePagerAdapter {
 
+    private ArrayList<Fragment> mFragmentsList = new ArrayList<>();
+    private ArrayList<String> mTabtitles = new ArrayList<>();
+    ArrayList<JSONObject> mJObject = new ArrayList<>();
 
-    public void addFragments(Fragment fragments, String titles, JSONObject jobject)
+    void addFragments(Fragment fragments, String titles, JSONObject jobject)
     {
-        this.fragments.add(fragments);
-        this.tabtitles.add(titles);
-        this.jobject.add(jobject);
+        this.mFragmentsList.add(fragments);
+        this.mTabtitles.add(titles);
+        this.mJObject.add(jobject);
     }
 
-    public RestaurantMenuAdapter(FragmentManager fm) {
+    RestaurantMenuAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -34,18 +34,18 @@ public class RestaurantMenuAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
 
         Bundle bundle = new Bundle();
-        bundle.putString("data", String.valueOf(jobject.get(position)));
-        fragments.get(position).setArguments(bundle);
-        return fragments.get(position);
+        bundle.putString("data", String.valueOf(mJObject.get(position)));
+        mFragmentsList.get(position).setArguments(bundle);
+        return mFragmentsList.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return mFragmentsList.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabtitles.get(position);
+        return mTabtitles.get(position);
     }
 }

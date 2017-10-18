@@ -34,14 +34,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ActionBarDrawerToggle toggle;
-    DrawerLayout drawerLayout;
-    Toolbar myToolbar;
+    ActionBarDrawerToggle mActionBarToggle;
+    DrawerLayout mDrawerLayout;
+    Toolbar mToolbar;
     public static String rupeesymbol;
-    TextView headName, headEmail, headNumber;
+    TextView mHeadNameTextView, mHeadEmailTextView, mHeadNumberTextView;
     static String requestURL;
     FragmentTransaction fragmentTransaction;
     boolean doubleBackToExitPressedOnce = false;
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        }
 //    }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,8 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            getWindow().setStatusBarColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
 //        }
 
-        //following commented out portion is for generating key-hash
-
+// following commented out portion is for generating key-hash
 //        MessageDigest md = null;
 //        try {
 //            PackageInfo info = getPackageManager().getPackageInfo(
@@ -121,12 +118,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         requestURL = "http://fauxify.com/api/";
 
-        myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mActionBarToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mActionBarToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -141,28 +138,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        getSupportActionBar().setTitle("Restaurants");
 
         View header = navigationView.getHeaderView(0);
-        headName = (TextView) header.findViewById(R.id.navheadName);
-        headEmail = (TextView) header.findViewById(R.id.navheademail);
-        headNumber = (TextView) header.findViewById(R.id.navheadcontact);
-        //headNumber.setVisibility(View.GONE);
+        mHeadNameTextView = (TextView) header.findViewById(R.id.navheadName);
+        mHeadEmailTextView = (TextView) header.findViewById(R.id.navheademail);
+        mHeadNumberTextView = (TextView) header.findViewById(R.id.navheadcontact);
 
         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
         String personEmail = sharedPref.getString("personEmail", null);
         String personDisplayName = sharedPref.getString("personDisplayName", null);
         String personContactNumber = sharedPref.getString("personContactNumber", null);
         Log.i("defaultpersonContactNo", personContactNumber);
-        headName.setText(personDisplayName);
-        headEmail.setText(personEmail);
-        headNumber.setText(personContactNumber);
-
+        mHeadNameTextView.setText(personDisplayName);
+        mHeadEmailTextView.setText(personEmail);
+        mHeadNumberTextView.setText(personContactNumber);
 
         //if contact no. isn't there in sharedpref, get it from DB (although it should definitely be there)
         if (personContactNumber == null || personContactNumber.matches("")) {
 
-            Log.i("unmarked", "territory");
-            new bgroundtask().execute();
+            Log.i("pNo not avail-shredpref", "territory");
+            new BGTaskGetPhoneNum().execute();
         }
-
 
         // below code is to implement default fragment of Restaurants by default when app is started
         if (savedInstanceState == null) {
@@ -181,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction.replace(R.id.main_container, new RestaurantFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Restaurants");
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_option_orders:
@@ -190,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("My Orders");
                         getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
 
                         break;
 
@@ -200,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Offers");
                         getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_option_addresses:
@@ -209,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Addresses");
                         getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                         break;
 
 //                    case R.id.nav_option_help:
@@ -235,12 +229,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("EXIT", true);
                         startActivity(intent);
-
                 }
                 return true;
             }
         });
-
     }
 
     @Override
@@ -248,20 +240,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View view = new View(this);
         view.setPadding(16, 0, 0, 0);
-
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         return false;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (toggle.onOptionsItemSelected(item)) {
+        if (mActionBarToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return true;
@@ -270,14 +260,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        mActionBarToggle.syncState();
     }
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskGetPhoneNum extends AsyncTask<Void, Void, String> {
 
         String urlFinal;
         String JSON_STRING;
@@ -307,7 +297,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(urlFinal);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -328,10 +317,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 phoneNumber = jobject.getString("Contact");
 
             } catch (IOException | JSONException e) {
-
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -339,16 +326,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected void onPostExecute(String s) {
 
             if (phoneNumber != null && !phoneNumber.matches("")) {
-                headNumber.setVisibility(View.VISIBLE);
-                headNumber.setText(phoneNumber);
+                mHeadNumberTextView.setVisibility(View.VISIBLE);
+                mHeadNumberTextView.setText(phoneNumber);
 
                 SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("personContactNumber", phoneNumber);
                 editor.apply();
             }
-
         }
-
     }
 }

@@ -28,15 +28,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class RestaurantFragment extends Fragment {
 
-    private ArrayList<Restaurant> restaurantList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    SwipeRefreshLayout swipeRefreshLayout;
-    private RestaurantAdapter resAdapter;
+    private ArrayList<Restaurant> mRestaurantList = new ArrayList<>();
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    private RestaurantAdapter mResAdapter;
 
     @Override
     public void onResume() {
@@ -51,37 +47,36 @@ public class RestaurantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_restaurant, container, false);
 
-        recyclerView = (RecyclerView) rootview.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) rootview.findViewById(R.id.recycler_view);
 
-        resAdapter = new RestaurantAdapter(restaurantList);
+        mResAdapter = new RestaurantAdapter(mRestaurantList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rootview.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(resAdapter);
+        recyclerView.setAdapter(mResAdapter);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-                restaurantList.clear();
+                mRestaurantList.clear();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.detach(RestaurantFragment.this).attach(RestaurantFragment.this).commit();
 
             }
         });
 
-        prepareMovieData();
-
+        prepareRestaurantData();
         return rootview;
     }
 
-    private void prepareMovieData() {
-        new bgroundtask().execute();
+    private void prepareRestaurantData() {
+        new BGTaskPrepareRestaurantData().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskPrepareRestaurantData extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
@@ -93,23 +88,15 @@ public class RestaurantFragment extends Fragment {
         @Override
         protected void onPreExecute() {
 
-//
-//            SharedPreferences sharedPref = getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
-//            String token = sharedPref.getString("UserToken", null);
-//            String userid = sharedPref.getString("userId", null);
-
-
             json_url = MainActivity.requestURL + "restaurants";
             Log.e("json_url", json_url);
             pd = ProgressDialog.show(getContext(), "", "Fetching Restaurants...", false);
-
         }
 
         @Override
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -129,10 +116,7 @@ public class RestaurantFragment extends Fragment {
                 status = 1;
                 jsonArray = new JSONArray(resultjson);
 
-
             } catch (IOException | JSONException e) {
-
-
                 status = 0;
                 e.printStackTrace();
             }
@@ -152,32 +136,24 @@ public class RestaurantFragment extends Fragment {
                                 jobject.getString("Ordercapacity"), jobject.getString("Deliversin"), jobject.getString("Minorder"),
                                 jobject.getString("restaurantId"), jobject.getString("Deliveryfee"),
                                 jobject.getString("freeDeliveryAmount"), jobject.getString("RestaurantStatus"));
-                        restaurantList.add(restaurant);
+                        mRestaurantList.add(restaurant);
                         Log.e("add", String.valueOf(jobject.getString("Restname")));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                resAdapter.notifyDataSetChanged();
-
+                mResAdapter.notifyDataSetChanged();
 
             } else if (status == 0) {
-
-                //pd.dismiss();
                 Toast.makeText(getContext(), "Error Ocurred. Try Again", Toast.LENGTH_SHORT).show();
 
             } else {
-
-                //pd.dismiss();
                 Toast.makeText(getContext(), "Couldn't load Restaurant data", Toast.LENGTH_SHORT).show();
-
             }
+
             pd.dismiss();
-            swipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setRefreshing(false);
         }
-
-
     }
-
 }

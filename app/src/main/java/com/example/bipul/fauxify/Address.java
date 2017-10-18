@@ -11,8 +11,7 @@ public class Address {
         this.userAddress = userAddress;
     }
 
-
-    public String getUserAddress() {
+    String getUserAddress() {
         return userAddress;
     }
 

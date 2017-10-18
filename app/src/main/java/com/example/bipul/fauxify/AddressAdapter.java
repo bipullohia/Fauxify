@@ -31,39 +31,37 @@ import java.util.ArrayList;
 /**
  * Created by Bipul Lohia on 8/31/2016.
  */
-public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
 
-    private ArrayList<Address> addressList;
-    Integer position;
+class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
 
+    private ArrayList<Address> mAddressList;
+    private Integer mPosition;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        private static final String TAG = "error";
-        public TextView userAddress;
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+
+        TextView userAddress;
         Context context;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             context = view.getContext();
-
             view.setOnLongClickListener(this);
 
             userAddress = (TextView) view.findViewById(R.id.user_address);
         }
 
-
         @Override
         public boolean onLongClick(View v) {
 
-            position = getAdapterPosition();
+            mPosition = getAdapterPosition();
 
             AlertDialog.Builder alertbuilder = new AlertDialog.Builder(context);
             alertbuilder.setMessage("Do you want to delete this address?")
                     .setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
-                                class BackgrTask extends AsyncTask<Void, Void, String> {
+                                class BGTaskDeleteAddress extends AsyncTask<Void, Void, String> {
 
                                     String userId, userToken, urlFinal, JSON_STRING;
                                     String[] savedaddress;
@@ -75,26 +73,22 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                         SharedPreferences sharedPref = context.getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                                         userId = sharedPref.getString("userId", null);
                                         userToken = sharedPref.getString("userToken", null);
-
-
                                         String utfUserId = null;
+
                                         try {
                                             utfUserId = URLEncoder.encode(userId, "utf-8");
                                         } catch (UnsupportedEncodingException e) {
                                             e.printStackTrace();
                                         }
 
-
                                         urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-
                                         Log.e("checkurl", urlFinal);
-
                                     }
 
                                     @Override
                                     protected String doInBackground(Void... params) {
 
-                                        try {
+                                        try {   //to fetch the already saved addresses from database
                                             URL url = new URL(urlFinal);
                                             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -127,14 +121,14 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                                 }
 
                                             } else {
-                                                Log.e("Addressconfirm activity", "no previous address found");
+                                                Log.e("AddressConfirm activity", "No Previous Address found");
                                             }
 
                                         } catch (JSONException | IOException e) {
                                             e.printStackTrace();
                                         }
 
-                                        try {
+                                        try {   //to post the new set of addresses which includes the new one
 
                                             URL urll = new URL(urlFinal);
                                             HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
@@ -152,16 +146,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
 
                                                 for (int i = 0; i <= jArrayOldAddresses.length() - 1; i++) {
 
-                                                    if (i != position) {
+                                                    if (i != mPosition) {
 
                                                         Address address = new Address(savedaddress[i]); //adding the new addresses to list
-                                                        addressList.add(address);
+                                                        mAddressList.add(address);
                                                         jArrayNewAddresses.put(savedaddress[i]);
                                                         Log.e("posting addresses", savedaddress[i]);
                                                     }
                                                 }
+
                                             } else {
-                                                Log.e("Addressconfirm activity", "no previous address found while posting");
+                                                Log.e("Addressconfirm activity", "No Previous Address found while posting");
                                             }
 
                                             JSONObject jsonObject = new JSONObject();
@@ -189,7 +184,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                                 System.out.println(httpConnection.getResponseMessage());
                                             }
 
-                                            Log.e("testhehe", json);
+                                            Log.e("test-finalAddressPost", json);
 
                                         } catch (IOException | JSONException e) {
                                             e.printStackTrace();
@@ -205,28 +200,23 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                                         if(jArrayNewAddresses.length()==0){ //it will update the textview which says no saved
                                             AddressesFragment.noSavedAdd.setVisibility(View.VISIBLE); //addresses since no of Add is zero
                                         }
-                                        Log.e("JsonArraylength", String.valueOf(jArrayNewAddresses.length()));
+                                        Log.e("No. of Addresses-new", String.valueOf(jArrayNewAddresses.length()));
                                     }
                                 }
-
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    addressList.clear(); //clearing the old address list
+                                    mAddressList.clear(); //clearing the old address list
                                     Toast.makeText(context, "Address Deleted!", Toast.LENGTH_SHORT).show();
                                     deleteAddress();
                                 }
 
                                 private void deleteAddress() {
-                                    new BackgrTask().execute();
-
+                                    new BGTaskDeleteAddress().execute();
                                 }
-
-
                             }
                     )
-
 
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
@@ -236,16 +226,15 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                     });
 
             AlertDialog alert = alertbuilder.create();
-            alert.setTitle("Alert!");
+            alert.setTitle("Alert");
             alert.show();
 
             return true;
         }
     }
 
-
     AddressAdapter(ArrayList<Address> addressList) {
-        this.addressList = addressList;
+        this.mAddressList = addressList;
     }
 
     @Override
@@ -258,14 +247,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Address address = addressList.get(position);
+        Address address = mAddressList.get(position);
         holder.userAddress.setText(address.getUserAddress());
-
     }
 
     @Override
     public int getItemCount() {
-        return addressList.size();
+        return mAddressList.size();
     }
-
 }

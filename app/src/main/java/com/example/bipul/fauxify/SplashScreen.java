@@ -10,9 +10,10 @@ import android.util.Log;
 /**
  * Created by bipul on 22-04-2016.
  */
+
 public class SplashScreen extends Activity {
 
-    SharedPreferences shapre = null;
+    SharedPreferences mSharedPref = null;
 
     @Override
     public void onBackPressed() {
@@ -21,7 +22,6 @@ public class SplashScreen extends Activity {
 
     @Override
     protected void onResume() {
-
         super.onResume();
         finish();
     }
@@ -32,30 +32,26 @@ public class SplashScreen extends Activity {
 
         //setContentView(R.layout.splash); don't uncomment this
 
-        shapre = getSharedPreferences("myshared", MODE_PRIVATE);
+        mSharedPref = getSharedPreferences("myshared", MODE_PRIVATE);
 
-        if (shapre.getBoolean("firstrun", true)) {
-
+        if (mSharedPref.getBoolean("firstrun", true)) {
             Log.i("firstrun", "true");
             Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(intent);
-            shapre.edit().putBoolean("firstrun", false).apply();
-        } else {
+            mSharedPref.edit().putBoolean("firstrun", false).apply();
 
+        } else {
             Log.i("firstrun", "false");
             Intent intent = new Intent(this, GoogleSignIn.class);
             startActivity(intent);
             launchHomeScreen();
         }
-
-//        Intent intent = new Intent(getApplicationContext(), OtpActivity.class);
-//        startActivity(intent);
-
+        //Insert an intent here to bypass the whole login system
     }
 
     private void launchHomeScreen() {
 
-        Log.e("im in", "launchhomescreen");
+        Log.e("im inside from SS", "launchhomescreen");
         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
         String personEmail = sharedPref.getString("personEmail", null);
         String personId = sharedPref.getString("personId", null);
@@ -68,24 +64,21 @@ public class SplashScreen extends Activity {
 
         if ((personEmail == null) || (personDisplayName == null) || (personId == null) || (personUserId == null)
                 || (personToken == null) || (personContactNumber == null)) {
-            Log.e("Data status", "some/all info are null");
+            Log.e("Data status", "Some/All info is Null");
 
             Intent intent = new Intent(this, GoogleSignIn.class);
             startActivity(intent);
+            finish();
+
         } else {
-            Log.e("Data status", "none is null");
+            Log.e("Data status", "None of the info is null");
 
             Log.i("token", personToken);
             Log.i("id", personUserId);
             Log.i("number", personContactNumber);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
-
-
-//
-//        Intent intent = new Intent(this, GoogleSignIn.class);
-//        startActivity(intent);
-//        finish();
     }
 }

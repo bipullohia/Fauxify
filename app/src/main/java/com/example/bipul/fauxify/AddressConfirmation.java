@@ -30,31 +30,31 @@ import java.net.URLEncoder;
 /**
  * Created by Bipul Lohia on 8/28/2016.
  */
+
 public class AddressConfirmation extends AppCompatActivity implements View.OnClickListener {
 
-    TextView finaladdress;
-    Button confirmButton;
-    String address;
-    JSONArray jArray;
-    Toolbar toolbar;
+    TextView mFinalAddressTextView;
+    Button mConfirmButton;
+    String mAddress;
+    JSONArray jArrayOldAddresses;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.address_confirmation_layout);
 
-        confirmButton = (Button) findViewById(R.id.confirm_button);
-        finaladdress = (TextView) findViewById(R.id.confirm_address);
-        finaladdress.setText(getIntent().getStringExtra("Address"));
-        address = getIntent().getStringExtra("Address");
+        mConfirmButton = (Button) findViewById(R.id.confirm_button);
+        mFinalAddressTextView = (TextView) findViewById(R.id.confirm_address);
+        mFinalAddressTextView.setText(getIntent().getStringExtra("Address"));
+        mAddress = getIntent().getStringExtra("Address");
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_addressconfirm);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_addressconfirm);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Address Confirmation");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        confirmButton.setOnClickListener(this);
-
+        mConfirmButton.setOnClickListener(this);
     }
 
     @Override
@@ -62,18 +62,16 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
 
         sendAddress();
 
-
         Toast.makeText(getBaseContext(), "Address added successfully", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     private void sendAddress() {
-        new BgroundTask().execute();
+        new BGTaskAddAddress().execute();
     }
 
-
-    private class BgroundTask extends AsyncTask<Void, Void, String> {
+    private class BGTaskAddAddress extends AsyncTask<Void, Void, String> {
 
         String userId, userToken, urlFinal, JSON_STRING;
         String[] savedaddress;
@@ -92,7 +90,6 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-
 
             urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
             Log.e("checkurl", urlFinal);
@@ -120,19 +117,19 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
                 Log.e("result", result_checkjson);
 
                 JSONObject jobject = new JSONObject(result_checkjson);
-                jArray = jobject.getJSONArray("Address");
+                jArrayOldAddresses = jobject.getJSONArray("Address");
 
-                if (jArray != null){
+                if (jArrayOldAddresses != null){
 
-                savedaddress = new String[jArray.length()];
+                savedaddress = new String[jArrayOldAddresses.length()];
 
-                for (int j = 0; j <= (jArray.length() - 1); j++) {
-                    savedaddress[j] = jArray.getString(j);
+                for (int j = 0; j <= (jArrayOldAddresses.length() - 1); j++) {
+                    savedaddress[j] = jArrayOldAddresses.getString(j);
                     Log.e("saved addresses", savedaddress[j]);
                 }}
 
                 else {
-                    Log.e("Addressconfirm activity", "no previous address found");
+                    Log.e("Addressconfirm activity", "No previous address found");
                 }
 
             } catch (JSONException | IOException e) {
@@ -153,18 +150,18 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
 
                 JSONArray jsonArray = new JSONArray();
 
-                if (jArray != null){
+                if (jArrayOldAddresses != null){
 
-                for (int i = 0; i <= jArray.length() - 1; i++) {
+                for (int i = 0; i <= jArrayOldAddresses.length() - 1; i++) {
                     jsonArray.put(savedaddress[i]);
                     Log.e("posting addresses", savedaddress[i]);
                 }}
 
                 else {
-                    Log.e("Addressconfirm activity", "no previous address found while posting");
+                    Log.e("Addressconfirm activity", "No previous address found while posting");
                 }
 
-                jsonArray.put(address);
+                jsonArray.put(mAddress);
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("Address", jsonArray);
@@ -191,11 +188,10 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                Log.e("Final posted Addresses", json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-
 
             return null;
         }

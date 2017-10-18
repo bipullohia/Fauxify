@@ -25,7 +25,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,18 +41,17 @@ import java.util.Random;
 
 public class CartActivity extends AppCompatActivity implements View.OnKeyListener {
 
-    private ArrayList<CurrentOrder> itemSummaryList = new ArrayList<>();
-    private ArrayList<Address> addressList = new ArrayList<>();
-    private CartAddressAdapter cartAddressAdapter;
-    static CardView cardViewSelectedAdd, cardViewToSelectAdd;
-    Button selectAnotherAdd, addNewAddress, confirmorder;
-    Toolbar toolbar;
-    EditText userMessage;
+    private ArrayList<CurrentOrder> mItemSummaryList = new ArrayList<>();
+    private ArrayList<Address> mAddressList = new ArrayList<>();
+    private CartAddressAdapter mCartAddressAdapter;
+    Button mSelectAnotherAddressButton, mAddNewAddressButton, mConfirmOrderButton;
+    Toolbar mToolbar;
+    EditText mUserMessageEditText;
     public static String orderid, restaurantNameInCart;
     static String finaladdress = null;
     static int totaldishcount = 0, totalitempricecount = 0, deliveryfee = 0, grandtotalamount = 0;
+    static CardView cardViewSelectedAdd, cardViewToSelectAdd;
     static TextView RestaurantNameInCart, TotalItemPriceInCart, GrandTotalAmount, DeliveryFee, selectedAddress, noSavedAddCart;
-
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -62,7 +60,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
             InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-
         }
         return false;
     }
@@ -73,18 +70,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
         finaladdress = null;
         super.onBackPressed();
-
     }
-
-//    @Override   //this is to duplicate the effect of back button on UP button of actionbar
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                onBackPressed();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,7 +80,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         RecyclerView recyclerViewCart;
         recyclerViewCart = (RecyclerView) findViewById(R.id.cart_recyclerview);
         CartItemAdapter cartAdapter;
-        cartAdapter = new CartItemAdapter(itemSummaryList);
+        cartAdapter = new CartItemAdapter(mItemSummaryList);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getBaseContext());
         assert recyclerViewCart != null;
@@ -102,44 +88,44 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         recyclerViewCart.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCart.setAdapter(cartAdapter);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Review Order");
 
         RecyclerView addressRecyclerView;
         addressRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_addresscart);
 
-        cartAddressAdapter = new CartAddressAdapter(addressList);
+        mCartAddressAdapter = new CartAddressAdapter(mAddressList);
         RecyclerView.LayoutManager nLayoutManager = new LinearLayoutManager(getBaseContext());
         assert addressRecyclerView != null;
         addressRecyclerView.setLayoutManager(nLayoutManager);
         addressRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        addressRecyclerView.setAdapter(cartAddressAdapter);
+        addressRecyclerView.setAdapter(mCartAddressAdapter);
 
         cardViewSelectedAdd = (CardView) findViewById(R.id.cart_selectedaddress_cardview);
         cardViewToSelectAdd = (CardView) findViewById(R.id.cart_toselectaddress_cardview);
-        selectAnotherAdd = (Button) findViewById(R.id.button_selectanotheraddress_cart);
+        mSelectAnotherAddressButton = (Button) findViewById(R.id.button_selectanotheraddress_cart);
         selectedAddress = (TextView) findViewById(R.id.cart_selectedaddress);
-        addNewAddress = (Button) findViewById(R.id.button_addnewaddress_cart);
-        confirmorder = (Button) findViewById(R.id.button_confirmorder);
+        mAddNewAddressButton = (Button) findViewById(R.id.button_addnewaddress_cart);
+        mConfirmOrderButton = (Button) findViewById(R.id.button_confirmorder);
         noSavedAddCart = (TextView) findViewById(R.id.noSavedAddCartTextview);
 
-        userMessage = (EditText) findViewById(R.id.userMessage);
-        userMessage.setOnKeyListener(this);
+        mUserMessageEditText = (EditText) findViewById(R.id.userMessage);
+        mUserMessageEditText.setOnKeyListener(this);
 
         DeliveryFee = (TextView) findViewById(R.id.deliveryfee_incart);
         GrandTotalAmount = (TextView) findViewById(R.id.grandtotalprice_incart);
 
-        addNewAddress.setOnClickListener(new View.OnClickListener() {
+        mAddNewAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, AddAddressInCart.class);
+                Intent intent = new Intent(CartActivity.this, AddAddressInfoCart.class);
                 startActivity(intent);
             }
         });
 
-        selectAnotherAdd.setOnClickListener(new View.OnClickListener() {
+        mSelectAnotherAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finaladdress = null;
@@ -154,48 +140,43 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         prepareCartData();
         prepareDetails();
 
-        // after preparation of details, now we will check for deivery fee implementation
-
+        // after preparation of details, now we will check for delivery fee implementation
         checkDeliveryFee();
-
-
         prepareAddressDetails();
 
-        confirmorder.setOnClickListener(new View.OnClickListener() {
+        mConfirmOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if ((finaladdress != null) && totaldishcount != 0) {
 
                     if (totalitempricecount >= Integer.parseInt(RestaurantDetails.restMinimumOrder)) {
-
-
                         confirmOrder();
                         DishesAdapter.currentOrders.clear();
                         Intent intent = new Intent(getApplicationContext(), OrderConfirmationActivity.class);
                         startActivity(intent);
+
                     } else {
                         Toast.makeText(getApplicationContext(), "Minimum order value is Rs "
                                 + RestaurantDetails.restMinimumOrder, Toast.LENGTH_LONG).show();
                     }
+
                 } else if ((finaladdress == null) && (totaldishcount != 0)) {
                     Toast.makeText(getApplicationContext(), "Select a delivery address", Toast.LENGTH_LONG).show();
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Add dishes to cart", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
     }
 
     public static void checkDeliveryFee() {
-
 
         Log.i("totalitempricecount", String.valueOf(totalitempricecount));
         Log.i("resFreedelAmount", String.valueOf(Integer.valueOf(RestaurantDetails.resFreeDelAmount)));
 
         if (totalitempricecount < Integer.valueOf(RestaurantDetails.resFreeDelAmount)) {
-
             deliveryfee = Integer.valueOf(RestaurantDetails.resDeliveryFee);
 
         } else {
@@ -205,12 +186,11 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         DeliveryFee.setText(String.valueOf(deliveryfee));
         grandtotalamount = totalitempricecount + deliveryfee;
         GrandTotalAmount.setText(String.valueOf(grandtotalamount));
-
     }
 
     private void confirmOrder() {
-        Log.e("confirm order", "order confirmed");
-        new BTaskConfirmOrder().execute();
+        Log.e("cartact-confirm order", "order confirmed");
+        new BGTaskConfirmOrder().execute();
     }
 
     public String convertTime(int x) {
@@ -220,19 +200,14 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         } else {
             return String.valueOf(x);
         }
-
     }
 
+    private class BGTaskConfirmOrder extends AsyncTask<Void, Void, String> {
 
-
-    class BTaskConfirmOrder extends AsyncTask<Void, Void, String> {
         String urlFinal;
-        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
-
-            //pd = ProgressDialog.show(getApplicationContext(), "", "Sending Order info", false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -304,9 +279,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 //                Log.i("month", months);
 //                Log.i("year", yearshort);
 //                Log.i("random", randomnos);
-//
 //                Log.i("timestamp", timestamp);
-
 
                 JSONArray jarrayDishesInfo = new JSONArray();
 
@@ -382,16 +355,12 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 e.printStackTrace();
             }
             return null;
-
         }
     }
 
-
     public static void checkAddressCondition() {
-
         cardViewToSelectAdd.setVisibility(View.GONE);
         cardViewSelectedAdd.setVisibility(View.VISIBLE);
-
     }
 
     public static void setCurrentAddress(String address) {
@@ -410,11 +379,9 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                     .currentdishQuantity * Integer.parseInt(CartItemAdapter.itemSummaryList.get(j).currentdishPrice));
         }
 
-
         restaurantNameInCart = RestaurantDetails.resName;
         RestaurantNameInCart.setText(restaurantNameInCart);
         TotalItemPriceInCart.setText(String.valueOf(totalitempricecount));
-
     }
 
     private void prepareCartData() {
@@ -424,19 +391,18 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                     DishesAdapter.currentOrders.get(i).getCurrentdishName(),
                     DishesAdapter.currentOrders.get(i).getCurrentdishPrice(),
                     DishesAdapter.currentOrders.get(i).getCurrentdishQuantity());
-            itemSummaryList.add(currentOrder);
+            mItemSummaryList.add(currentOrder);
             Log.e("sehfl", String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishName()));
             Log.e("sehfl", String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishPrice()));
             Log.e("sehfl", String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishQuantity()));
-
         }
     }
 
     private void prepareAddressDetails() {
-        new btaskPrepareAddDetails().execute();
+        new BGTaskPrepareAddDetails().execute();
     }
 
-    class btaskPrepareAddDetails extends AsyncTask<Void, Void, String> {
+    private class BGTaskPrepareAddDetails extends AsyncTask<Void, Void, String> {
 
         String urlFinal;
         String JSON_STRING;
@@ -447,8 +413,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
         @Override
         protected void onPreExecute() {
-
-            //pd = ProgressDialog.show(getBaseContext(), "", "Loading Address info", false);
 
             SharedPreferences sharedPref;
             sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
@@ -465,15 +429,12 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
             urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
 
             Log.e("checkurl", urlFinal);
-
-
         }
 
         @Override
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(urlFinal);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -513,32 +474,25 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         protected void onPostExecute(String s) {
 
             if(jsonArray==null || jsonArray.length()==0){
-
                 noSavedAddCart.setVisibility(View.VISIBLE);
             }
+
             else if (jsonArray != null) {
                 Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
                         Address address = new Address(jsonArray.getString(j));
-                        addressList.add(address);
+                        mAddressList.add(address);
                         Log.e("add", String.valueOf(jsonArray.getString(j)));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                cartAddressAdapter.notifyDataSetChanged();
+                mCartAddressAdapter.notifyDataSetChanged();
 
-
-            } else Log.e("Jsonarray length", "is zero");
-
-            //pd.dismiss();
+            } else Log.e("JsonArray length-", "is zero");
         }
-
-
     }
-
-
 }
 

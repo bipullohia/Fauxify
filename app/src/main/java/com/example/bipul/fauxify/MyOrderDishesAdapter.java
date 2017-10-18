@@ -13,36 +13,30 @@ import java.util.ArrayList;
  * Created by Bipul Lohia on 10/10/2016.
  */
 
-public class MyOrderDishesAdapter extends RecyclerView.Adapter<MyOrderDishesAdapter.MyViewHolder> {
+class MyOrderDishesAdapter extends RecyclerView.Adapter<MyOrderDishesAdapter.MyViewHolder> {
 
-    private ArrayList<CurrentOrder> dishesListInCart;
+    private ArrayList<CurrentOrder> mDishesListInCart;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "error";
-        public TextView dishname, dishprice, dishquantity, dishamount;
-
+        TextView dishName, dishPrice, dishQuantity, dishAmount;
 
         Context context;
 
-
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             context = view.getContext();
 
-            dishname = (TextView) view.findViewById(R.id.dishname_incart);
-            dishprice = (TextView) view.findViewById(R.id.dishprice_incart);
-            dishquantity = (TextView) view.findViewById(R.id.dishquantity_incart);
-            dishamount = (TextView) view.findViewById(R.id.dishamount_incart);
-
+            dishName = (TextView) view.findViewById(R.id.dishname_incart);
+            dishPrice = (TextView) view.findViewById(R.id.dishprice_incart);
+            dishQuantity = (TextView) view.findViewById(R.id.dishquantity_incart);
+            dishAmount = (TextView) view.findViewById(R.id.dishamount_incart);
         }
-
-
     }
 
-
-    public MyOrderDishesAdapter(ArrayList<CurrentOrder> dishesListInCart) {
-        this.dishesListInCart = dishesListInCart;
+    MyOrderDishesAdapter(ArrayList<CurrentOrder> dishesListInCart) {
+        this.mDishesListInCart = dishesListInCart;
     }
 
     @Override
@@ -55,20 +49,18 @@ public class MyOrderDishesAdapter extends RecyclerView.Adapter<MyOrderDishesAdap
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        CurrentOrder currentOrder = dishesListInCart.get(position);
+        CurrentOrder currentOrder = mDishesListInCart.get(position);
 
-        holder.dishname.setText(currentOrder.getCurrentdishName());
-        holder.dishprice.setText(currentOrder.getCurrentdishPrice());
-        holder.dishquantity.setText(String.valueOf(currentOrder.getCurrentdishQuantity()));
-        holder.dishamount.setText(String.valueOf(Integer.parseInt(currentOrder.getCurrentdishPrice())*
+        holder.dishName.setText(currentOrder.getCurrentdishName());
+        holder.dishPrice.setText(currentOrder.getCurrentdishPrice());
+        holder.dishQuantity.setText(String.valueOf(currentOrder.getCurrentdishQuantity()));
+        holder.dishAmount.setText(String.valueOf(Integer.parseInt(currentOrder.getCurrentdishPrice())*
                 currentOrder.getCurrentdishQuantity()));
-
     }
 
     @Override
     public int getItemCount() {
-        return dishesListInCart.size();
+        return mDishesListInCart.size();
     }
-
 }
 

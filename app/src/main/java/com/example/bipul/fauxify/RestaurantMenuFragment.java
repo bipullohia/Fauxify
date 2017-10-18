@@ -17,15 +17,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class RestaurantMenuFragment extends Fragment {
 
-    private ArrayList<Dishes> dishesList = new ArrayList<>();
-    private RecyclerView dishesRecyclerView;
-    private DishesAdapter dishesAdapter;
+    private ArrayList<Dishes> mDishesList = new ArrayList<>();
 
     public RestaurantMenuFragment() {
         // Required empty public constructor
@@ -34,12 +28,11 @@ public class RestaurantMenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_menu, container, false);
 
-        dishesRecyclerView = (RecyclerView) view.findViewById(R.id.dishes_recycler_view);
+        RecyclerView dishesRecyclerView = (RecyclerView) view.findViewById(R.id.dishes_recycler_view);
 
-        dishesAdapter = new DishesAdapter(dishesList);
+        DishesAdapter dishesAdapter = new DishesAdapter(mDishesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
         dishesRecyclerView.setLayoutManager(mLayoutManager);
         dishesRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -65,7 +58,7 @@ public class RestaurantMenuFragment extends Fragment {
 
             Log.e("subresult content1", String.valueOf(dishDetails));
 
-            if (dishId.size() != dishesList.size()) {
+            if (dishId.size() != mDishesList.size()) {
                 for (int j = 0; j <= (dishId.size() - 1); j++) {
 
                     if(RestaurantDetails.isVeg) {   //this is only for the case when VEGETARIAN option is switched on by user
@@ -73,18 +66,15 @@ public class RestaurantMenuFragment extends Fragment {
                         JSONObject jsob = new JSONObject(dishDetails.get(j));
 
                         if(jsob.getInt("isveg")==1) {
-
                             Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"), dishId.get(j), jsob.getInt("isveg"));
-                            dishesList.add(dishes);
+                            mDishesList.add(dishes);
                         }
-
                     }
 
                     else{   // this option is for general case by default
-
                         JSONObject jsob = new JSONObject(dishDetails.get(j));
                         Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"), dishId.get(j), jsob.getInt("isveg"));
-                        dishesList.add(dishes);
+                        mDishesList.add(dishes);
                     }
                 }
             }

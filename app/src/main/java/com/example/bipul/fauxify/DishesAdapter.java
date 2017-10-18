@@ -19,36 +19,36 @@ import java.util.ArrayList;
 /**
  * Created by Bipul Lohia on 9/6/2016.
  */
-public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
 
-    private ArrayList<Dishes> dishesList;
-    public static ArrayList<CurrentOrder> currentOrders = new ArrayList<>();
-    public ArrayList<String> currentDish = new ArrayList<>();
+class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
 
-    private Button addDish, removeDish, addToCart;
-    ImageView imgVeg, imgNonveg;
+    private ArrayList<Dishes> mDishesList;
+    static ArrayList<CurrentOrder> currentOrders = new ArrayList<>();
+    //public ArrayList<String> currentDish = new ArrayList<>();
 
+    private Button mAddDishButton, mRemoveDishButton, mAddToCartButton;
+    private ImageView mVegImageView, mNonVegImageView;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView dishName, dishPrice, dishCount;
+        TextView dishName, dishPrice, dishCount;
         Context context;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
+
             context = view.getContext();
 
             dishName = (TextView) view.findViewById(R.id.dish_name);
             dishPrice = (TextView) view.findViewById(R.id.dish_price);
             dishCount = (TextView) view.findViewById(R.id.dish_count);
-            imgVeg = (ImageView) view.findViewById(R.id.isVegDish);
-            imgNonveg = (ImageView) view.findViewById(R.id.isNonvegDish);
-
+            mVegImageView = (ImageView) view.findViewById(R.id.isVegDish);
+            mNonVegImageView = (ImageView) view.findViewById(R.id.isNonvegDish);
         }
     }
 
-    public DishesAdapter(ArrayList<Dishes> dishesList) {
-        this.dishesList = dishesList;
+    DishesAdapter(ArrayList<Dishes> dishesList) {
+        this.mDishesList = dishesList;
     }
 
     @Override
@@ -56,14 +56,14 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.dishes_restaurantmenufragment_rowlayout, parent, false);
 
-        addDish = (Button) itemView.findViewById(R.id.add_dish);
-        removeDish = (Button) itemView.findViewById(R.id.remove_dish);
-        addToCart = (Button) itemView.findViewById(R.id.addtocart);
+        mAddDishButton = (Button) itemView.findViewById(R.id.add_dish);
+        mRemoveDishButton = (Button) itemView.findViewById(R.id.remove_dish);
+        mAddToCartButton = (Button) itemView.findViewById(R.id.addtocart);
         LinearLayout linearLayoutButtons = (LinearLayout) itemView.findViewById(R.id.linearlayoutbuttons);
 
         if (!RestaurantDetails.restStatus.equals("open")) {
             linearLayoutButtons.setVisibility(View.INVISIBLE);
-            addToCart.setVisibility(View.INVISIBLE);
+            mAddToCartButton.setVisibility(View.INVISIBLE);
         }
 
         return new MyViewHolder(itemView);
@@ -71,30 +71,27 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
-
         //holder.setIsRecyclable(false);
 
-
         final Integer[] count = {0};
-        final Dishes dishes = dishesList.get(position);
+        final Dishes dishes = mDishesList.get(position);
         holder.dishName.setText(dishes.getDishName());
         holder.dishPrice.setText(dishes.getDishPrice());
 
         if (dishes.getIsVeg() == 1) {
 
-            imgNonveg.setVisibility(View.GONE);
-            imgVeg.setVisibility(View.VISIBLE);
+            mNonVegImageView.setVisibility(View.GONE);
+            mVegImageView.setVisibility(View.VISIBLE);
 
         } else {
 
-            imgVeg.setVisibility(View.GONE);
-            imgNonveg.setVisibility(View.VISIBLE);
+            mVegImageView.setVisibility(View.GONE);
+            mNonVegImageView.setVisibility(View.VISIBLE);
         }
 
         Log.e("clicked", "check " + String.valueOf(dishes.getDishName() + dishes.getDishPrice()));
 
-        addDish.setOnClickListener(new View.OnClickListener() {
+        mAddDishButton.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
@@ -102,11 +99,10 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
 
                 count[0]++;
                 holder.dishCount.setText(String.valueOf(count[0]));
-
             }
         });
 
-        removeDish.setOnClickListener(new View.OnClickListener() {
+        mRemoveDishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -117,7 +113,7 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
             }
         });
 
-        addToCart.setOnClickListener(new View.OnClickListener() {
+        mAddToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -125,7 +121,7 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
                     CurrentOrder currentOrder = new CurrentOrder(dishes.getDishName(), dishes.getDishPrice(), count[0]);
                     currentOrders.add(currentOrder);
 
-                    //adding the snackbar to display how many items have been added to cart
+                    //adding the SnackBar to display how many items have been added to cart
                     Snackbar snackbar = Snackbar
                             .make(holder.itemView, count[0] + " " + dishes.getDishName() + " added to Cart", Snackbar.LENGTH_LONG);
                     View snackbarView = snackbar.getView();
@@ -138,21 +134,17 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHold
                 } else {
                     Toast.makeText(v.getContext(), "Select/Reselect the Item quantity to be added", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return dishesList.size();
+        return mDishesList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-
         return position;
     }
-
 }

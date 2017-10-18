@@ -15,31 +15,29 @@ import java.util.ArrayList;
 /**
  * Created by bipul on 27-06-2016.
  */
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHolder> {
 
-    public static ArrayList<Restaurant> restaurantList;
+class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHolder> {
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private static final String TAG = "error";
-        public TextView resName, restype, resStatus, resDeliveryTime, resMinimumOrder;
-        public ImageView resImage;
+    private static ArrayList<Restaurant> restaurantList;
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView resNameTextView, restypeTextView, resStatusTextView, resDeliveryTimeTextView, resMinimumOrderTextView;
+        ImageView resImageView;
         Context context;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             context = view.getContext();
             view.setOnClickListener(this);
 
-
-            resName = (TextView) view.findViewById(R.id.res_name);
-            restype = (TextView) view.findViewById(R.id.res_type);
-            resStatus = (TextView) view.findViewById(R.id.res_status);
-            resDeliveryTime = (TextView) view.findViewById(R.id.res_delivery_time);
-            resMinimumOrder = (TextView) view.findViewById(R.id.res_min_order);
-            resImage = (ImageView) view.findViewById(R.id.res_image);
+            resNameTextView = (TextView) view.findViewById(R.id.res_name);
+            restypeTextView = (TextView) view.findViewById(R.id.res_type);
+            resStatusTextView = (TextView) view.findViewById(R.id.res_status);
+            resDeliveryTimeTextView = (TextView) view.findViewById(R.id.res_delivery_time);
+            resMinimumOrderTextView = (TextView) view.findViewById(R.id.res_min_order);
+            resImageView = (ImageView) view.findViewById(R.id.res_image);
         }
-
 
         @Override
         public void onClick(View v) {
@@ -60,13 +58,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             intent.putExtra("restStatus", restaurant.getRestStatus());
 
             context.startActivity(intent);
-
         }
     }
 
-
-    public RestaurantAdapter(ArrayList<Restaurant> restaurantList) {
-        this.restaurantList = restaurantList;
+    RestaurantAdapter(ArrayList<Restaurant> restaurantList) {
+        RestaurantAdapter.restaurantList = restaurantList;
     }
 
     @Override
@@ -81,39 +77,31 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         Restaurant restaurant = restaurantList.get(position);
-        holder.resName.setText(restaurant.getResName());
-        holder.restype.setText(restaurant.getResType());
+        holder.resNameTextView.setText(restaurant.getResName());
+        holder.restypeTextView.setText(restaurant.getResType());
         //holder.resRating.setText(restaurant.getResRating());
-        holder.resDeliveryTime.setText(restaurant.getResDeliveryTime());
-        holder.resMinimumOrder.setText("Min Order  " + MainActivity.rupeesymbol + restaurant.getResMinOrder());
+        holder.resDeliveryTimeTextView.setText(restaurant.getResDeliveryTime());
+        holder.resMinimumOrderTextView.setText("Min Order  " + MainActivity.rupeesymbol + restaurant.getResMinOrder());
 
         if (!restaurant.getRestStatus().equals("open")) {
 
-            holder.resStatus.setVisibility(View.VISIBLE);
-            holder.resImage.setAlpha(0.2f);
-            holder.resName.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
-            holder.restype.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
-            holder.resDeliveryTime.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
-            holder.resMinimumOrder.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
-
+            holder.resStatusTextView.setVisibility(View.VISIBLE);
+            holder.resImageView.setAlpha(0.2f);
+            holder.resNameTextView.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
+            holder.restypeTextView.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
+            holder.resDeliveryTimeTextView.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
+            holder.resMinimumOrderTextView.setTextColor(ContextCompat.getColor(holder.context, R.color.fadetext));
         }
-
-
         // holder.itemView.setEnabled(false);
-
     }
-
 
     @Override
     public int getItemCount() {
         return restaurantList.size();
     }
 
-
     @Override
     public int getItemViewType(int position) {
-
         return position;
     }
-
 }

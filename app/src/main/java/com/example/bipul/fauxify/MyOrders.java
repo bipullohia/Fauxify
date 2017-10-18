@@ -4,28 +4,29 @@ package com.example.bipul.fauxify;
  * Created by Bipul Lohia on 9/27/2016.
  */
 
-public class MyOrders {
-    public String orderId, totalitems, totalprice, ordertime,
-            orderconfirmed, orderdelivered, totalitemsprice, customerorder, customeraddress, restName, deliveryFee;
+class MyOrders {
 
-    public MyOrders(String orderId, String totalitems, String totalprice,
-                    String ordertime, String orderconfirmed, String orderdelivered,
-                    String totalitemsprice, String customerorder, String customeraddress, String restName, String deliveryFee) {
+    private String orderId, totalItems, totalPrice, orderTime,
+            orderConfirmed, orderDelivered, totalItemPrice, customerOrder, customerAddress, restName, deliveryFee;
+
+    MyOrders(String orderId, String totalItems, String totalPrice,
+             String orderTime, String orderConfirmed, String orderDelivered,
+             String totalItemPrice, String customerOrder, String customerAddress, String restName, String deliveryFee) {
+
         this.orderId = orderId;
-        this.totalitems = totalitems;
-        this.totalprice = totalprice;
-        this.ordertime = ordertime;
-        this.orderconfirmed = orderconfirmed;
-        this.orderdelivered = orderdelivered;
-        this.customerorder = customerorder;
-        this.totalitemsprice = totalitemsprice;
-        this.customeraddress = customeraddress;
+        this.totalItems = totalItems;
+        this.totalPrice = totalPrice;
+        this.orderTime = orderTime;
+        this.orderConfirmed = orderConfirmed;
+        this.orderDelivered = orderDelivered;
+        this.customerOrder = customerOrder;
+        this.totalItemPrice = totalItemPrice;
+        this.customerAddress = customerAddress;
         this.restName = restName;
         this.deliveryFee = deliveryFee;
-
     }
 
-    public String getOrderId() {
+    String getOrderId() {
         return orderId;
     }
 
@@ -33,71 +34,67 @@ public class MyOrders {
         this.orderId = name;
     }
 
-    public String getTotalitems() {
-        return totalitems;
+    String getTotalitems() {
+        return totalItems;
     }
 
     public void setTotalitems(String name) {
-        this.totalitems = name;
+        this.totalItems = name;
     }
 
-    public String getTotalprice() {
-        return totalprice;
+    String getTotalprice() {
+        return totalPrice;
     }
 
     public void setTotalprice(String name) {
-        this.totalprice = name;
+        this.totalPrice = name;
     }
 
-    public String getOrdertime() {
-        return ordertime;
+    String getOrdertime() {
+        return orderTime;
     }
 
     public void setOrdertime(String name) {
-        this.ordertime = name;
+        this.orderTime = name;
     }
 
-    public String getOrderconfirmed() {
-        return orderconfirmed;
-    }
+    String getOrderconfirmed() { return orderConfirmed; }
 
     public void setOrderconfirmed(String name) {
-        this.orderconfirmed = name;
+        this.orderConfirmed = name;
     }
 
-    public String getOrderdelivered() {
-        return orderdelivered;
+    String getOrderdelivered() {
+        return orderDelivered;
     }
 
     public void setOrderdelivered(String name) {
-        this.orderdelivered = name;
+        this.orderDelivered = name;
     }
 
-    public String getCustomerorder() {
-        return customerorder;
+    String getCustomerorder() {
+        return customerOrder;
     }
 
-    public void setCustomerorder(String name) {
-        this.customerorder = name;
-    }
+    public void setCustomerorder(String name) { this.customerOrder = name; }
 
-    public String getTotalitemsprice() {
-        return totalitemsprice;
+    String getTotalitemsprice() {
+        return totalItemPrice;
     }
 
     public void setTotalitemsprice(String name) {
-        this.totalitemsprice = name;
+        this.totalItemPrice = name;
     }
 
-    public String getCustomeraddress() {
-        return customeraddress;
+    String getCustomeraddress() {
+        return customerAddress;
     }
 
     public void setCustomeraddress(String name) {
-        this.customeraddress = name;
+        this.customerAddress = name;
     }
 
-    public String getRestName() {
+    String getRestName() {
         return restName;
     }
 
@@ -105,12 +102,11 @@ public class MyOrders {
         this.restName = name;
     }
 
-    public String getDeliveryFee() {
+    String getDeliveryFee() {
         return deliveryFee;
     }
 
     public void setDeliveryFee(String name) {
         this.deliveryFee = name;
     }
-
 }

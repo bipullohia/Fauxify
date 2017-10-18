@@ -52,7 +52,7 @@
             android:name=".CartActivity"
             android:parentActivityName=".RestaurantDetails" />
 
-        <activity android:name=".AddAddressInCart" />
+        <activity android:name=".AddAddressInfoCart" />
 
         <activity android:name=".AddressConfirmationInCart" />
 

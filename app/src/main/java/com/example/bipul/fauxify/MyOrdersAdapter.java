@@ -2,8 +2,6 @@ package com.example.bipul.fauxify;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,34 +20,33 @@ import java.util.ArrayList;
  * Created by Bipul Lohia on 11/5/2016.
  */
 
-public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder> {
+class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder> {
 
-    public static ArrayList<MyOrders> orderList;
+    private static ArrayList<MyOrders> orderList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private static final String TAG = "error";
-        public TextView orderTime, totalPrice, orderDelivered, orderConfirmed, restName, dishDetails;
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        TextView orderTimeTextView, totalPriceTextView, orderDeliveredTextView, orderConfirmedTextView,
+                restNameTextView, dishDetailsTextView;
         Context context;
-        ImageView redConfirm, greenConfirm, redDeliver, greenDeliver;
+        ImageView redConfirmImageView, greenConfirmImageView, redDeliverImageView, greenDeliverImageView;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             context = view.getContext();
             view.setOnClickListener(this);
 
-            // orderId = (TextView) view.findViewById(R.id.orderrow_orderid);
-            //totalItems = (TextView) view.findViewById(R.id.orderrow_totalitems);
-            orderTime = (TextView) view.findViewById(R.id.orderTime);
-            dishDetails = (TextView) view.findViewById(R.id.dishDetails);
-            totalPrice = (TextView) view.findViewById(R.id.orderrow_totalprice);
-            orderConfirmed = (TextView) view.findViewById(R.id.orderrow_orderconfirmed);
-            orderDelivered = (TextView) view.findViewById(R.id.orderrow_orderdelivered);
-            restName = (TextView) view.findViewById(R.id.orderrow_restname);
-            redConfirm = (ImageView) view.findViewById(R.id.redConfirmImg);
-            greenConfirm = (ImageView) view.findViewById(R.id.greenConfirmImg);
-            redDeliver = (ImageView) view.findViewById(R.id.redDeliverImg);
-            greenDeliver = (ImageView) view.findViewById(R.id.greenDeliverImg);
+            orderTimeTextView = (TextView) view.findViewById(R.id.orderTime);
+            dishDetailsTextView = (TextView) view.findViewById(R.id.dishDetails);
+            totalPriceTextView = (TextView) view.findViewById(R.id.orderrow_totalprice);
+            orderConfirmedTextView = (TextView) view.findViewById(R.id.orderrow_orderconfirmed);
+            orderDeliveredTextView = (TextView) view.findViewById(R.id.orderrow_orderdelivered);
+            restNameTextView = (TextView) view.findViewById(R.id.orderrow_restname);
+            redConfirmImageView = (ImageView) view.findViewById(R.id.redConfirmImg);
+            greenConfirmImageView = (ImageView) view.findViewById(R.id.greenConfirmImg);
+            redDeliverImageView = (ImageView) view.findViewById(R.id.redDeliverImg);
+            greenDeliverImageView = (ImageView) view.findViewById(R.id.greenDeliverImg);
         }
 
         @Override
@@ -74,11 +71,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
             intent.putExtra("deliveryfee", orders.getDeliveryFee());
 
             context.startActivity(intent);
-
         }
     }
 
-    public MyOrdersAdapter(ArrayList<MyOrders> orderList)
+    MyOrdersAdapter(ArrayList<MyOrders> orderList)
     {
         MyOrdersAdapter.orderList = orderList;
     }
@@ -94,10 +90,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         MyOrders orders = orderList.get(position);
-        holder.totalPrice.setText(orders.getTotalprice());
-        holder.orderConfirmed.setText(orders.getOrderconfirmed());
-        holder.orderDelivered.setText(orders.getOrderdelivered());
-        holder.restName.setText(orders.getRestName());
+        holder.totalPriceTextView.setText(orders.getTotalprice());
+        holder.orderConfirmedTextView.setText(orders.getOrderconfirmed());
+        holder.orderDeliveredTextView.setText(orders.getOrderdelivered());
+        holder.restNameTextView.setText(orders.getRestName());
 
         //below code is to format the dishlist and quantity into the desired format to show in myOrders section
         String dishInfo = orders.getCustomerorder();
@@ -119,12 +115,11 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
 
             Log.d("dishinfo", dishDetails);
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        holder.dishDetails.setText(dishDetails);
+        holder.dishDetailsTextView.setText(dishDetails);
 
         //following code formats the timestamp into proper desired format of date under restaurant name
         String timestamp = orders.getOrdertime();
@@ -155,38 +150,32 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
             orderTiming = orderTiming + timestamp.substring(20);
         }
 
-        holder.orderTime.setText("Ordered on " + orderDate + " " + orderMonth + " " + orderYear + " at " + orderTiming);
+        holder.orderTimeTextView.setText("Ordered on " + orderDate + " " + orderMonth + " " + orderYear + " at " + orderTiming);
         //02-10-2017 09:59:15 AM - timestamp format
 
         if (orders.getOrderconfirmed().equals("Confirmed")) {
-            //holder.orderConfirmed.setTextColor(ContextCompat.getColor(holder.context, R.color.green));
-            holder.redConfirm.setVisibility(View.GONE);
-            holder.greenConfirm.setVisibility(View.VISIBLE);
-        } else {
-            //holder.orderConfirmed.setTextColor(ContextCompat.getColor(holder.context, R.color.red));
-            holder.greenConfirm.setVisibility(View.GONE);
-            holder.redConfirm.setVisibility(View.VISIBLE);
-        }
+            holder.redConfirmImageView.setVisibility(View.GONE);
+            holder.greenConfirmImageView.setVisibility(View.VISIBLE);
 
+        } else {
+            holder.greenConfirmImageView.setVisibility(View.GONE);
+            holder.redConfirmImageView.setVisibility(View.VISIBLE);
+        }
 
         if (orders.getOrderdelivered().equals("Delivered")) {
-            //holder.orderDelivered.setTextColor(ContextCompat.getColor(holder.context, R.color.green));
-            holder.redDeliver.setVisibility(View.GONE);
-            holder.greenDeliver.setVisibility(View.VISIBLE);
+            holder.redDeliverImageView.setVisibility(View.GONE);
+            holder.greenDeliverImageView.setVisibility(View.VISIBLE);
 
         } else{
-            //holder.orderDelivered.setTextColor(ContextCompat.getColor(holder.context, R.color.red));
-            holder.greenDeliver.setVisibility(View.GONE);
-            holder.redDeliver.setVisibility(View.VISIBLE);
+            holder.greenDeliverImageView.setVisibility(View.GONE);
+            holder.redDeliverImageView.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
     public int getItemCount() {
         return orderList.size();
     }
-
 }
 
 

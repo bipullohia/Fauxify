@@ -30,12 +30,13 @@ import java.net.URLEncoder;
 
 public class OrderConfirmationActivity extends AppCompatActivity {
 
-    TextView currentStatus, deliveryTime, orderId, restName, totalOrderAmount, orderRefresh;
-    Handler handler = new Handler();
-    int joOrderConfirmation = 0;
-    Runnable runnable;
+    TextView mCurrentStatusTextView, mDeliveryTimeTextView, mOrderIdTextView, mRestNameTextView,
+             mTotalOrderAmountTextView, mOrderRefreshTextView;
+    Handler mHandler = new Handler();
+    int mJOOrderConfirmationInt = 0;
+    Runnable mRunnable;
     int i = 0;
-    Toolbar toolbar;
+    Toolbar mToolbar;
 
     @Override   //this is to duplicate the effect of back button on UP button of actionbar
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -57,16 +58,15 @@ public class OrderConfirmationActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        handler.removeCallbacks(runnable);
+                        mHandler.removeCallbacks(mRunnable);
                         Intent intent = new Intent(OrderConfirmationActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                 });
 
         AlertDialog alert = alertbuilder.create();
-        alert.setTitle("Redirecting to Restaurants");
+        alert.setTitle("Redirecting to Restaurants...");
         alert.show();
-
     }
 
     @Override
@@ -74,68 +74,57 @@ public class OrderConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirmed);
 
-        currentStatus = (TextView) findViewById(R.id.current_time);
-        deliveryTime = (TextView) findViewById(R.id.deliverytime);
-        orderId = (TextView) findViewById(R.id.orderId_orderconfirmed);
-        if (orderId != null) {
-            orderId.setText(CartActivity.orderid);
+        mCurrentStatusTextView = (TextView) findViewById(R.id.current_time);
+        mDeliveryTimeTextView = (TextView) findViewById(R.id.deliverytime);
+        mOrderIdTextView = (TextView) findViewById(R.id.orderId_orderconfirmed);
+        if (mOrderIdTextView != null) {
+            mOrderIdTextView.setText(CartActivity.orderid);
         }
 
-        restName = (TextView) findViewById(R.id.restNameOrderConfirm);
-        totalOrderAmount = (TextView) findViewById(R.id.totalpriceOrderConfirm);
-        orderRefresh = (TextView) findViewById(R.id.orderrefresh);
+        mRestNameTextView = (TextView) findViewById(R.id.restNameOrderConfirm);
+        mTotalOrderAmountTextView = (TextView) findViewById(R.id.totalpriceOrderConfirm);
+        mOrderRefreshTextView = (TextView) findViewById(R.id.orderrefresh);
 
-        restName.setText(CartActivity.restaurantNameInCart);
-        totalOrderAmount.setText(String.valueOf(CartActivity.grandtotalamount));
+        mRestNameTextView.setText(CartActivity.restaurantNameInCart);
+        mTotalOrderAmountTextView.setText(String.valueOf(CartActivity.grandtotalamount));
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_confirmorder);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_confirmorder);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Order Confirmation");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         doTheAutoRefresh();
-
     }
 
     private void doTheAutoRefresh() {
 
-        runnable = new Runnable() {
+        mRunnable = new Runnable() {
             @Override
             public void run() {
 
-                if (joOrderConfirmation == 0) {
+                if (mJOOrderConfirmationInt == 0) {
                     checkConfirmationStatus();
                     Log.e("checking", "again");
-                    handler.postDelayed(this, 5000);
+                    mHandler.postDelayed(this, 5000);
 
-                } else if (joOrderConfirmation == 1) {
+                } else if (mJOOrderConfirmationInt == 1) {
                     Log.e("Runnable Stopped", "No longer Running");
-                    handler.removeCallbacks(this);
+                    mHandler.removeCallbacks(this);
+
                 } else {
                     Log.e("invalid", "value of orderconfirmation");
                 }
-//                if(i==5){
-//                    handler.removeCallbacks(this);
-//                    Toast.makeText(getApplicationContext(), "runnable stopped", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else {
-//                    Toast.makeText(getApplicationContext(), "It's 5 second already", Toast.LENGTH_SHORT).show();
-//                    i++;
-//                    currentStatus.setText("no is : "+ i);
-//                    handler.postDelayed(this, 5000);
-//                }
             }
         };
 
-        handler.postDelayed(runnable, 5000);
+        mHandler.postDelayed(mRunnable, 5000);
     }
 
     private void checkConfirmationStatus() {
-        new bgroundtask().execute();
+        new BGTaskCheckConfirmationStatus().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskCheckConfirmationStatus extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
@@ -168,7 +157,6 @@ public class OrderConfirmationActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -188,14 +176,14 @@ public class OrderConfirmationActivity extends AppCompatActivity {
                 JSONObject jobject = new JSONObject(resultjson);
                 JSONObject jodelivery = jobject.getJSONObject("delivery");
 
-                joOrderConfirmation = jodelivery.getInt("orderconfirmed");
+                mJOOrderConfirmationInt = jodelivery.getInt("orderconfirmed");
 
-                if (joOrderConfirmation == 1) {
+                if (mJOOrderConfirmationInt == 1) {
                     joDeliveryTime = jodelivery.getString("deliverytime");
                     Log.e("result deliverytime", joDeliveryTime);
                 }
 
-                Log.e("result orderconfirm", String.valueOf(joOrderConfirmation));
+                Log.e("result orderconfirm", String.valueOf(mJOOrderConfirmationInt));
 
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
@@ -207,15 +195,15 @@ public class OrderConfirmationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
 
-            if (joOrderConfirmation == 1) {
-                currentStatus.setText("Your Order has been confirmed and is being prepared by the Restaurant");
-                currentStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                //currentStatus.setTypeface(null, Typeface.NORMAL);
-                deliveryTime.setVisibility(View.VISIBLE);
-                orderRefresh.setVisibility(View.GONE);
-                deliveryTime.setText("Your order will be delivered in approximately " + joDeliveryTime + " Minutes");
-                //deliveryTime.setTypeface(null, Typeface.NORMAL);
-                handler.removeCallbacks(runnable);
+            if (mJOOrderConfirmationInt == 1) {
+                mCurrentStatusTextView.setText("Your Order has been confirmed and is being prepared by the Restaurant");
+                mCurrentStatusTextView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                //mCurrentStatusTextView.setTypeface(null, Typeface.NORMAL);
+                mDeliveryTimeTextView.setVisibility(View.VISIBLE);
+                mOrderRefreshTextView.setVisibility(View.GONE);
+                mDeliveryTimeTextView.setText("Your order will be delivered in approximately " + joDeliveryTime + " Minutes");
+                //mDeliveryTimeTextView.setTypeface(null, Typeface.NORMAL);
+                mHandler.removeCallbacks(mRunnable);
             }
         }
     }

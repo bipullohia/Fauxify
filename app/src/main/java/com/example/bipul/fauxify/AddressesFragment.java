@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,13 +36,13 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class AddressesFragment extends Fragment {
 
-    Button addAddressButton;
-    private ArrayList<Address> addressList = new ArrayList<>();
-    private RecyclerView addressRecyclerView;
-    FloatingActionButton fabAddAddress;
-    private AddressAdapter addressAdapter;
+    private ArrayList<Address> mAddressList = new ArrayList<>();
+    private RecyclerView mAddressRecyclerView;
+    FloatingActionButton mAddAddressFAButton;
+    private AddressAdapter mAddressAdapter;
     static TextView noSavedAdd;
 
     public AddressesFragment() {
@@ -56,17 +55,17 @@ public class AddressesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_addresses, container, false);
 
-        addressRecyclerView = (RecyclerView) view.findViewById(R.id.address_recycler_view);
-
         noSavedAdd = (TextView) view.findViewById(R.id.noSavedAddTextview);
-        addressAdapter = new AddressAdapter(addressList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
-        addressRecyclerView.setLayoutManager(mLayoutManager);
-        addressRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        addressRecyclerView.setAdapter(addressAdapter);
 
-        fabAddAddress = (FloatingActionButton) view.findViewById(R.id.fabAddAddress);
-        fabAddAddress.setOnClickListener(new View.OnClickListener() {
+        mAddressRecyclerView = (RecyclerView) view.findViewById(R.id.address_recycler_view);
+        mAddressAdapter = new AddressAdapter(mAddressList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
+        mAddressRecyclerView.setLayoutManager(mLayoutManager);
+        mAddressRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAddressRecyclerView.setAdapter(mAddressAdapter);
+
+        mAddAddressFAButton = (FloatingActionButton) view.findViewById(R.id.fabAddAddress);
+        mAddAddressFAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddAddressInfo.class);
@@ -76,14 +75,13 @@ public class AddressesFragment extends Fragment {
 
         getAddresses();
         return view;
-
     }
 
     private void getAddresses() {
-        new bgroundtask().execute();
+        new BGTaskGetAddresses().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskGetAddresses extends AsyncTask<Void, Void, String> {
 
         String urlFinal;
         String JSON_STRING;
@@ -119,7 +117,6 @@ public class AddressesFragment extends Fragment {
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(urlFinal);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -140,19 +137,17 @@ public class AddressesFragment extends Fragment {
                 jsonArray = jobject.getJSONArray("Address");
 
                 if (jsonArray != null) {
-
                     jsonString = jsonArray.toString();
                     Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
                     Log.e("jsonarray", jsonString);
+
                 } else {
                     Log.e("Jsonarray length", "is zero");
                 }
 
                 status = 1;
 
-
             } catch (IOException | JSONException e) {
-
                 status = 0;
                 e.printStackTrace();
             }
@@ -166,31 +161,29 @@ public class AddressesFragment extends Fragment {
             if(jsonArray==null || jsonArray.length()==0){
 
                 noSavedAdd.setVisibility(View.VISIBLE);
-                addressRecyclerView.setVisibility(View.GONE);
+                mAddressRecyclerView.setVisibility(View.GONE);
             }
+
             else if (jsonArray != null && status == 1) {
                 Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
                         Address address = new Address(jsonArray.getString(j));
-                        addressList.add(address);
+                        mAddressList.add(address);
                         Log.e("add", String.valueOf(jsonArray.getString(j)));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                addressAdapter.notifyDataSetChanged();
+                mAddressAdapter.notifyDataSetChanged();
             }
 
             else {
-
                 Toast.makeText(getContext(), "Couldn't load Address info", Toast.LENGTH_SHORT).show();
             }
 
             pd.dismiss();
         }
-
     }
-
 }

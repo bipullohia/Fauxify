@@ -30,30 +30,30 @@ import java.net.URLEncoder;
 /**
  * Created by Bipul Lohia on 9/17/2016.
  */
+
 public class AddressConfirmationInCart extends AppCompatActivity implements View.OnClickListener {
 
-    TextView finaladdress;
-    Button confirmButton;
-    String address;
-    JSONArray jArray;
-    Toolbar toolbar;
+    TextView mFinalAddressTextView;
+    Button mConfirmButton;
+    String mAddress;
+    JSONArray mJArrayOldAddresses;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.address_confirmation_layout);
 
-        confirmButton = (Button) findViewById(R.id.confirm_button);
-        finaladdress = (TextView) findViewById(R.id.confirm_address);
-        finaladdress.setText(getIntent().getStringExtra("Address"));
-        address = getIntent().getStringExtra("Address");
+        mConfirmButton = (Button) findViewById(R.id.confirm_button);
+        mFinalAddressTextView = (TextView) findViewById(R.id.confirm_address);
+        mFinalAddressTextView.setText(getIntent().getStringExtra("Address"));
+        mAddress = getIntent().getStringExtra("Address");
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_addressconfirm);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_addressconfirm);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Address Confirmation");
 
-        confirmButton.setOnClickListener(this);
-
+        mConfirmButton.setOnClickListener(this);
     }
 
     @Override
@@ -67,11 +67,10 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
     }
 
     private void sendAddress() {
-        new BgroundTask().execute();
+        new BGTaskSaveAddress().execute();
     }
 
-
-    private class BgroundTask extends AsyncTask<Void, Void, String> {
+    private class BGTaskSaveAddress extends AsyncTask<Void, Void, String> {
 
         String userId,userToken, urlFinal, JSON_STRING;
         String[] savedaddress;
@@ -84,21 +83,16 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
             userId = sharedPref.getString("userId", null);
             userToken = sharedPref.getString("userToken", null);
 
-
             String utfUserId = null;
+
             try {
                 utfUserId = URLEncoder.encode(userId, "utf-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 
-
             urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-
-
             Log.e("checkurl", urlFinal);
-
-
         }
 
         @Override
@@ -123,14 +117,14 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                 Log.e("result", result_checkjson);
 
                 JSONObject jobject = new JSONObject(result_checkjson);
-                jArray = jobject.getJSONArray("Address");
+                mJArrayOldAddresses = jobject.getJSONArray("Address");
 
-                if (jArray != null){
+                if (mJArrayOldAddresses != null){
 
-                    savedaddress = new String[jArray.length()];
+                    savedaddress = new String[mJArrayOldAddresses.length()];
 
-                    for (int j = 0; j <= (jArray.length() - 1); j++) {
-                        savedaddress[j] = jArray.getString(j);
+                    for (int j = 0; j <= (mJArrayOldAddresses.length() - 1); j++) {
+                        savedaddress[j] = mJArrayOldAddresses.getString(j);
                         Log.e("saved addresses", savedaddress[j]);
                     }}
 
@@ -156,9 +150,9 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
 
                 JSONArray jsonArray = new JSONArray();
 
-                if (jArray != null){
+                if (mJArrayOldAddresses != null){
 
-                    for (int i = 0; i <= jArray.length() - 1; i++) {
+                    for (int i = 0; i <= mJArrayOldAddresses.length() - 1; i++) {
                         jsonArray.put(savedaddress[i]);
                         Log.e("posting addresses", savedaddress[i]);
                     }}
@@ -167,7 +161,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                     Log.e("Addressconfirm activity", "no previous address found while posting");
                 }
 
-                jsonArray.put(address);
+                jsonArray.put(mAddress);
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("Address", jsonArray);
@@ -194,12 +188,11 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-
                 Log.e("test", json);
+
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-
 
             return null;
         }

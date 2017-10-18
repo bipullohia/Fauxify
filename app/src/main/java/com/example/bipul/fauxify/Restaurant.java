@@ -3,9 +3,9 @@ package com.example.bipul.fauxify;
 /**
  * Created by bipul on 27-06-2016.
  */
+
 public class Restaurant {
     private String resName, resType, resRating, resDeliveryTime, resMinOrder, resId, deliveryFee, freeDeliveryAmount, restStatus;
-
 
     public Restaurant(String resName, String resType, String resRating, String resDeliveryTime,
                       String resMinOrder, String resId, String deliveryFee, String freeDeliveryAmount, String restStatus) {
@@ -21,7 +21,7 @@ public class Restaurant {
         this.restStatus = restStatus;
     }
 
-    public String getResName() {
+    String getResName() {
         return resName;
     }
 
@@ -29,7 +29,7 @@ public class Restaurant {
         this.resName = name;
     }
 
-    public String getResId() {
+    String getResId() {
         return resId;
     }
 
@@ -37,8 +37,7 @@ public class Restaurant {
         this.resId = name;
     }
 
-
-    public String getResType() {
+    String getResType() {
         return resType;
     }
 
@@ -46,7 +45,7 @@ public class Restaurant {
         this.resType = year;
     }
 
-    public String getResRating() {
+    String getResRating() {
         return resRating;
     }
 
@@ -54,7 +53,7 @@ public class Restaurant {
         this.resRating = genre;
     }
 
-    public String getResDeliveryTime() {
+    String getResDeliveryTime() {
         return resDeliveryTime;
     }
 
@@ -62,7 +61,7 @@ public class Restaurant {
         this.resDeliveryTime = genre;
     }
 
-    public String getResMinOrder() {
+    String getResMinOrder() {
         return resMinOrder;
     }
 
@@ -70,7 +69,7 @@ public class Restaurant {
         this.resMinOrder = genre;
     }
 
-    public String getDeliveryFee() {
+    String getDeliveryFee() {
         return deliveryFee;
     }
 
@@ -78,7 +77,7 @@ public class Restaurant {
         this.deliveryFee = genre;
     }
 
-    public String getFreeDeliveryAmount() {
+    String getFreeDeliveryAmount() {
         return freeDeliveryAmount;
     }
 
@@ -86,13 +85,11 @@ public class Restaurant {
         this.freeDeliveryAmount = genre;
     }
 
-
-    public String getRestStatus() {
+    String getRestStatus() {
         return restStatus;
     }
 
     public void setRestStatus(String genre) {
         this.restStatus = genre;
     }
-
 }

@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,47 +31,40 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MyOrdersFragment extends Fragment {
 
-    private ArrayList<MyOrders> orderList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private MyOrdersAdapter myOrderAdapter;
-    //TextView noOrder;
-    CardView noOrder;
+    private ArrayList<MyOrders> mOrderList = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private MyOrdersAdapter mMyOrderAdapter;
+    CardView mNoOrder;
 
     public MyOrdersFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         View rootview = inflater.inflate(R.layout.fragment_orders, container, false);
-        recyclerView = (RecyclerView) rootview.findViewById(R.id.myOrdersRecyclerView);
 
-        noOrder = (CardView) rootview.findViewById(R.id.noOrderscardView);
-        myOrderAdapter = new MyOrdersAdapter(orderList);
+        mNoOrder = (CardView) rootview.findViewById(R.id.noOrderscardView);
+
+        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.myOrdersRecyclerView);
+        mMyOrderAdapter = new MyOrdersAdapter(mOrderList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rootview.getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(myOrderAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mMyOrderAdapter);
 
         prepareOrderData();
-
         return rootview;
     }
 
     private void prepareOrderData() {
-        new bgroundtask().execute();
+        new BGTaskOrderData().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskOrderData extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
@@ -106,7 +98,6 @@ public class MyOrdersFragment extends Fragment {
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -128,20 +119,19 @@ public class MyOrdersFragment extends Fragment {
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
 
-            String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
+            String totalitems, totalitemprice, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
 
             if(jsonArray==null || jsonArray.length()==0){
-
-                noOrder.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
+                mNoOrder.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
             }
+
             else if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
@@ -179,21 +169,18 @@ public class MyOrdersFragment extends Fragment {
                                 orderdelivered, totalitemprice, dishesinfo, jobject.getString("customeraddress"),
                                 jobject.getString("restName"), deliveryfee);
 
-                        orderList.add(orders);
-
+                        mOrderList.add(orders);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                myOrderAdapter.notifyDataSetChanged();
+                mMyOrderAdapter.notifyDataSetChanged();
 
-            } else Log.e("Jsonarray length", "is zero");
+            } else Log.e("Jsonarray length-", "zero");
 
             pd.dismiss();
         }
-
     }
-
 }

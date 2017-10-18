@@ -37,22 +37,19 @@ import java.util.Iterator;
 
 public class RestaurantDetails extends AppCompatActivity {
 
-    ViewPager viewPager;
-    Integer resRating, noOfCategories;
+    ViewPager mViewPager;
+    Integer mResRatingInt, mNoOfCategoriesInt;
     public static String resId, resName, restMinimumOrder, resDeliveryFee, resFreeDelAmount;
-    TabLayout tabLayout;
-    Toolbar toolbar;
-     CoordinatorLayout restaurantDetailCoordinatorLayout;
-    CollapsingToolbarLayout collapsingToolbar;
+    TabLayout mTabLayout;
+    Toolbar mToolbar;
+    CoordinatorLayout mRestaurantDetailCoordinatorLayout;
+    CollapsingToolbarLayout mCollapsingToolbar;
     public static boolean isVeg;
-    Switch switchVeg;
+    Switch mVegSwitch;
     static String restStatus;
-    RestaurantMenuAdapter restaurantMenuAdapter;
-    private static final String TAG = "onclickeddd";
-    FloatingActionButton fabCheckout;
-    TextView restDelTime, restMinOrder, resType;
-    //Button checkOutButton;
-
+    RestaurantMenuAdapter mRestaurantMenuAdapter;
+    FloatingActionButton mCheckoutFAButton;
+    TextView mRestDelTimeTextView, mRestMinOrderTextView, mResTypeTextView;
 
     @Override
     //to modify the back pressing from this activity so that cart can be emptied before going to restaurants page
@@ -87,7 +84,6 @@ public class RestaurantDetails extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override   //this is to duplicate the effect of back button on HOME (UP) button of actionbar
@@ -103,24 +99,17 @@ public class RestaurantDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_restaurant_details);
 
-        viewPager = (ViewPager) findViewById(R.id.menu_viewpager);
-        assert viewPager != null;
-        viewPager.setOffscreenPageLimit(10);
-        tabLayout = (TabLayout) findViewById(R.id.menu_tabs);
+        mViewPager = (ViewPager) findViewById(R.id.menu_viewpager);
+        assert mViewPager != null;
+        mViewPager.setOffscreenPageLimit(10);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            Window w = getWindow(); // in Activity's onCreate() for instance
-//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//        }
+        mTabLayout = (TabLayout) findViewById(R.id.menu_tabs);
+        mCheckoutFAButton = (FloatingActionButton) findViewById(R.id.fabCheckout);
+        mVegSwitch = (Switch) findViewById(R.id.switchVeg);
 
-        //checkOutButton = (Button)findViewById(R.id.checkout_button);
-        fabCheckout = (FloatingActionButton) findViewById(R.id.fabCheckout);
-        switchVeg = (Switch) findViewById(R.id.switchVeg);
-
-        restaurantDetailCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.restaurantDetailsCoordinatorLayout);
+        mRestaurantDetailCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.restaurantDetailsCoordinatorLayout);
 
         resId = getIntent().getStringExtra("resId");
         resName = getIntent().getStringExtra("restaurantName");
@@ -130,31 +119,31 @@ public class RestaurantDetails extends AppCompatActivity {
         restStatus = getIntent().getStringExtra("restStatus");
 
         Log.i("delfee freedelamount", resDeliveryFee + "  " + resFreeDelAmount);
-        restDelTime = (TextView) findViewById(R.id.restDelTimeCollapse);
-        restMinOrder = (TextView) findViewById(R.id.restMinOrderCollapse);
-        resType = (TextView) findViewById(R.id.restTypeCollapse);
-        resRating = Integer.valueOf(getIntent().getStringExtra("restaurantRating"));
+        mRestDelTimeTextView = (TextView) findViewById(R.id.restDelTimeCollapse);
+        mRestMinOrderTextView = (TextView) findViewById(R.id.restMinOrderCollapse);
+        mResTypeTextView = (TextView) findViewById(R.id.restTypeCollapse);
+        mResRatingInt = Integer.valueOf(getIntent().getStringExtra("restaurantRating"));
         Log.e("resId", resId);
 
-        restDelTime.setText(getIntent().getStringExtra("restaurantDeLTime"));
+        mRestDelTimeTextView.setText(getIntent().getStringExtra("restaurantDeLTime"));
         String minOrder = "\u20B9 " + restMinimumOrder;
-        restMinOrder.setText(minOrder);
-        resType.setText(getIntent().getStringExtra("restaurantType"));
+        mRestMinOrderTextView.setText(minOrder);
+        mResTypeTextView.setText(getIntent().getStringExtra("restaurantType"));
 
         if (!restStatus.equals("open")) {
-            fabCheckout.setVisibility(View.GONE);
+            mCheckoutFAButton.setVisibility(View.GONE);
         }
 
-        Log.e("log value check", String.valueOf(switchVeg.isChecked()));
+        Log.e("log value check", String.valueOf(mVegSwitch.isChecked()));
 
-        switchVeg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mVegSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-
                     isVeg = true;
                     prepareMenu();
+
                 } else {
                     isVeg = false;
                     prepareMenu();
@@ -164,24 +153,22 @@ public class RestaurantDetails extends AppCompatActivity {
 
         prepareMenu();
 
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mCollapsingToolbar.setTitle(resName);
+        mCollapsingToolbar.setExpandedTitleMarginBottom(130);
+        mCollapsingToolbar.setExpandedTitleMarginStart(50);
+        mCollapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        mCollapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
 
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(resName);
-        collapsingToolbar.setExpandedTitleMarginBottom(130);
-        collapsingToolbar.setExpandedTitleMarginStart(50);
-        collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-        collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        mCollapsingToolbar.setContentScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        mCollapsingToolbar.setStatusBarScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 
-        collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-        collapsingToolbar.setStatusBarScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-//        toolbar= (Toolbar) findViewById(R.id.toolbar_restaurantdetails);
-//        setSupportActionBar(toolbar);
+//        mToolbar= (Toolbar) findViewById(R.id.toolbar_restaurantdetails);
+//        setSupportActionBar(mToolbar);
 //        getSupportActionBar().setTitle(resName);
 
 //        checkOutButton.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +185,7 @@ public class RestaurantDetails extends AppCompatActivity {
 //            }
 //        });
 
-        fabCheckout.setOnClickListener(new View.OnClickListener() {
+        mCheckoutFAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (DishesAdapter.currentOrders.size() != 0) {
@@ -209,14 +196,13 @@ public class RestaurantDetails extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void prepareMenu() {
-        new bgroundtask().execute();
+        new BGTaskPrepareMenu().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskPrepareMenu extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
@@ -237,7 +223,6 @@ public class RestaurantDetails extends AppCompatActivity {
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -253,65 +238,58 @@ public class RestaurantDetails extends AppCompatActivity {
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
 
-
                 categories = new ArrayList<String>();
 
                 jobject = new JSONObject(resultjson);
                 JSONObject job = jobject.getJSONObject("Menu");
 
-                Log.e("sdkjc", String.valueOf(job));
+                Log.e("log-JOB-menu", String.valueOf(job));
 
                 Iterator x = job.keys();
                 jsonArray = new JSONArray();
-                noOfCategories = 0;
+                mNoOfCategoriesInt = 0;
 
                 while (x.hasNext()) {
 
                     String key = (String) x.next();
                     categories.add(key);
                     jsonArray.put(job.get(key));
-                    noOfCategories++;
+                    mNoOfCategoriesInt++;
                 }
 
                 Log.e("result", String.valueOf(jsonArray));
 
-
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
 
-            restaurantMenuAdapter = new RestaurantMenuAdapter(getSupportFragmentManager());
-            for (int i = 0; i <= noOfCategories - 1; i++) {
+            mRestaurantMenuAdapter = new RestaurantMenuAdapter(getSupportFragmentManager());
+            for (int i = 0; i <= mNoOfCategoriesInt - 1; i++) {
 
                 try {
-                    restaurantMenuAdapter.addFragments(new RestaurantMenuFragment(), categories.get(i), jsonArray.getJSONObject(i));
+                    mRestaurantMenuAdapter.addFragments(new RestaurantMenuFragment(), categories.get(i), jsonArray.getJSONObject(i));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
-            viewPager.setAdapter(restaurantMenuAdapter);
-            tabLayout.setupWithViewPager(viewPager);
+            mViewPager.setAdapter(mRestaurantMenuAdapter);
+            mTabLayout.setupWithViewPager(mViewPager);
 
             pd.dismiss();
         }
     }
-
+}
 //    public void snackbarMessage(String message){
 //
 //        Snackbar snackbar = Snackbar
-//                .make(restaurantDetailCoordinatorLayout, message, Snackbar.LENGTH_SHORT);
+//                .make(mRestaurantDetailCoordinatorLayout, message, Snackbar.LENGTH_SHORT);
 //        View snackbarView = snackbar.getView();
 //        snackbarView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 //        snackbar.show();
-//
-//    }
-
-
-}
+//}

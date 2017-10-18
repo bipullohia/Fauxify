@@ -16,72 +16,66 @@ import java.util.ArrayList;
 
 public class MyOrderDetails extends AppCompatActivity {
 
-    Toolbar toolbar;
+    Toolbar mToolbar;
+    private ArrayList<CurrentOrder> mDishesList = new ArrayList<>();
 
-    private ArrayList<CurrentOrder> dishesList = new ArrayList<>();
-    private MyOrderDishesAdapter myOrderDishesAdapter;
-
-    String customeremail, dishesdata, orderconfirmed, orderdelivered;
-    private RecyclerView recyclerView;
-    TextView customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime, restName, deliveryFee;
+    String mCustomerEmail, mDishesData, mOrderConfirmed, mOrderDelivered;
+    TextView mCustomerAddressTextView, mOrderIdTextView, mTotalPriceTextView, mTotalItemPriceTextView,
+            mTotalItemsTextView, mOrderTimeTextView, mDeliveryTimeTextView, mRestNameTextView, mDeliveryFeeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order_details);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_orderdetails);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_orderdetails);
 
-        myOrderDishesAdapter = new MyOrderDishesAdapter(dishesList);
+        MyOrderDishesAdapter myOrderDishesAdapter = new MyOrderDishesAdapter(mDishesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myOrderDishesAdapter);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Order Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        customerAddress = (TextView) findViewById(R.id.orderdetails_deliveryaddress);
-        orderId = (TextView) findViewById(R.id.orderdetails_orderid);
-        orderTime = (TextView) findViewById(R.id.orderdetails_ordertime);
-        totalItemPrice = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
-        //totalItems = (TextView) findViewById(R.id.orderdetails_totalitems);
-        totalPrice = (TextView) findViewById(R.id.orderdetails_totalprice);
-        deliveryTime = (TextView) findViewById(R.id.deliverytime);
-        restName = (TextView) findViewById(R.id.orderdetails_restname);
-        deliveryFee = (TextView) findViewById(R.id.orderdetails_deliveryfee);
+        mCustomerAddressTextView = (TextView) findViewById(R.id.orderdetails_deliveryaddress);
+        mOrderIdTextView = (TextView) findViewById(R.id.orderdetails_orderid);
+        mOrderTimeTextView = (TextView) findViewById(R.id.orderdetails_ordertime);
+        mTotalItemPriceTextView = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
+        //mTotalItemsTextView = (TextView) findViewById(R.id.orderdetails_totalitems);
+        mTotalPriceTextView = (TextView) findViewById(R.id.orderdetails_totalprice);
+        mDeliveryTimeTextView = (TextView) findViewById(R.id.deliverytime);
+        mRestNameTextView = (TextView) findViewById(R.id.orderdetails_restname);
+        mDeliveryFeeTextView = (TextView) findViewById(R.id.orderdetails_deliveryfee);
 
-        customerAddress.setText(getIntent().getStringExtra("customeraddress"));
-        orderId.setText(getIntent().getStringExtra("orderid"));
-        orderTime.setText(getIntent().getStringExtra("ordertime"));
-        totalItemPrice.setText(getIntent().getStringExtra("totalitemprice"));
-        totalPrice.setText(getIntent().getStringExtra("totalprice"));
-        //totalItems.setText(getIntent().getStringExtra("totalitems"));
-        restName.setText(getIntent().getStringExtra("RestName"));
-        deliveryFee.setText(getIntent().getStringExtra("deliveryfee"));
-        customeremail = getIntent().getStringExtra("ordercustemail");
-        dishesdata = getIntent().getStringExtra("customerorder");
-        orderconfirmed = getIntent().getStringExtra("orderconfirmed");
-        orderdelivered = getIntent().getStringExtra("orderdelivered");
+        mCustomerAddressTextView.setText(getIntent().getStringExtra("customeraddress"));
+        mOrderIdTextView.setText(getIntent().getStringExtra("orderid"));
+        mOrderTimeTextView.setText(getIntent().getStringExtra("ordertime"));
+        mTotalItemPriceTextView.setText(getIntent().getStringExtra("totalitemprice"));
+        mTotalPriceTextView.setText(getIntent().getStringExtra("totalprice"));
+        //mTotalItemsTextView.setText(getIntent().getStringExtra("totalitems"));
+        mRestNameTextView.setText(getIntent().getStringExtra("RestName"));
+        mDeliveryFeeTextView.setText(getIntent().getStringExtra("deliveryfee"));
+        mCustomerEmail = getIntent().getStringExtra("ordercustemail");
+        mDishesData = getIntent().getStringExtra("customerorder");
+        mOrderConfirmed = getIntent().getStringExtra("orderconfirmed");
+        mOrderDelivered = getIntent().getStringExtra("orderdelivered");
 
         try {
-            JSONArray jsonArray = new JSONArray(dishesdata);
+            JSONArray jsonArray = new JSONArray(mDishesData);
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CurrentOrder currentOrder = new CurrentOrder(jsonObject.getString("dishname"), jsonObject.getString("dishprice"),
                         jsonObject.getInt("dishquantity"));
-                dishesList.add(currentOrder);
-
+                mDishesList.add(currentOrder);
             }
-
             myOrderDishesAdapter.notifyDataSetChanged();
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
-
 }
