@@ -42,8 +42,8 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
 
         mFlatNoEditText = (EditText) findViewById(R.id.flat_no);
         mFullAdressEditText = (EditText) findViewById(R.id.full_address);
-        mSubmitButton = (Button) findViewById(R.id.submit_button);
-        mHouseNoCardview = (CardView) findViewById(R.id.houseno_cardview);
+        mSubmitButton = (Button) findViewById(R.id.button_submit);
+        mHouseNoCardview = (CardView) findViewById(R.id.cardview_houseno);
 
         mSpinner = (Spinner) findViewById(R.id.spinner);
         mSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.Areas, android.R.layout.simple_spinner_item);

@@ -47,9 +47,9 @@ public class MyOrdersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_orders, container, false);
 
-        mNoOrder = (CardView) rootview.findViewById(R.id.noOrderscardView);
+        mNoOrder = (CardView) rootview.findViewById(R.id.cardview_no_orders);
 
-        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.myOrdersRecyclerView);
+        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerview_fragment_myorders);
         mMyOrderAdapter = new MyOrdersAdapter(mOrderList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rootview.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -8,33 +8,33 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/navheadName"
+        android:id="@+id/navhead_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginStart="16dp"
-        android:text="pqrs wxyz"
         android:textColor="@color/colorAccent"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:text="pqrs wxyz"/>
 
     <TextView
-        android:id="@+id/navheademail"
+        android:id="@+id/navhead_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginStart="16dp"
-        android:text="abc.xyz@gmail.com"
         android:textColor="@color/white"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:text="abc.xyz@gmail.com"/>
 
     <TextView
-        android:id="@+id/navheadcontact"
+        android:id="@+id/navhead_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginStart="16dp"
-        android:text="9999999999"
         android:textColor="@color/white"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:text="XXXXXXXXXX"/>
 
 </LinearLayout>

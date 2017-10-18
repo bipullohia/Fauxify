@@ -3,17 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:padding="5dp"
-    android:layout_width="match_parent"
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
     android:background="?android:attr/selectableItemBackground"
     cardView:cardElevation="2dp"
-    cardView:cardCornerRadius="2dp"
-  >
+    cardView:cardCornerRadius="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,75 +22,72 @@
         android:paddingTop="30dp">
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:contentDescription="Restaurant Image"
+            android:src="@drawable/muffin"
             android:id="@+id/res_image"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/muffin"
-            android:contentDescription="Restaurant Image" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
 
         <TextView
+            android:id="@+id/res_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorPrimaryText"
             android:ellipsize="end"
-            android:text="French Loaf"
-            android:id="@+id/res_name"
             android:layout_alignTop="@+id/res_image"
             android:layout_toEndOf="@+id/res_image"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorPrimaryText"
+            android:text="French Loaf"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Desserts"
-            android:textColor="@color/colorAccent"
             android:id="@+id/res_type"
-            android:layout_below="@+id/res_name"
-            android:layout_alignStart="@+id/res_name" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:textSize="13sp"
-            android:text="Inactive"
-            android:visibility="gone"
+            android:layout_below="@+id/res_name"
+            android:layout_alignStart="@+id/res_name"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorAccent"
+            android:text="Desserts"/>
+
+        <TextView
             android:id="@+id/res_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_alignTop="@+id/res_name"
-            android:textColor="@color/fadetext"
             android:gravity="center"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp" />
+            android:layout_marginEnd="15dp"
+            android:textColor="@color/fadetext"
+            android:textSize="13sp"
+            android:text="Inactive" />
 
         <TextView
+            android:id="@+id/res_delivery_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="12sp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Delivers in 40 minutes"
-            android:id="@+id/res_delivery_time"
             android:layout_below="@+id/res_type"
-            android:layout_alignStart="@+id/res_type" />
+            android:layout_alignStart="@+id/res_type"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="12sp"
+            android:text="Delivers in XX minutes"/>
 
         <TextView
+            android:id="@+id/res_min_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Min Order: 100"
-            android:id="@+id/res_min_order"
             android:layout_alignTop="@+id/res_delivery_time"
             android:layout_toEndOf="@+id/res_delivery_time"
-            android:layout_marginStart="10dp" />
-
+            android:layout_marginStart="10dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="12sp"
+            android:text="Min Order: 100"/>
 
     </RelativeLayout>
-
-
 
 </android.support.v7.widget.CardView>

@@ -42,8 +42,8 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
             dishName = (TextView) view.findViewById(R.id.dish_name);
             dishPrice = (TextView) view.findViewById(R.id.dish_price);
             dishCount = (TextView) view.findViewById(R.id.dish_count);
-            mVegImageView = (ImageView) view.findViewById(R.id.isVegDish);
-            mNonVegImageView = (ImageView) view.findViewById(R.id.isNonvegDish);
+            mVegImageView = (ImageView) view.findViewById(R.id.is_vegdish);
+            mNonVegImageView = (ImageView) view.findViewById(R.id.is_nonvegdish);
         }
     }
 
@@ -58,8 +58,8 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
 
         mAddDishButton = (Button) itemView.findViewById(R.id.add_dish);
         mRemoveDishButton = (Button) itemView.findViewById(R.id.remove_dish);
-        mAddToCartButton = (Button) itemView.findViewById(R.id.addtocart);
-        LinearLayout linearLayoutButtons = (LinearLayout) itemView.findViewById(R.id.linearlayoutbuttons);
+        mAddToCartButton = (Button) itemView.findViewById(R.id.button_add_to_cart);
+        LinearLayout linearLayoutButtons = (LinearLayout) itemView.findViewById(R.id.linearlayout_buttons);
 
         if (!RestaurantDetails.restStatus.equals("open")) {
             linearLayoutButtons.setVisibility(View.INVISIBLE);

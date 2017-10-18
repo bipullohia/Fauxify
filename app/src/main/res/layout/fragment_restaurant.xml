@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,8 +8,8 @@
     tools:context="com.example.bipul.fauxify.RestaurantFragment">
 
         <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:id="@+id/swipeRefreshLayout"
             android:layout_height="wrap_content">
 
                 <android.support.v7.widget.RecyclerView
@@ -19,8 +18,6 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:scrollbars="vertical" />
-
         </android.support.v4.widget.SwipeRefreshLayout>
-
 
 </LinearLayout>

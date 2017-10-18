@@ -4,35 +4,34 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:contentDescription="Background Image"
+            android:src="@drawable/welcomescreen4"
             android:scaleType="centerCrop"
-            android:src="@drawable/welcomescreen4" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Multiple Payment Options"
-            android:textAlignment="center"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_gravity="center_vertical"
             android:textColor="@color/colorAccent"
+            android:textAlignment="center"
             android:textSize="28sp"
-            />
+            android:text="Multiple Payment Options"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="60dp"
             android:paddingRight="15dp"
             android:paddingLeft="15dp"
-            android:layout_gravity="center_vertical"
-            android:text="Pay via Paytm or by Cash On Delivery"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+            android:textSize="@dimen/slide_desc"
+            android:text="Pay via Paytm or by Cash On Delivery"/>
 
 </FrameLayout>

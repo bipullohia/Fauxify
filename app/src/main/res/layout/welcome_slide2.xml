@@ -4,21 +4,21 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:contentDescription="Background Image"
+            android:src="@drawable/welcomescreen2"
             android:scaleType="centerCrop"
-            android:src="@drawable/welcomescreen2" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delivery"
-            android:textAlignment="center"
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/slide_title" />
+            android:textAlignment="center"
+            android:textSize="@dimen/slide_title"
+            android:text="Delivery"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,10 +27,9 @@
             android:layout_marginTop="60dp"
             android:paddingRight="15dp"
             android:paddingLeft="15dp"
-            android:text="Get Home Delivery directly from your desired restaurants"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
-
+            android:textSize="@dimen/slide_desc"
+            android:text="Get Home Delivery directly from your desired restaurants"/>
 
 </FrameLayout>

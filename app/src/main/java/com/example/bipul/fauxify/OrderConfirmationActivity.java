@@ -74,16 +74,16 @@ public class OrderConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirmed);
 
-        mCurrentStatusTextView = (TextView) findViewById(R.id.current_time);
-        mDeliveryTimeTextView = (TextView) findViewById(R.id.deliverytime);
-        mOrderIdTextView = (TextView) findViewById(R.id.orderId_orderconfirmed);
+        mCurrentStatusTextView = (TextView) findViewById(R.id.awaiting_confirmation);
+        mDeliveryTimeTextView = (TextView) findViewById(R.id.delivery_time);
+        mOrderIdTextView = (TextView) findViewById(R.id.orderid_orderconfirmed);
         if (mOrderIdTextView != null) {
             mOrderIdTextView.setText(CartActivity.orderid);
         }
 
-        mRestNameTextView = (TextView) findViewById(R.id.restNameOrderConfirm);
-        mTotalOrderAmountTextView = (TextView) findViewById(R.id.totalpriceOrderConfirm);
-        mOrderRefreshTextView = (TextView) findViewById(R.id.orderrefresh);
+        mRestNameTextView = (TextView) findViewById(R.id.resname_order_confirm);
+        mTotalOrderAmountTextView = (TextView) findViewById(R.id.totalprice_order_confirm);
+        mOrderRefreshTextView = (TextView) findViewById(R.id.orderrefresh_message_fivesec);
 
         mRestNameTextView.setText(CartActivity.restaurantNameInCart);
         mTotalOrderAmountTextView.setText(String.valueOf(CartActivity.grandtotalamount));

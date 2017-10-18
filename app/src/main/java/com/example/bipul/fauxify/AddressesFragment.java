@@ -55,16 +55,16 @@ public class AddressesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_addresses, container, false);
 
-        noSavedAdd = (TextView) view.findViewById(R.id.noSavedAddTextview);
+        noSavedAdd = (TextView) view.findViewById(R.id.no_saved_address);
 
-        mAddressRecyclerView = (RecyclerView) view.findViewById(R.id.address_recycler_view);
+        mAddressRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_fragaddress);
         mAddressAdapter = new AddressAdapter(mAddressList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
         mAddressRecyclerView.setLayoutManager(mLayoutManager);
         mAddressRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAddressRecyclerView.setAdapter(mAddressAdapter);
 
-        mAddAddressFAButton = (FloatingActionButton) view.findViewById(R.id.fabAddAddress);
+        mAddAddressFAButton = (FloatingActionButton) view.findViewById(R.id.fab_addaddress);
         mAddAddressFAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

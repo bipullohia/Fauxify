@@ -35,7 +35,7 @@ public class MyOrderDetails extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myOrderDishesAdapter);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_myorder_details);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Order Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,7 +46,7 @@ public class MyOrderDetails extends AppCompatActivity {
         mTotalItemPriceTextView = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
         //mTotalItemsTextView = (TextView) findViewById(R.id.orderdetails_totalitems);
         mTotalPriceTextView = (TextView) findViewById(R.id.orderdetails_totalprice);
-        mDeliveryTimeTextView = (TextView) findViewById(R.id.deliverytime);
+        mDeliveryTimeTextView = (TextView) findViewById(R.id.delivery_time);
         mRestNameTextView = (TextView) findViewById(R.id.orderdetails_restname);
         mDeliveryFeeTextView = (TextView) findViewById(R.id.orderdetails_deliveryfee);
 

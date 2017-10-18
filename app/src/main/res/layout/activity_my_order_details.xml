@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +9,7 @@
     tools:context="com.example.bipul.fauxify.CartActivity">
 
     <include
-        android:id="@+id/toolbar_cartactivity"
+        android:id="@+id/toolbar_myorder_details"
         layout="@layout/toolbar" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -47,8 +45,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingBottom="5dp"
-                        android:text="Item Summary and Details"
-                        android:textSize="@dimen/headingCardView"/>
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Item Summary and Details"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -62,7 +60,6 @@
                         android:layout_marginTop="10dp"
                         android:longClickable="true"
                         android:scrollbars="vertical">
-
                     </android.support.v7.widget.RecyclerView>
 
                     <View
@@ -79,13 +76,12 @@
                         android:orientation="horizontal"
                         android:paddingTop="5dp">
 
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Total Items Amount"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Total Items Amount"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -93,23 +89,22 @@
                             android:layout_weight="1"
                             android:gravity="end">
 
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingEnd="2dp"
                                 android:paddingStart="2dp"
-                                android:text="@string/Rs"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:text="@string/Rs"/>
 
                             <TextView
                                 android:id="@+id/orderdetails_totalitemsprice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="XXX"
-                                android:textSize="14sp" />
-                        </LinearLayout>
+                                android:textSize="14sp"
+                                android:text="XXX"/>
 
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -122,13 +117,12 @@
                         android:orientation="horizontal"
                         android:paddingTop="5dp">
 
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Delivery Fee"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Delivery Fee"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -136,26 +130,24 @@
                             android:layout_weight="1"
                             android:gravity="end">
 
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingEnd="2dp"
                                 android:paddingStart="2dp"
-                                android:text="@string/Rs"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:text="@string/Rs"/>
 
                             <TextView
                                 android:id="@+id/orderdetails_deliveryfee"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="XX"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:text="XX"/>
+
                         </LinearLayout>
 
-
                     </LinearLayout>
-
 
                     <View
                         android:layout_width="match_parent"
@@ -174,8 +166,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Final Amount"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:text="Final Amount"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -189,19 +181,19 @@
                                 android:layout_height="wrap_content"
                                 android:paddingEnd="2dp"
                                 android:paddingStart="2dp"
-                                android:text="@string/Rs"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                android:text="@string/Rs"/>
 
                             <TextView
                                 android:id="@+id/orderdetails_totalprice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="XXX"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                android:text="XXX"/>
+
                         </LinearLayout>
 
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -218,7 +210,6 @@
                 cardView:cardCornerRadius="2dp"
                 cardView:cardElevation="2dp">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -230,9 +221,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:text="Other Details"
-                        android:textSize="@dimen/headingCardView"/>
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Other Details"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -251,18 +241,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Order Id"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Order Id"/>
 
                         <TextView
-
                             android:id="@+id/orderdetails_orderid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="XXXXXXXXXXXXXX"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="XXXXXXXXXXXXXX"/>
 
                     </LinearLayout>
 
@@ -278,18 +267,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Restaurant Name"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Restaurant Name"/>
 
                         <TextView
-
                             android:id="@+id/orderdetails_restname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="XXXXXX XXXXXX"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="XXXXXX XXXXXX"/>
 
                     </LinearLayout>
 
@@ -305,18 +293,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Order Time"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Order Time"/>
 
                         <TextView
-
                             android:id="@+id/orderdetails_ordertime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="XXXXXXX"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="XXXXXXX"/>
 
                     </LinearLayout>
 
@@ -335,7 +322,6 @@
                 cardView:cardCornerRadius="2dp"
                 cardView:cardElevation="2dp">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -347,9 +333,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:text="Delivery Address"
-                        android:textSize="@dimen/headingCardView"/>
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Delivery Address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -357,19 +342,21 @@
                         android:background="@color/headingSeparatorCardView" />
 
                     <TextView
-                        android:padding="10dp"
-                        android:textAlignment="center"
                         android:id="@+id/orderdetails_deliveryaddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="XXXXXXX"
-                        android:textSize="14sp" />
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:text="XXXXXXX"/>
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

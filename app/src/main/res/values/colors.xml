@@ -9,7 +9,6 @@
     <color name="colorDivider">#B6B6B6</color>
     <color name="colorTextIcons">#FFFFFF</color>
 
-
     <color name="headingSeparatorCardView">@color/lightGray</color>
     <color name="sectionSeparatorCardView">@color/lightGray</color>
 

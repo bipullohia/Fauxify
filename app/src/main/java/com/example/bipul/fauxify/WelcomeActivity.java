@@ -58,9 +58,9 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mDotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        mDotsLayout = (LinearLayout) findViewById(R.id.layout_dots);
         //mSkipButton = (Button) findViewById(R.id.btn_skip);
-        mNextButton = (Button) findViewById(R.id.btn_next);
+        mNextButton = (Button) findViewById(R.id.button_next);
 
         // layouts of all welcome sliders
         mLayouts = new int[]{

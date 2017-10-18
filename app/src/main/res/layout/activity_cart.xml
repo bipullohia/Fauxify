@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,9 +20,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -48,23 +46,22 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingBottom="5dp"
-                        android:text="Item Summary"
-                        android:textSize="@dimen/headingCardView"/>
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Item Summary"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/headingSeparatorCardView"
                         android:background="@color/headingSeparatorCardView" />
 
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="Long press on a specific item to delete it"
                         android:textSize="12sp"
-                        android:textStyle="italic" />
+                        android:textStyle="italic"
+                        android:text="Long press on a specific item to delete it"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -79,15 +76,11 @@
                         android:longClickable="true"
                         android:overScrollMode="never"
                         android:scrollbars="vertical">
-
                     </android.support.v7.widget.RecyclerView>
-
 
                 </LinearLayout>
 
-
             </android.support.v7.widget.CardView>
-
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -101,7 +94,6 @@
                 cardView:cardCornerRadius="2dp"
                 cardView:cardElevation="2dp">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -113,16 +105,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:text="Other Details"
-                        android:textSize="@dimen/headingCardView"/>
-
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Other Details"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/headingSeparatorCardView"
                         android:background="@color/headingSeparatorCardView"/>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -132,13 +121,12 @@
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Restaurant Name"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Restaurant Name"/>
 
                         <TextView
                             android:id="@+id/restname_incart"
@@ -146,9 +134,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="XXXXX"
-                            android:textSize="14sp" />
-
+                            android:textSize="14sp"
+                            android:text="XXXXX"/>
 
                     </LinearLayout>
 
@@ -160,13 +147,12 @@
                         android:orientation="horizontal"
                         android:paddingTop="5dp">
 
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Total Items Amount"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Total Items Amount"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -174,26 +160,24 @@
                             android:layout_weight="1"
                             android:gravity="end">
 
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingEnd="5dp"
-                                android:paddingStart="5dp"
-                                android:text="@string/Rs"
-                                android:textSize="14sp" />
+                                android:paddingEnd="2dp"
+                                android:paddingStart="2dp"
+                                android:textSize="14sp"
+                                android:text="@string/Rs"/>
 
                             <TextView
                                 android:id="@+id/totalitemprice_incart"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="XXX"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:text="XXX"/>
+
                         </LinearLayout>
 
-
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -204,13 +188,12 @@
                         android:orientation="horizontal"
                         android:paddingTop="5dp">
 
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Delivery Fee"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="Delivery Fee"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -218,32 +201,29 @@
                             android:layout_weight="1"
                             android:gravity="end">
 
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingEnd="5dp"
-                                android:paddingStart="5dp"
-                                android:text="@string/Rs"
-                                android:textSize="14sp" />
+                                android:paddingEnd="2dp"
+                                android:paddingStart="2dp"
+                                android:textSize="14sp"
+                                android:text="@string/Rs"/>
 
                             <TextView
                                 android:id="@+id/deliveryfee_incart"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="XX"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:text="XX"/>
+
                         </LinearLayout>
 
-
                     </LinearLayout>
-
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/sectionSeparatorCardView"
                         android:background="@color/sectionSeparatorCardView" />
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -258,8 +238,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Final Amount to be paid"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:text="Final Amount to be paid"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -271,16 +251,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingEnd="5dp"
-                                android:text="@string/Rs"
-                                android:textSize="15sp" />
+                                android:paddingEnd="2dp"
+                                android:paddingStart="2dp"
+                                android:textSize="15sp"
+                                android:text="@string/Rs"/>
 
                             <TextView
                                 android:id="@+id/grandtotalprice_incart"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="XXX"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                android:text="XXX"/>
+
                         </LinearLayout>
 
                     </LinearLayout>
@@ -290,7 +272,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/cart_toselectaddress_cardview"
+                android:id="@+id/cardview_cart_toselectaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -301,7 +283,6 @@
                 android:orientation="vertical"
                 cardView:cardCornerRadius="2dp"
                 cardView:cardElevation="2dp">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -314,8 +295,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:text="Select Delivery Address"
-                        android:textSize="@dimen/headingCardView"/>
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Select Delivery Address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -332,15 +313,14 @@
                         android:scrollbars="vertical" />
 
                     <TextView
+                        android:id="@+id/no_saved_add_in_cart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:text="No saved Address found"
                         android:visibility="gone"
-                        android:id="@+id/noSavedAddCartTextview"/>
-
+                        android:text="No saved Address found"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -351,16 +331,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:minHeight="0dp"
-                            android:text="Add new Address"
-                            android:textAllCaps="false" />
+                            android:textAllCaps="false"
+                            android:text="Add new Address"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/cart_selectedaddress_cardview"
+                android:id="@+id/cardview_cart_selectedaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -383,8 +364,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:text="Selected Address"
-                        android:textSize="@dimen/headingCardView"/>
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Selected Address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -397,10 +378,10 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp"
-                        android:text="Your address"
                         android:textAlignment="center"
                         android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:text="Your address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -412,9 +393,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="0dp"
-                        android:text="Select Another Address"
-                        android:textAllCaps="false" />
-
+                        android:textAllCaps="false"
+                        android:text="Select Another Address"/>
 
                 </LinearLayout>
 
@@ -432,7 +412,6 @@
                 cardView:cardCornerRadius="2dp"
                 cardView:cardElevation="2dp">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -444,26 +423,23 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:text="Any Message for the Chef?"
-                        android:textSize="@dimen/headingCardView"/>
-
+                        android:textSize="@dimen/headingCardView"
+                        android:text="Any Message for the Chef?"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/headingSeparatorCardView"
                         android:background="@color/headingSeparatorCardView" />
 
-
                     <EditText
+                        android:id="@+id/edittext_user_message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:id="@+id/userMessage"
-                        android:textSize="14sp"
-                        android:inputType="textShortMessage"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:inputType="textShortMessage"
+                        android:textSize="14sp"
                         android:hint="Eg. extra spicy, less gravy, etc."/>
 
                 </LinearLayout>
@@ -477,15 +453,17 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"
-                android:text="Confirm Order"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:text="Confirm Order"/>
 
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>
 

@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:id="@+id/passcodescreenLinearLayout"
-    android:layout_height="match_parent"
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:id="@+id/otpactivity_linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar_otpactivity"
+        layout="@layout/toolbar"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_gravity="center_vertical"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -20,7 +24,7 @@
         cardView:cardElevation="2dp">
 
         <LinearLayout
-            android:id="@+id/numberInputLinearLayout"
+            android:id="@+id/number_input_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -32,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:text="Enter your Phone Number"
-                android:textSize="16sp" />
+                android:textSize="@dimen/headingCardView"
+                android:text="Enter your Phone Number"/>
 
             <View
                 android:layout_width="match_parent"
@@ -54,11 +58,11 @@
                     android:text="+91 "/>
 
                 <EditText
-                        android:id="@+id/phoneNumberEdittext"
+                        android:id="@+id/edittext_phone_number"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
                         android:maxLength="10"
+                        android:inputType="phone"
                         android:textSize="18sp"/>
 
             </LinearLayout>
@@ -70,20 +74,20 @@
                 android:background="@color/sectionSeparatorCardView" />
 
             <Button
-                android:id="@+id/submitButton"
+                android:id="@+id/button_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/paddingNormalButton"
-                android:paddingEnd="@dimen/paddingNormalButton"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"
-                android:text="Submit"
-                android:textAllCaps="false" />
+                android:paddingStart="@dimen/paddingNormalButton"
+                android:paddingEnd="@dimen/paddingNormalButton"
+                android:textAllCaps="false"
+                android:text="Submit"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/OTPInputLinearLayout"
+            android:id="@+id/otp_input_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -95,8 +99,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:text="Enter OTP"
-                android:textSize="16sp" />
+                android:textSize="@dimen/headingCardView"
+                android:text="Enter OTP"/>
 
             <View
                 android:layout_width="match_parent"
@@ -104,14 +108,14 @@
                 android:background="@color/headingSeparatorCardView" />
 
             <EditText
-                android:id="@+id/OTPEdittext"
+                android:id="@+id/otp_edittext"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
                 android:maxLength="6"
+                android:inputType="phone"
                 android:textSize="18sp"/>
 
             <View
@@ -121,15 +125,15 @@
                 android:background="@color/sectionSeparatorCardView" />
 
             <Button
-                android:id="@+id/verifyButton"
+                android:id="@+id/button_verify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:paddingStart="@dimen/paddingNormalButton"
                 android:paddingEnd="@dimen/paddingNormalButton"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:text="Verify"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:text="Verify"/>
 
         </LinearLayout>
 

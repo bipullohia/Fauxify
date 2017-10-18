@@ -2,45 +2,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    >
+    tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:contentDescription="Background Image"
         android:src="@drawable/welcomescreen5"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/appname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fauxify"
         android:layout_centerHorizontal="true"
-        android:id="@+id/appname"
         android:layout_marginTop="5dp"
+        android:layout_above="@+id/sign_in_button"
+        android:layout_gravity="center"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="32sp"
-        android:layout_above="@+id/sign_in_button"
-        android:layout_gravity="center"/>
+        android:text="Fauxify"/>
 
     <ImageView
-        android:layout_width="60dp"
+        android:contentDescription="Restaurant Icon"
+        android:src="@drawable/app_icon"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/appname"
-        android:src="@drawable/app_icon"
-        android:layout_height="60dp" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginRight="50dp"
         android:layout_marginTop="90dp"
         android:layout_marginLeft="50dp"
         android:layout_gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="180dp" />
+        android:layout_marginBottom="180dp"/>
 
 </RelativeLayout>

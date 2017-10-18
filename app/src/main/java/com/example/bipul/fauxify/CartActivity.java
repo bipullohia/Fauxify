@@ -103,15 +103,15 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         addressRecyclerView.setItemAnimator(new DefaultItemAnimator());
         addressRecyclerView.setAdapter(mCartAddressAdapter);
 
-        cardViewSelectedAdd = (CardView) findViewById(R.id.cart_selectedaddress_cardview);
-        cardViewToSelectAdd = (CardView) findViewById(R.id.cart_toselectaddress_cardview);
+        cardViewSelectedAdd = (CardView) findViewById(R.id.cardview_cart_selectedaddress);
+        cardViewToSelectAdd = (CardView) findViewById(R.id.cardview_cart_toselectaddress);
         mSelectAnotherAddressButton = (Button) findViewById(R.id.button_selectanotheraddress_cart);
         selectedAddress = (TextView) findViewById(R.id.cart_selectedaddress);
         mAddNewAddressButton = (Button) findViewById(R.id.button_addnewaddress_cart);
         mConfirmOrderButton = (Button) findViewById(R.id.button_confirmorder);
-        noSavedAddCart = (TextView) findViewById(R.id.noSavedAddCartTextview);
+        noSavedAddCart = (TextView) findViewById(R.id.no_saved_add_in_cart);
 
-        mUserMessageEditText = (EditText) findViewById(R.id.userMessage);
+        mUserMessageEditText = (EditText) findViewById(R.id.edittext_user_message);
         mUserMessageEditText.setOnKeyListener(this);
 
         DeliveryFee = (TextView) findViewById(R.id.deliveryfee_incart);

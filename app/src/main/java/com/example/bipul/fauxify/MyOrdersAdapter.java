@@ -37,16 +37,16 @@ class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder>
             context = view.getContext();
             view.setOnClickListener(this);
 
-            orderTimeTextView = (TextView) view.findViewById(R.id.orderTime);
-            dishDetailsTextView = (TextView) view.findViewById(R.id.dishDetails);
+            orderTimeTextView = (TextView) view.findViewById(R.id.order_time);
+            dishDetailsTextView = (TextView) view.findViewById(R.id.dish_details);
             totalPriceTextView = (TextView) view.findViewById(R.id.orderrow_totalprice);
             orderConfirmedTextView = (TextView) view.findViewById(R.id.orderrow_orderconfirmed);
             orderDeliveredTextView = (TextView) view.findViewById(R.id.orderrow_orderdelivered);
             restNameTextView = (TextView) view.findViewById(R.id.orderrow_restname);
-            redConfirmImageView = (ImageView) view.findViewById(R.id.redConfirmImg);
-            greenConfirmImageView = (ImageView) view.findViewById(R.id.greenConfirmImg);
-            redDeliverImageView = (ImageView) view.findViewById(R.id.redDeliverImg);
-            greenDeliverImageView = (ImageView) view.findViewById(R.id.greenDeliverImg);
+            redConfirmImageView = (ImageView) view.findViewById(R.id.imageview_red_confirm);
+            greenConfirmImageView = (ImageView) view.findViewById(R.id.imageview_green_confirm);
+            redDeliverImageView = (ImageView) view.findViewById(R.id.imageview_red_deliver);
+            greenDeliverImageView = (ImageView) view.findViewById(R.id.imageview_green_deliver);
         }
 
         @Override

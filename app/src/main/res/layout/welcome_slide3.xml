@@ -5,31 +5,31 @@
     android:background="@color/white">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:contentDescription="Background Image"
+            android:src="@drawable/welcomescreen3"
             android:scaleType="centerCrop"
-            android:src="@drawable/welcomescreen3" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Take Away"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/slide_title"
-            android:layout_gravity="center_vertical"
             android:textAlignment="center"
-            />
+            android:text="Take Away"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:layout_gravity="center_vertical"
             android:paddingRight="15dp"
             android:paddingLeft="15dp"
-            android:layout_gravity="center_vertical"
-            android:text="You can order your food in advance and take it from restaurant"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+            android:textSize="@dimen/slide_desc"
+            android:text="You can order your food in advance and take it from restaurant"/>
 
 </FrameLayout>

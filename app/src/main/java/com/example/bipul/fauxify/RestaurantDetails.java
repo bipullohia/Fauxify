@@ -153,7 +153,7 @@ public class RestaurantDetails extends AppCompatActivity {
 
         prepareMenu();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_mainactivity);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

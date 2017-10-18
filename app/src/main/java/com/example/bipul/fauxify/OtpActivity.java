@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,8 +39,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
-import static com.example.bipul.fauxify.R.id.submitButton;
-import static com.example.bipul.fauxify.R.id.verifyButton;
+import static com.example.bipul.fauxify.R.id.button_submit;
+import static com.example.bipul.fauxify.R.id.button_verify;
 
 public class OtpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,18 +56,23 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     ProgressDialog mProgressDialog;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
 
-        mOtpInputEditText = (EditText) findViewById(R.id.OTPEdittext);
-        mNumberInputEditText = (EditText) findViewById(R.id.phoneNumberEdittext);
-        mSubmitButton = (Button) findViewById(submitButton);
-        mVerifyButton = (Button) findViewById(R.id.verifyButton);
-        mOtpInputLinearLayout = (LinearLayout) findViewById(R.id.OTPInputLinearLayout);
-        mNumberInputLinearLayout = (LinearLayout) findViewById(R.id.numberInputLinearLayout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_otpactivity);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Phone Number Verification");
+
+        mOtpInputEditText = (EditText) findViewById(R.id.otp_edittext);
+        mNumberInputEditText = (EditText) findViewById(R.id.edittext_phone_number);
+        mSubmitButton = (Button) findViewById(button_submit);
+        mVerifyButton = (Button) findViewById(R.id.button_verify);
+        mOtpInputLinearLayout = (LinearLayout) findViewById(R.id.otp_input_linearlayout);
+        mNumberInputLinearLayout = (LinearLayout) findViewById(R.id.number_input_linear_layout);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -134,7 +140,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
 
         switch (v.getId()){
 
-            case submitButton:
+            case button_submit:
                 mPhoneNumber = mNumberInputEditText.getText().toString();
                 mProgressDialog = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -145,7 +151,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                         mCallbacks);        // OnVerificationStateChangedCallbacks
                 break;
 
-            case verifyButton:
+            case button_verify:
                 mProgressDialog = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
                 PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mOtpInputEditText.getText().toString());
                 signInWithPhoneAuthCredential(credential);

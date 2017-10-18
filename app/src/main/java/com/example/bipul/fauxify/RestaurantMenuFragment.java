@@ -30,7 +30,7 @@ public class RestaurantMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_restaurant_menu, container, false);
 
-        RecyclerView dishesRecyclerView = (RecyclerView) view.findViewById(R.id.dishes_recycler_view);
+        RecyclerView dishesRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_dishes);
 
         DishesAdapter dishesAdapter = new DishesAdapter(mDishesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());

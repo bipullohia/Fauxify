@@ -118,17 +118,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         requestURL = "http://fauxify.com/api/";
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_mainactivity);
         setSupportActionBar(mToolbar);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mActionBarToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mActionBarToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -138,9 +138,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        getSupportActionBar().setTitle("Restaurants");
 
         View header = navigationView.getHeaderView(0);
-        mHeadNameTextView = (TextView) header.findViewById(R.id.navheadName);
-        mHeadEmailTextView = (TextView) header.findViewById(R.id.navheademail);
-        mHeadNumberTextView = (TextView) header.findViewById(R.id.navheadcontact);
+        mHeadNameTextView = (TextView) header.findViewById(R.id.navhead_name);
+        mHeadEmailTextView = (TextView) header.findViewById(R.id.navhead_email);
+        mHeadNumberTextView = (TextView) header.findViewById(R.id.navhead_contact);
 
         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
         String personEmail = sharedPref.getString("personEmail", null);

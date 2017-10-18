@@ -18,15 +18,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:orientation="vertical"
+        android:padding="8dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:baselineAligned="false"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:layout_marginBottom="5dp">
 
             <LinearLayout
@@ -35,34 +35,33 @@
                 android:layout_marginEnd="10dp">
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/greenConfirmImg"
-                    android:visibility="gone"
-                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Vegetarian Dish"
                     android:src="@drawable/dish_type_veg"
-                    android:contentDescription="Vegetarian Dish" />
+                    android:id="@+id/imageview_green_confirm"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/redConfirmImg"
-                    android:visibility="visible"
-                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Non-Vegetarian Dish"
                     android:src="@drawable/dish_type_nonveg"
-                    android:contentDescription="Non-Vegetarian Dish" />
-
+                    android:id="@+id/imageview_red_confirm"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="visible"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/orderrow_orderconfirmed"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Default Status"
                     android:layout_gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textSize="11sp"
-                    android:textAlignment="center"/>
+                    android:text="Default Status"/>
 
             </LinearLayout>
 
@@ -72,33 +71,33 @@
                 android:layout_marginStart="10dp">
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/greenDeliverImg"
-                    android:visibility="gone"
-                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Vegetarian Dish"
                     android:src="@drawable/dish_type_veg"
-                    android:contentDescription="Vegetarian Dish" />
+                    android:id="@+id/imageview_green_deliver"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/redDeliverImg"
-                    android:visibility="visible"
-                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Non-Vegetarian Dish"
                     android:src="@drawable/dish_type_nonveg"
-                    android:contentDescription="Non-Vegetarian Dish" />
+                    android:id="@+id/imageview_red_deliver"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="visible"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <TextView
+                    android:id="@+id/orderrow_orderdelivered"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Default Status"
-                    android:id="@+id/orderrow_orderdelivered"
                     android:layout_gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textSize="11sp"
-                    android:textAlignment="center"/>
+                    android:text="Default Status"/>
 
             </LinearLayout>
 
@@ -118,10 +117,10 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:contentDescription="Restaurant Image"
                 android:src="@drawable/muffin"
-                android:contentDescription="Restaurant Image"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -132,23 +131,24 @@
                 android:paddingEnd="10dp">
 
                 <TextView
+                    android:id="@+id/orderrow_restname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Restaurant Name"
-                    android:id="@+id/orderrow_restname"
                     android:paddingBottom="2dp"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:text="Restaurant Name"/>
 
                 <TextView
+                    android:id="@+id/order_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
                     android:paddingTop="2dp"
-                    android:id="@+id/orderTime"
-                    android:text="Ordered on 03 Oct 2017 at 7.14PM"/>
+                    android:textSize="12sp"
+                    android:text="Ordered on XX XXX XXXX at X.XXPM"/>
 
             </LinearLayout>
+
         </LinearLayout>
 
         <View
@@ -166,13 +166,13 @@
             android:paddingEnd="5dp">
 
             <TextView
+                android:id="@+id/dish_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/dishDetails"
-                android:textSize="13sp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="1 Veg Burger, 3 Chicken Burger, 1 Veg Pizza with extra cheese"/>
+                android:textSize="13sp"
+                android:text="X Veg Burger, X Chicken Burger, X Veg Pizza with extra cheese"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -182,36 +182,33 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total"
-                    android:textSize="13sp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
                     android:textColor="@color/colorPrimaryText"
-                    android:paddingEnd="5dp"/>
+                    android:textSize="13sp"
+                    android:text="Total"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
                     android:textColor="@color/colorPrimaryText"
+                    android:textSize="13sp"
                     android:text="@string/Rs"/>
 
-
                 <TextView
+                    android:id="@+id/orderrow_totalprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="000"
-                    android:textSize="13sp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
                     android:textColor="@color/colorPrimaryText"
-                    android:id="@+id/orderrow_totalprice"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"/>
+                    android:textSize="13sp"
+                    android:text="XXX"/>
 
             </LinearLayout>
-
-
 
         </LinearLayout>
 
     </LinearLayout>
-
 
 </android.support.v7.widget.CardView>
