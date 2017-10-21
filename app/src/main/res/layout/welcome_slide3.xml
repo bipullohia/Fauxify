@@ -5,7 +5,7 @@
     android:background="@color/white">
 
         <ImageView
-            android:contentDescription="Background Image"
+            android:contentDescription="@string/background_image"
             android:src="@drawable/welcomescreen3"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/slide_title"
             android:textAlignment="center"
-            android:text="Take Away"/>
+            android:text="@string/take_away"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -30,6 +30,6 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_desc"
-            android:text="You can order your food in advance and take it from restaurant"/>
+            android:text="@string/welcome_slide3"/>
 
 </FrameLayout>

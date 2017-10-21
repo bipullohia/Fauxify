@@ -16,15 +16,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 9/6/2016.
- */
 
 class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
 
     private ArrayList<Dishes> mDishesList;
     static ArrayList<CurrentOrder> currentOrders = new ArrayList<>();
-    //public ArrayList<String> currentDish = new ArrayList<>();
 
     private Button mAddDishButton, mRemoveDishButton, mAddToCartButton;
     private ImageView mVegImageView, mNonVegImageView;
@@ -79,12 +75,10 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
         holder.dishPrice.setText(dishes.getDishPrice());
 
         if (dishes.getIsVeg() == 1) {
-
             mNonVegImageView.setVisibility(View.GONE);
             mVegImageView.setVisibility(View.VISIBLE);
 
         } else {
-
             mVegImageView.setVisibility(View.GONE);
             mNonVegImageView.setVisibility(View.VISIBLE);
         }
@@ -121,7 +115,7 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
                     CurrentOrder currentOrder = new CurrentOrder(dishes.getDishName(), dishes.getDishPrice(), count[0]);
                     currentOrders.add(currentOrder);
 
-                    //adding the SnackBar to display how many items have been added to cart
+                    //adding the SnackBar to display how many and which items have been added to cart
                     Snackbar snackbar = Snackbar
                             .make(holder.itemView, count[0] + " " + dishes.getDishName() + " added to Cart", Snackbar.LENGTH_LONG);
                     View snackbarView = snackbar.getView();
@@ -131,8 +125,8 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
                     snackbar.show();
 
                     Log.e("the count:", String.valueOf(currentOrder));
-                } else {
-                    Toast.makeText(v.getContext(), "Select/Reselect the Item quantity to be added", Toast.LENGTH_SHORT).show();
+                } else { //this means no item has been selected to add to cart. Let user select/reselect it
+                    Toast.makeText(v.getContext(), R.string.select_item_quantity_tobe_added, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,20 +1,13 @@
 <resources>
     <string name="app_name">Fauxify</string>
+    <string name="request_url">http://fauxify.com/api/</string>
+
     <string name="restaurants_names">Restaurants</string>
     <string name="res_subtitle">Restaurants around you</string>
     <string name="option_setting">Settings</string>
     <string name="menu_setting">Logout</string>
 
-    <string name="sample_string"> tdyfgvhbjfyugfhjgvjhbjhvjgvhgfhfhghgvghvgh
-    hbjhbhjbhjbjhbjhvjhbjhbhbdrhfirhijjfhvnidfhbvihdvihtdbvidhvjfviuhugfvfgn
-    dfferbfkjrnfkjrnkjndkjfvndfjlvnfldjvnfdljvfdnjvnjkdfnvkdfvkjdfnjvnddfklv
-        hbjhbhjbhjbjhbjhvjhbjhbhbdrhfirhijjfhvnidfhbvihdvihtdbvidhvjfviuhugfvfgn
-    dfferbfkjrnfkjrnkjndkjfvndfjlvnfldjvnfdljvfdnjvnjkdfnvkdfvkjdfnjvnddfklv
-        hbjhbhjbhjbjhbjhvjhbjhbhbdrhfirhijjfhvnidfhbvihdvihtdbvidhvjfviuhugfvfgn
-    dfferbfkjrnfkjrnkjndkjfvndfjlvnfldjvnfdljvfdnjvnjkdfnvkdfvkjdfnjvnddfklvhbjh
-        bhjbjhbjhvjhbjhbhbdrhfirhijjfhvnidfhbvihdvihtdbvidhvjfviuhugfvfgn
-    dfferbfkjrnfkjrnkjndkjfvndfjlvnfldjvnfdljvfdnjvnjkdfnvkdfvkjdfnjvnddfklvhbjh
-        bhjbhjbjhbjhvjhbjhbhbdrhfirhijjfhvnidfhbvihdvihtdbvidhvjfviuhugfvfgn
+    <string name="sample_string"> tdyfgvhbjugfvfgn
     dfferbfkjrnfkjrnkjndkjfvndfjlvnfldjvnfdljvfdnjvnjkdfnvkdfvkjdfnjvnddfklv
     </string>
 
@@ -22,32 +15,145 @@
     <string name="open">open</string>
     <string name="close">close</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
-
-    <string name="slide_1_title">Hello Food!</string>
-    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
-
-    <string name="slide_2_title">Movie Tickets</string>
-    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
-
-    <string name="slide_3_title">Great Discounts</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
-
-    <string name="slide_4_title">World Travel</string>
-    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
-
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
-    <string name="play_again">Play Again</string>
 
     <string name="Rs">\u20B9</string>
     <string name="rs">\u20A8</string>
 
     <string name="verified">Verification successful</string>
     <string name="failed">Verification failed</string>
+
+    <string name="add_address">Add Address</string>
+    <string name="abode_address">Abode Valley, 54 Kakkan Street, Potheri-603203</string>
+    <string name="estancia_address">Estancia, Grand Southern Trunk Rd, Potheri-603203</string>
+    <string name="greenpearl_address">SRM Green Pearl, Amman Koil Street, Potheri-603203</string>
+    <string name="empty_input_field">Input field is empty!</string>
+    <string name="delete_address_ques">Do you want to delete this address?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="address_deleted">Address Deleted</string>
+    <string name="address_confirmation">Address Confirmation</string>
+    <string name="address_added_successfully">Address added successfully</string>
+    <string name="loading_address_info">Loading Address info…</string>
+    <string name="loading_orders">Loading Orders…</string>
+    <string name="loading_restaurant_menu">Loading Restaurant Menu…</string>
+    <string name="processing_request">Processing request…</string>
+    <string name="fetching_restaurants">Fetching Restaurants…</string>
+    <string name="checking_user">Checking user…</string>
+    <string name="checking_contact_info">Checking contact info…</string>
+    <string name="redirecting_to_restaurants">Redirecting to Restaurants…</string>
+    <string name="address_load_failed">Couldn\'t load Address info</string>
+    <string name="review_order">Review Order</string>
+    <string name="select_delivery_address">Select a delivery address</string>
+    <string name="add_dishes_cart">Add dishes to cart</string>
+    <string name="remove_dish_ques">Do you want to remove this dish?</string>
+    <string name="select_item_quantity_tobe_added">Select/Reselect the Item quantity to be added</string>
+    <string name="tap_back_again_exit">Tap \'back\' again to exit</string>
+    <string name="logging_in">Logging In…</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="unknown">Unknown</string>
+    <string name="login_failed">Login failed</string>
+    <string name="logged_out">Logged out</string>
+    <string name="submit">Submit</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="verify">Verify</string>
+    <string name="help">Help</string>
+    <string name="your_offers">Your Offers</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="my_orders">My Orders</string>
+    <string name="offers">Offers</string>
+    <string name="orders">Orders</string>
+    <string name="logout">Logout</string>
+    <string name="addresses">Addresses</string>
+    <string name="order_details">Order Details</string>
+    <string name="you_can_check_orders_at_myorders">You can always check your order in \'My Orders\'</string>
+    <string name="ok">OK</string>
+    <string name="order_confirmation">Order Confirmation</string>
+    <string name="your_order_being_prepared">Your Order has been confirmed and is being prepared by the Restaurant</string>
+    <string name="phone_number_verification">Phone Number Verification</string>
+    <string name="verification_failed_invalid_num">Verification Failed. Invalid Phone Number</string>
+    <string name="verification_failed_quota_exceeded">Verification Failed. Quota exceeded!</string>
+    <string name="verification_code_sent">Verification Code sent!</string>
+    <string name="phone_verification_success">Phone number verification is successful!</string>
+    <string name="verification_failed_invalid_code">Verification failed. Invalid code!</string>
+    <string name="saving_contact_info">Saving contact info…</string>
+    <string name="cart_already_has_items_empty_ques">You cart has items from this restaurant. It needs to be emptied for you to be able to browse other restaurants. Agree?</string>
+    <string name="oops">Oops!</string>
+    <string name="select_dishes_to_order">Select Dishes to order</string>
+    <string name="cart_emptied">Cart Emptied</string>
+    <string name="error_occurred">Error Occurred</string>
+    <string name="item_summary">Item Summary</string>
+    <string name="long_press_on_a_specific_item_to_delete_it">Long press on a specific item to delete it</string>
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="total_items_amount">Total Items Amount</string>
+    <string name="delivery_fee">Delivery Fee</string>
+    <string name="final_amount_to_be_paid">Final Amount to be paid</string>
+    <string name="no_saved_address_found">No saved Address found</string>
+    <string name="add_new_address">Add new Address</string>
+    <string name="selected_address">Selected Address</string>
+    <string name="your_address">Your address</string>
+    <string name="select_another_address">Select Another Address</string>
+    <string name="any_message_for_the_chef">Any Message for the Chef?</string>
+    <string name="eg_extra_spicy_less_gravy_etc">Eg. extra spicy, less gravy, etc.</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="other_details">Other Details</string>
+    <string name="item_summary_and_details">Item Summary and Details</string>
+    <string name="order_id">Order Id</string>
+    <string name="order_time">Order Time</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="order_status">Order Status</string>
+    <string name="awaiting_confirmaiton_by_restaurant">Awaiting Confirmaiton by Restaurant…</string>
+    <string name="this_auto_refreshes_every_5_seconds">This auto-refreshes every 5 seconds</string>
+    <string name="enter_your_phone_number">Enter your Phone Number</string>
+    <string name="content_desc_activity_rest_details">my image</string>
+    <string name="fast_food">Fast Food</string>
+    <string name="xxxx_xxxxx">XXXX XXXXX</string>
+    <string name="xxx">XXX</string>
+    <string name="xx_minutes">XX minutes</string>
+    <string name="rs_xxx">Rs. XXX</string>
+    <string name="ordered_on_xx_xxx_xxxx_at_x_xxpm">Ordered on XX XXX XXXX at X.XXPM</string>
+    <string name="delivers_in_xx_minutes">Delivers in XX minutes</string>
+    <string name="min_order_xxx">Min Order: XXX</string>
+    <string name="x">x</string>
+    <string name="order_description">X Veg Burger, X Chicken Burger, X Veg Pizza with extra cheese</string>
+    <string name="show_only_vegetarian_items">Show only Vegetarian Items</string>
+    <string name="where_do_you_live">Where do you live?</string>
+    <string name="required_details">Required Details</string>
+    <string name="enter_flat_house_no">Enter Flat/House no.</string>
+    <string name="enter_full_address">Enter Full Address</string>
+    <string name="check_your_address">Check your address</string>
+    <string name="confirm">Confirm</string>
+    <string name="vegetarian_dish">Vegetarian Dish</string>
+    <string name="non_vegetarian_dish">Non-Vegetarian Dish</string>
+    <string name="dish_name">Dish Name</string>
+    <string name="_0">0</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="saved_addresses">Saved Addresses</string>
+    <string name="no_saved_address_found_add_one_now">No saved Address found. Add one now!</string>
+    <string name="no_offers_yet_we_re_working_on_it">No Offers Yet. We\'re working on it!</string>
+    <string name="your_orders">Your Orders</string>
+    <string name="no_order_found_order_something_now">No Order found. Order something now!</string>
+    <string name="default_status">Default Status</string>
+    <string name="restaurant_image">Restaurant Image</string>
+    <string name="total">Total</string>
+    <string name="restaurant_type">Type</string>
+    <string name="inactive">Inactive</string>
+    <string name="restaurant_icon">Restaurant Icon</string>
+    <string name="background_image">Background Image</string>
+    <string name="fauxify_logo">Fauxify Logo</string>
+    <string name="fauxify_tagline">The Ultimate Food Solution</string>
+    <string name="delivery">Delivery</string>
+    <string name="take_away">Take Away</string>
+    <string name="multiple_payment_options">Multiple Payment Options</string>
+    <string name="welcome_slide1">Explore the restaurants around you</string>
+    <string name="welcome_slide2">Get Home Delivery directly from your desired restaurants</string>
+    <string name="welcome_slide3">You can order your food in advance and take it from restaurant</string>
+    <string name="welcome_slide4">Pay via Paytm or by Cash On Delivery</string>
+    <string name="alert">Alert</string>
 
     <string-array name="Areas">
         <item>Select a Location</item>

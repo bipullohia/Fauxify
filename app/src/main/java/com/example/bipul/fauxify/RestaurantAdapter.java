@@ -12,9 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by bipul on 27-06-2016.
- */
 
 class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHolder> {
 
@@ -79,7 +76,6 @@ class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHol
         Restaurant restaurant = restaurantList.get(position);
         holder.resNameTextView.setText(restaurant.getResName());
         holder.restypeTextView.setText(restaurant.getResType());
-        //holder.resRating.setText(restaurant.getResRating());
         holder.resDeliveryTimeTextView.setText(restaurant.getResDeliveryTime());
         holder.resMinimumOrderTextView.setText("Min Order  " + MainActivity.rupeesymbol + restaurant.getResMinOrder());
 

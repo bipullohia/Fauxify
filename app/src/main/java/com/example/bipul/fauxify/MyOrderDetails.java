@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
 public class MyOrderDetails extends AppCompatActivity {
 
     Toolbar mToolbar;
@@ -21,7 +22,7 @@ public class MyOrderDetails extends AppCompatActivity {
 
     String mCustomerEmail, mDishesData, mOrderConfirmed, mOrderDelivered;
     TextView mCustomerAddressTextView, mOrderIdTextView, mTotalPriceTextView, mTotalItemPriceTextView,
-            mTotalItemsTextView, mOrderTimeTextView, mDeliveryTimeTextView, mRestNameTextView, mDeliveryFeeTextView;
+            mOrderTimeTextView, mDeliveryTimeTextView, mRestNameTextView, mDeliveryFeeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +38,13 @@ public class MyOrderDetails extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_myorder_details);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Order Details");
+        getSupportActionBar().setTitle(R.string.order_details);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mCustomerAddressTextView = (TextView) findViewById(R.id.orderdetails_deliveryaddress);
         mOrderIdTextView = (TextView) findViewById(R.id.orderdetails_orderid);
         mOrderTimeTextView = (TextView) findViewById(R.id.orderdetails_ordertime);
         mTotalItemPriceTextView = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
-        //mTotalItemsTextView = (TextView) findViewById(R.id.orderdetails_totalitems);
         mTotalPriceTextView = (TextView) findViewById(R.id.orderdetails_totalprice);
         mDeliveryTimeTextView = (TextView) findViewById(R.id.delivery_time);
         mRestNameTextView = (TextView) findViewById(R.id.orderdetails_restname);
@@ -55,7 +55,6 @@ public class MyOrderDetails extends AppCompatActivity {
         mOrderTimeTextView.setText(getIntent().getStringExtra("ordertime"));
         mTotalItemPriceTextView.setText(getIntent().getStringExtra("totalitemprice"));
         mTotalPriceTextView.setText(getIntent().getStringExtra("totalprice"));
-        //mTotalItemsTextView.setText(getIntent().getStringExtra("totalitems"));
         mRestNameTextView.setText(getIntent().getStringExtra("RestName"));
         mDeliveryFeeTextView.setText(getIntent().getStringExtra("deliveryfee"));
         mCustomerEmail = getIntent().getStringExtra("ordercustemail");

@@ -66,14 +66,16 @@ public class RestaurantMenuFragment extends Fragment {
                         JSONObject jsob = new JSONObject(dishDetails.get(j));
 
                         if(jsob.getInt("isveg")==1) {
-                            Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"), dishId.get(j), jsob.getInt("isveg"));
+                            Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"),
+                                                        dishId.get(j), jsob.getInt("isveg"));
                             mDishesList.add(dishes);
                         }
                     }
 
                     else{   // this option is for general case by default
                         JSONObject jsob = new JSONObject(dishDetails.get(j));
-                        Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"), dishId.get(j), jsob.getInt("isveg"));
+                        Dishes dishes = new Dishes(jsob.getString("dishname"), jsob.getString("dishprice"),
+                                                    dishId.get(j), jsob.getInt("isveg"));
                         mDishesList.add(dishes);
                     }
                 }

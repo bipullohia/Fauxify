@@ -51,7 +51,7 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_addressconfirm);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Address Confirmation");
+        getSupportActionBar().setTitle(R.string.address_confirmation);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mConfirmButton.setOnClickListener(this);
@@ -62,7 +62,7 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
 
         sendAddress();
 
-        Toast.makeText(getBaseContext(), "Address added successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), R.string.address_added_successfully, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -91,8 +91,8 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
                 e.printStackTrace();
             }
 
-            urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-            Log.e("checkurl", urlFinal);
+            urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            Log.i("checkurl", urlFinal);
         }
 
         @Override
@@ -125,11 +125,11 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
 
                 for (int j = 0; j <= (jArrayOldAddresses.length() - 1); j++) {
                     savedaddress[j] = jArrayOldAddresses.getString(j);
-                    Log.e("saved addresses", savedaddress[j]);
+                    Log.i("saved addresses", savedaddress[j]);
                 }}
 
                 else {
-                    Log.e("Addressconfirm activity", "No previous address found");
+                    Log.i("Addressconfirm activity", "No previous address found");
                 }
 
             } catch (JSONException | IOException e) {
@@ -154,11 +154,11 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
 
                 for (int i = 0; i <= jArrayOldAddresses.length() - 1; i++) {
                     jsonArray.put(savedaddress[i]);
-                    Log.e("posting addresses", savedaddress[i]);
+                    Log.i("posting addresses", savedaddress[i]);
                 }}
 
                 else {
-                    Log.e("Addressconfirm activity", "No previous address found while posting");
+                    Log.i("Addressconfirm activity", "No previous address found while posting");
                 }
 
                 jsonArray.put(mAddress);
@@ -188,7 +188,7 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.e("Final posted Addresses", json);
+                Log.i("Final posted Addresses", json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }

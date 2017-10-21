@@ -47,7 +47,7 @@
                         android:gravity="center"
                         android:paddingBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Item Summary"/>
+                        android:text="@string/item_summary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                         android:padding="5dp"
                         android:textSize="12sp"
                         android:textStyle="italic"
-                        android:text="Long press on a specific item to delete it"/>
+                        android:text="@string/long_press_on_a_specific_item_to_delete_it"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Other Details"/>
+                        android:text="@string/other_details"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -126,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Restaurant Name"/>
+                            android:text="@string/restaurant_name"/>
 
                         <TextView
                             android:id="@+id/restname_incart"
@@ -135,7 +135,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textSize="14sp"
-                            android:text="XXXXX"/>
+                            android:text="@string/xxx"/>
 
                     </LinearLayout>
 
@@ -152,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Total Items Amount"/>
+                            android:text="@string/total_items_amount"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -173,7 +173,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:text="XXX"/>
+                                android:text="@string/xxx"/>
 
                         </LinearLayout>
 
@@ -193,7 +193,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Delivery Fee"/>
+                            android:text="@string/delivery_fee"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -214,7 +214,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:text="XX"/>
+                                android:text="@string/xxx"/>
 
                         </LinearLayout>
 
@@ -239,7 +239,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="15sp"
-                            android:text="Final Amount to be paid"/>
+                            android:text="@string/final_amount_to_be_paid"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -261,7 +261,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp"
-                                android:text="XXX"/>
+                                android:text="@string/xxx"/>
 
                         </LinearLayout>
 
@@ -296,7 +296,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Select Delivery Address"/>
+                        android:text="@string/select_delivery_address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -320,7 +320,7 @@
                         android:gravity="center"
                         android:padding="10dp"
                         android:visibility="gone"
-                        android:text="No saved Address found"/>
+                        android:text="@string/no_saved_address_found"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -332,7 +332,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="0dp"
                             android:textAllCaps="false"
-                            android:text="Add new Address"/>
+                            android:text="@string/add_new_address"/>
 
                     </LinearLayout>
 
@@ -365,7 +365,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Selected Address"/>
+                        android:text="@string/selected_address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -381,7 +381,7 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp"
-                        android:text="Your address"/>
+                        android:text="@string/your_address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -394,7 +394,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="0dp"
                         android:textAllCaps="false"
-                        android:text="Select Another Address"/>
+                        android:text="@string/select_another_address"/>
 
                 </LinearLayout>
 
@@ -424,7 +424,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Any Message for the Chef?"/>
+                        android:text="@string/any_message_for_the_chef"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -440,7 +440,7 @@
                         android:gravity="center"
                         android:inputType="textShortMessage"
                         android:textSize="14sp"
-                        android:hint="Eg. extra spicy, less gravy, etc."/>
+                        android:hint="@string/eg_extra_spicy_less_gravy_etc"/>
 
                 </LinearLayout>
 
@@ -459,7 +459,7 @@
                 android:textAllCaps="true"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
-                android:text="Confirm Order"/>
+                android:text="@string/confirm_order"/>
 
         </LinearLayout>
 

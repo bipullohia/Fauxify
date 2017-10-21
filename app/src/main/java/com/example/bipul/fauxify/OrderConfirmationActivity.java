@@ -28,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+
 public class OrderConfirmationActivity extends AppCompatActivity {
 
     TextView mCurrentStatusTextView, mDeliveryTimeTextView, mOrderIdTextView, mRestNameTextView,
@@ -51,9 +52,9 @@ public class OrderConfirmationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
-        alertbuilder.setMessage("You can always check your order in 'My Orders'")
+        alertbuilder.setMessage(R.string.you_can_check_orders_at_myorders)
                 .setCancelable(true)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -65,7 +66,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
                 });
 
         AlertDialog alert = alertbuilder.create();
-        alert.setTitle("Redirecting to Restaurants...");
+        alert.setTitle(getString(R.string.redirecting_to_restaurants));
         alert.show();
     }
 
@@ -90,7 +91,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_confirmorder);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Order Confirmation");
+        getSupportActionBar().setTitle(R.string.order_confirmation);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         doTheAutoRefresh();
@@ -149,7 +150,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            json_url = MainActivity.requestURL + "fauxusers/" + utfUserId + "/fauxorders/" + orderId + "?access_token=" + userToken;
+            json_url = getString(R.string.request_url) + "fauxusers/" + utfUserId + "/fauxorders/" + orderId + "?access_token=" + userToken;
             Log.e("json_url", json_url);
         }
 
@@ -196,13 +197,11 @@ public class OrderConfirmationActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
 
             if (mJOOrderConfirmationInt == 1) {
-                mCurrentStatusTextView.setText("Your Order has been confirmed and is being prepared by the Restaurant");
+                mCurrentStatusTextView.setText(R.string.your_order_being_prepared);
                 mCurrentStatusTextView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                //mCurrentStatusTextView.setTypeface(null, Typeface.NORMAL);
                 mDeliveryTimeTextView.setVisibility(View.VISIBLE);
                 mOrderRefreshTextView.setVisibility(View.GONE);
                 mDeliveryTimeTextView.setText("Your order will be delivered in approximately " + joDeliveryTime + " Minutes");
-                //mDeliveryTimeTextView.setTypeface(null, Typeface.NORMAL);
                 mHandler.removeCallbacks(mRunnable);
             }
         }

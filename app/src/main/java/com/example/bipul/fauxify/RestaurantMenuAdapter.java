@@ -9,15 +9,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 9/4/2016.
- */
 
 class RestaurantMenuAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<Fragment> mFragmentsList = new ArrayList<>();
     private ArrayList<String> mTabtitles = new ArrayList<>();
-    ArrayList<JSONObject> mJObject = new ArrayList<>();
+    private ArrayList<JSONObject> mJObject = new ArrayList<>();
 
     void addFragments(Fragment fragments, String titles, JSONObject jobject)
     {

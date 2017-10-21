@@ -1,14 +1,11 @@
 package com.example.bipul.fauxify;
 
-/**
- * Created by bipul on 27-06-2016.
- */
 
-public class Restaurant {
+class Restaurant {
     private String resName, resType, resRating, resDeliveryTime, resMinOrder, resId, deliveryFee, freeDeliveryAmount, restStatus;
 
-    public Restaurant(String resName, String resType, String resRating, String resDeliveryTime,
-                      String resMinOrder, String resId, String deliveryFee, String freeDeliveryAmount, String restStatus) {
+    Restaurant(String resName, String resType, String resRating, String resDeliveryTime,
+               String resMinOrder, String resId, String deliveryFee, String freeDeliveryAmount, String restStatus) {
 
         this.resName = resName;
         this.resType = resType;

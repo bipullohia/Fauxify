@@ -75,7 +75,7 @@ public class MyOrdersFragment extends Fragment {
         @Override
         protected void onPreExecute() {
 
-            pd = ProgressDialog.show(getContext(), "", "Loading Orders...", false);
+            pd = ProgressDialog.show(getContext(), "", getString(R.string.loading_orders), false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -90,7 +90,7 @@ public class MyOrdersFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            json_url = MainActivity.requestURL + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
+            json_url = getString(R.string.request_url) + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
             Log.e("json_url", json_url);
         }
 

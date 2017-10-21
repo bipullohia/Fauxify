@@ -1,8 +1,5 @@
 package com.example.bipul.fauxify;
 
-/**
- * Created by Bipul Lohia on 9/7/2016.
- */
 
 class CurrentOrder {
     String currentdishName, currentdishPrice; Integer currentdishQuantity;

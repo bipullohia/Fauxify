@@ -15,9 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-/**
- * Created by Bipul Lohia on 8/27/2016.
- */
+
 public class AddAddressInfo extends AppCompatActivity implements View.OnClickListener {
 
     Spinner mSpinner;
@@ -37,7 +35,7 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
 
         mToolbar =(Toolbar) findViewById(R.id.toolbar_addaddressinfo);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Add Address");
+        getSupportActionBar().setTitle(R.string.add_address);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mFlatNoEditText = (EditText) findViewById(R.id.flat_no);
@@ -55,7 +53,7 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 mAddressPositionInt = position;
-                Log.e("Position", (String) parent.getItemAtPosition(position));
+                Log.i("Position", (String) parent.getItemAtPosition(position));
 
                 if (position == 0) {
                     mFlatNoEditText.setVisibility(View.GONE);
@@ -73,19 +71,19 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
                     mFlatNoEditText.setVisibility(View.GONE);
                 }
 
-                Log.e("address selected-pos", String.valueOf(parent.getItemAtPosition(position)));
+                Log.i("address selected-pos", String.valueOf(parent.getItemAtPosition(position)));
 
                 switch (mAddressPositionInt) {
                     case 1:
-                        mDefaultAddress = "Abode Valley,\n54 Kakkan Street, Potheri-603203";
+                        mDefaultAddress = getString(R.string.abode_address);
                         break;
 
                     case 2:
-                        mDefaultAddress = "Estancia,\nGrand Southern Trunk Rd, Potheri-603203";
+                        mDefaultAddress = getString(R.string.estancia_address);
                         break;
 
                     case 3:
-                        mDefaultAddress = "SRM Green Pearl,\nAmman Koil Street, Potheri-603203";
+                        mDefaultAddress = getString(R.string.greenpearl_address);
                         break;
 
                     default:
@@ -112,7 +110,7 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
         } else if (mAddressPositionInt == 4) {
             mInputAddress = mFullAddress;
         }
-        Log.e("flat no", mInputAddress);
+        Log.d("flat no", mInputAddress);
 
         if(!mInputAddress.equals("")) {
 
@@ -125,8 +123,7 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
         }
 
         else{
-
-            Toast.makeText(getApplicationContext(), "House/Flat No. cannot be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.empty_input_field, Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -18,7 +18,7 @@ class MyOrderDishesAdapter extends RecyclerView.Adapter<MyOrderDishesAdapter.MyV
     private ArrayList<CurrentOrder> mDishesListInCart;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private static final String TAG = "error";
+
         TextView dishName, dishPrice, dishQuantity, dishAmount;
 
         Context context;

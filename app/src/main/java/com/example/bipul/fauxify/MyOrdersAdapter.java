@@ -16,9 +16,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 11/5/2016.
- */
 
 class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder> {
 
@@ -107,9 +104,11 @@ class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder>
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 if(i==jsonArray.length()-1){
-                    dishDetails = dishDetails + String.valueOf(jsonObject.getInt("dishquantity"))+ " " + jsonObject.getString("dishname");
+                    dishDetails = dishDetails + String.valueOf(jsonObject.getInt("dishquantity"))
+                                  + " " + jsonObject.getString("dishname");
                 }else{
-                    dishDetails = dishDetails + String.valueOf(jsonObject.getInt("dishquantity"))+ " " + jsonObject.getString("dishname") + ", ";
+                    dishDetails = dishDetails + String.valueOf(jsonObject.getInt("dishquantity"))
+                                  + " " + jsonObject.getString("dishname") + ", ";
                 }
             }
 

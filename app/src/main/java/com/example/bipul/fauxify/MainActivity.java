@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar mToolbar;
     public static String rupeesymbol;
     TextView mHeadNameTextView, mHeadEmailTextView, mHeadNumberTextView;
-    static String requestURL;
     FragmentTransaction fragmentTransaction;
     boolean doubleBackToExitPressedOnce = false;
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Tap 'back' again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.tap_back_again_exit, Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -90,11 +89,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-
-        rupeesymbol = getApplicationContext().getString(R.string.Rs);
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -115,8 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //
 //        }
 //        Log.i("SecretKey = ", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-
-        requestURL = "http://fauxify.com/api/";
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_mainactivity);
         setSupportActionBar(mToolbar);
@@ -162,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new RestaurantFragment()).commit();
             navigationView.getMenu().getItem(0).setChecked(true);
-            getSupportActionBar().setTitle("Restaurants");
+            getSupportActionBar().setTitle(R.string.restaurants);
         }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -174,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.main_container, new RestaurantFragment());
                         fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Restaurants");
+                        getSupportActionBar().setTitle(R.string.restaurants);
                         mDrawerLayout.closeDrawers();
                         break;
 
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.main_container, new MyOrdersFragment());
                         fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("My Orders");
+                        getSupportActionBar().setTitle(R.string.my_orders);
                         getSupportActionBar().setSubtitle(null);
                         mDrawerLayout.closeDrawers();
 
@@ -192,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.main_container, new OffersFragment());
                         fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Offers");
+                        getSupportActionBar().setTitle(R.string.offers);
                         getSupportActionBar().setSubtitle(null);
                         mDrawerLayout.closeDrawers();
                         break;
@@ -201,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.main_container, new AddressesFragment());
                         fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Addresses");
+                        getSupportActionBar().setTitle(R.string.addresses);
                         getSupportActionBar().setSubtitle(null);
                         mDrawerLayout.closeDrawers();
                         break;
@@ -217,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     case R.id.logout:
                         Log.i("Sign out button clicked", " success");
-                        Toast.makeText(MainActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.logged_out, Toast.LENGTH_SHORT).show();
 
                         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -289,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 e.printStackTrace();
             }
 
-            urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
             Log.e("json_url", urlFinal);
         }
 

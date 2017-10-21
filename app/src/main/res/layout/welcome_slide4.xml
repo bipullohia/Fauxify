@@ -5,7 +5,7 @@
     android:background="@color/white">
 
         <ImageView
-            android:contentDescription="Background Image"
+            android:contentDescription="@string/background_image"
             android:src="@drawable/welcomescreen4"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:textColor="@color/colorAccent"
             android:textAlignment="center"
             android:textSize="28sp"
-            android:text="Multiple Payment Options"/>
+            android:text="@string/multiple_payment_options"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -32,6 +32,6 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_desc"
-            android:text="Pay via Paytm or by Cash On Delivery"/>
+            android:text="@string/welcome_slide4"/>
 
 </FrameLayout>

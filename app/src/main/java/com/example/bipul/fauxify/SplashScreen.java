@@ -7,9 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-/**
- * Created by bipul on 22-04-2016.
- */
 
 public class SplashScreen extends Activity {
 
@@ -51,7 +48,6 @@ public class SplashScreen extends Activity {
 
     private void launchHomeScreen() {
 
-        Log.e("im inside from SS", "launchhomescreen");
         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
         String personEmail = sharedPref.getString("personEmail", null);
         String personId = sharedPref.getString("personId", null);
@@ -73,9 +69,10 @@ public class SplashScreen extends Activity {
         } else {
             Log.e("Data status", "None of the info is null");
 
-            Log.i("token", personToken);
-            Log.i("id", personUserId);
-            Log.i("number", personContactNumber);
+            //Log.i("token", personToken);
+            //Log.i("id", personUserId);
+            //Log.i("number", personContactNumber);
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

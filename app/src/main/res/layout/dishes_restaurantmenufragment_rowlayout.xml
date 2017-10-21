@@ -30,7 +30,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:contentDescription="Vegetarian Dish"
+                android:contentDescription="@string/vegetarian_dish"
                 android:src="@drawable/dish_type_veg"
                 android:id="@+id/is_vegdish"
                 android:layout_gravity="center_vertical"
@@ -40,7 +40,7 @@
                 android:layout_height="10dp"/>
 
             <ImageView
-                android:contentDescription="Non-Vegetarian Dish"
+                android:contentDescription="@string/non_vegetarian_dish"
                 android:src="@drawable/dish_type_nonveg"
                 android:id="@+id/is_nonvegdish"
                 android:layout_gravity="center_vertical"
@@ -57,7 +57,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:textSize="16sp"
-                android:text="Dish Name"/>
+                android:text="@string/dish_name"/>
 
             <LinearLayout
                 android:id="@+id/linearlayout_buttons"
@@ -81,7 +81,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="0"/>
+                    android:text="@string/_0"/>
 
                 <Button
                     android:id="@+id/add_dish"
@@ -130,7 +130,7 @@
                     android:textAlignment="viewEnd"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="16sp"
-                    android:text="XXX"/>
+                    android:text="@string/xxx"/>
 
             </LinearLayout>
 
@@ -141,7 +141,7 @@
                 android:layout_weight="1"
                 android:minHeight="0dp"
                 android:textAllCaps="false"
-                android:text="Add to Cart"/>
+                android:text="@string/add_to_cart"/>
 
         </LinearLayout>
 

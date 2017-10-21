@@ -1,8 +1,5 @@
 package com.example.bipul.fauxify;
 
-/**
- * Created by Bipul Lohia on 9/6/2016.
- */
 
 class Dishes {
     private String dishName, dishPrice, dishId;

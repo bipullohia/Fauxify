@@ -32,7 +32,7 @@
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:textSize="@dimen/headingCardView"
-                android:text="Check your address"/>
+                android:text="@string/check_your_address"/>
 
             <View
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:paddingLeft="@dimen/paddingNormalButton"
                 android:paddingRight="@dimen/paddingNormalButton"
                 android:textAllCaps="false"
-                android:text="Confirm"/>
+                android:text="@string/confirm"/>
 
         </LinearLayout>
 

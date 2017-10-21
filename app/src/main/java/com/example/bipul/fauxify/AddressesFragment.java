@@ -33,9 +33,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 
 public class AddressesFragment extends Fragment {
 
@@ -94,7 +91,7 @@ public class AddressesFragment extends Fragment {
         @Override
         protected void onPreExecute() {
 
-            pd = ProgressDialog.show(getContext(), "", "Loading Address info...", false);
+            pd = ProgressDialog.show(getContext(), "", getString(R.string.loading_address_info), false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -109,7 +106,7 @@ public class AddressesFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
             Log.e("json_url", urlFinal);
         }
 
@@ -180,7 +177,7 @@ public class AddressesFragment extends Fragment {
             }
 
             else {
-                Toast.makeText(getContext(), "Couldn't load Address info", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.address_load_failed, Toast.LENGTH_SHORT).show();
             }
 
             pd.dismiss();

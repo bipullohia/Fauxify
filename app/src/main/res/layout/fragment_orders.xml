@@ -41,7 +41,7 @@
                 android:padding="10dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/headingCardView"
-                android:text="Your Orders"/>
+                android:text="@string/your_orders"/>
 
             <View
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 android:padding="10dp"
                 android:gravity="center"
                 android:textSize="14sp"
-                android:text="No Order found. Order something now!"/>
+                android:text="@string/no_order_found_order_something_now"/>
 
         </LinearLayout>
 

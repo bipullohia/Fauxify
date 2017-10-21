@@ -34,7 +34,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Tap 'back' again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.tap_back_again_exit, Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 

@@ -13,7 +13,7 @@
         android:textAlignment="center"
         android:background="?android:attr/selectableItemBackground"
         android:textSize="15sp"
-        android:text="Your address"/>
+        android:text="@string/your_address"/>
 
     <View
         android:layout_width="match_parent"

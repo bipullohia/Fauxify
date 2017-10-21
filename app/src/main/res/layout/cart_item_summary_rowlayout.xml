@@ -19,7 +19,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="14sp"
-            android:text="XXXX XXXX"/>
+            android:text="@string/xxxx_xxxxx"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -38,7 +38,7 @@
                 android:id="@+id/dishprice_incart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"/>
+                android:text="@string/xxx"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,13 +46,14 @@
                 android:gravity="center_vertical"
                 android:paddingEnd="5dp"
                 android:paddingStart="5dp"
-                android:text="x"/>
+                android:text="@string/x"/>
 
             <TextView
                 android:id="@+id/dishquantity_incart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="X"/>
+                android:maxLines="1"
+                android:text="@string/xxx"/>
 
         </LinearLayout>
 
@@ -73,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dishamount_incart"
-                android:text="XXX"/>
+                android:text="@string/xxx"/>
 
         </LinearLayout>
 

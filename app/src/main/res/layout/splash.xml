@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:contentDescription="Fauxify Logo"
+        android:contentDescription="@string/fauxify_logo"
         android:src="@drawable/ic_restaurant_black_48dp"
         android:id="@+id/logo"
         android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
         android:layout_marginTop="72dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="32sp"
-        android:text="Fauxify"/>
+        android:text="@string/app_name"/>
 
     <TextView
         android:id="@+id/textView"
@@ -31,6 +31,6 @@
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="The Ultimate Food Solution"/>
+        android:text="@string/fauxify_tagline"/>
 
 </RelativeLayout>

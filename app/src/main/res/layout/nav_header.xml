@@ -15,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
-        android:text="pqrs wxyz"/>
+        android:text="@string/xxxx_xxxxx"/>
 
     <TextView
         android:id="@+id/navhead_email"
@@ -25,7 +25,7 @@
         android:layout_marginStart="16dp"
         android:textColor="@color/white"
         android:textSize="13sp"
-        android:text="abc.xyz@gmail.com"/>
+        android:text="@string/xxx"/>
 
     <TextView
         android:id="@+id/navhead_contact"
@@ -35,6 +35,6 @@
         android:layout_marginStart="16dp"
         android:textColor="@color/white"
         android:textSize="13sp"
-        android:text="XXXXXXXXXX"/>
+        android:text="@string/xxx"/>
 
 </LinearLayout>

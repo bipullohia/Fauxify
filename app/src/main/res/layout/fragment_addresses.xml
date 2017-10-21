@@ -26,7 +26,7 @@
                 android:padding="10dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/headingCardView"
-                android:text="Saved Addresses"/>
+                android:text="@string/saved_addresses"/>
 
             <View
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                 android:padding="10dp"
                 android:gravity="center"
                 android:textSize="14sp"
-                android:text="No saved Address found. Add one now!"/>
+                android:text="@string/no_saved_address_found_add_one_now"/>
 
         </LinearLayout>
 

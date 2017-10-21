@@ -51,7 +51,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_addressconfirm);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Address Confirmation");
+        getSupportActionBar().setTitle(R.string.address_confirmation);
 
         mConfirmButton.setOnClickListener(this);
     }
@@ -61,7 +61,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
 
         sendAddress();
 
-        Toast.makeText(getBaseContext(), "Address added successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), R.string.address_added_successfully, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
     }
@@ -91,7 +91,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                 e.printStackTrace();
             }
 
-            urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
             Log.e("checkurl", urlFinal);
         }
 
@@ -114,7 +114,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                 httpURLConnection.disconnect();
 
                 String result_checkjson = stringBuilder.toString().trim();
-                Log.e("result", result_checkjson);
+                Log.i("result", result_checkjson);
 
                 JSONObject jobject = new JSONObject(result_checkjson);
                 mJArrayOldAddresses = jobject.getJSONArray("Address");
@@ -129,7 +129,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                     }}
 
                 else {
-                    Log.e("Addressconfirm activity", "no previous address found");
+                    Log.i("Addressconfirm activity", "no previous address found");
                 }
 
             } catch (IOException | JSONException e) {
@@ -158,7 +158,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                     }}
 
                 else {
-                    Log.e("Addressconfirm activity", "no previous address found while posting");
+                    Log.i("Addressconfirm activity", "no previous address found while posting");
                 }
 
                 jsonArray.put(mAddress);
@@ -188,7 +188,7 @@ public class AddressConfirmationInCart extends AppCompatActivity implements View
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                Log.i("test", json);
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

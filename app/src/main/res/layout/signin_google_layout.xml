@@ -5,7 +5,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:contentDescription="Background Image"
+        android:contentDescription="@string/background_image"
         android:src="@drawable/welcomescreen5"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
@@ -22,10 +22,10 @@
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="32sp"
-        android:text="Fauxify"/>
+        android:text="@string/app_name"/>
 
     <ImageView
-        android:contentDescription="Restaurant Icon"
+        android:contentDescription="@string/restaurant_icon"
         android:src="@drawable/app_icon"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/appname"

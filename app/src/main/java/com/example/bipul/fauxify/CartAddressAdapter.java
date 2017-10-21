@@ -10,16 +10,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 9/15/2016.
- */
 
 class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.MyViewHolder> {
 
     private ArrayList<Address> mAddressListInCart;
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private static final String TAG = "error";
+
         TextView userAddress;
         Context context;
 
@@ -38,7 +35,7 @@ class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.MyViewH
             int position = getAdapterPosition();
             Address addresscart = mAddressListInCart.get(position);
 
-            Log.d(TAG, "onClick " + getAdapterPosition());
+            Log.d("error", "onClick " + getAdapterPosition());
 
             CartActivity.checkAddressCondition();
             CartActivity.setCurrentAddress(addresscart.getUserAddress());

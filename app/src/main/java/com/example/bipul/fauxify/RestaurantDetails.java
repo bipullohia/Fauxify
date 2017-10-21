@@ -58,19 +58,19 @@ public class RestaurantDetails extends AppCompatActivity {
         isVeg = false;
         if (DishesAdapter.currentOrders.size() != 0) {
             AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
-            alertbuilder.setMessage("You cart has items from this restaurant. It needs to be emptied for you to be able to browse other restaurants. Agree?")
+            alertbuilder.setMessage(R.string.cart_already_has_items_empty_ques)
                     .setCancelable(true)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Cart Emptied!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.cart_emptied, Toast.LENGTH_SHORT).show();
                             DishesAdapter.currentOrders.clear();
                             RestaurantDetails.super.onBackPressed();
                         }
                     })
 
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -78,7 +78,7 @@ public class RestaurantDetails extends AppCompatActivity {
                     });
 
             AlertDialog alert = alertbuilder.create();
-            alert.setTitle("Oops!");
+            alert.setTitle(getString(R.string.oops));
             alert.show();
 
         } else {
@@ -167,15 +167,10 @@ public class RestaurantDetails extends AppCompatActivity {
         mCollapsingToolbar.setContentScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         mCollapsingToolbar.setStatusBarScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 
-//        mToolbar= (Toolbar) findViewById(R.id.toolbar_restaurantdetails);
-//        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setTitle(resName);
-
-//        checkOutButton.setOnClickListener(new View.OnClickListener() {
+//        checkOutButton.setOnClickListener(new View.OnClickListener() { //the supposed replacement of Floating Action Button
 //            @Override
 //            public void onClick(View v) {
 //                if (DishesAdapter.currentOrders.size()!=0)
-//                {Log.e("hey!", "I heard you");
 //                Intent intent = new Intent(RestaurantDetails.this, CartActivity.class);
 //                startActivity(intent);}
 //
@@ -192,7 +187,7 @@ public class RestaurantDetails extends AppCompatActivity {
                     Intent intent = new Intent(RestaurantDetails.this, CartActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Dishes to order", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.select_dishes_to_order, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -214,9 +209,9 @@ public class RestaurantDetails extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://fauxify.com/api/restaurants/" + resId;
+            json_url = getString(R.string.request_url) + "restaurants/" + resId;
             Log.e("json_url", json_url);
-            pd = ProgressDialog.show(RestaurantDetails.this, "", "Loading Restaurant Menu...", false);
+            pd = ProgressDialog.show(RestaurantDetails.this, "", getString(R.string.loading_restaurant_menu), false);
         }
 
         @Override
@@ -272,7 +267,8 @@ public class RestaurantDetails extends AppCompatActivity {
             for (int i = 0; i <= mNoOfCategoriesInt - 1; i++) {
 
                 try {
-                    mRestaurantMenuAdapter.addFragments(new RestaurantMenuFragment(), categories.get(i), jsonArray.getJSONObject(i));
+                    mRestaurantMenuAdapter.addFragments(new RestaurantMenuFragment(), categories.get(i),
+                                                        jsonArray.getJSONObject(i));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -285,11 +281,3 @@ public class RestaurantDetails extends AppCompatActivity {
         }
     }
 }
-//    public void snackbarMessage(String message){
-//
-//        Snackbar snackbar = Snackbar
-//                .make(mRestaurantDetailCoordinatorLayout, message, Snackbar.LENGTH_SHORT);
-//        View snackbarView = snackbar.getView();
-//        snackbarView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-//        snackbar.show();
-//}

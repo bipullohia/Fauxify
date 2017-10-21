@@ -5,7 +5,7 @@
     android:background="@color/white">
 
         <ImageView
-            android:contentDescription="Background Image"
+            android:contentDescription="@string/background_image"
             android:src="@drawable/welcomescreen1"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:textColor="@color/colorAccent"
             android:textAlignment="center"
             android:textSize="@dimen/slide_title"
-            android:text="Restaurants"/>
+            android:text="@string/restaurants"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -30,6 +30,6 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_desc"
-            android:text="Explore the restaurants around you"/>
+            android:text="@string/welcome_slide1"/>
 
 </FrameLayout>

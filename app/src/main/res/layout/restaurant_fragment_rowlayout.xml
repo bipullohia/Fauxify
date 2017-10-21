@@ -22,7 +22,7 @@
         android:paddingTop="30dp">
 
         <ImageView
-            android:contentDescription="Restaurant Image"
+            android:contentDescription="@string/restaurant_image"
             android:src="@drawable/muffin"
             android:id="@+id/res_image"
             android:layout_alignParentTop="true"
@@ -41,7 +41,7 @@
             android:layout_marginStart="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimaryText"
-            android:text="French Loaf"/>
+            android:text="@string/restaurant_name"/>
 
         <TextView
             android:id="@+id/res_type"
@@ -51,7 +51,7 @@
             android:layout_alignStart="@+id/res_name"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorAccent"
-            android:text="Desserts"/>
+            android:text="@string/restaurant_type"/>
 
         <TextView
             android:id="@+id/res_status"
@@ -64,7 +64,7 @@
             android:layout_marginEnd="15dp"
             android:textColor="@color/fadetext"
             android:textSize="13sp"
-            android:text="Inactive" />
+            android:text="@string/inactive" />
 
         <TextView
             android:id="@+id/res_delivery_time"
@@ -75,7 +75,7 @@
             android:layout_alignStart="@+id/res_type"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="12sp"
-            android:text="Delivers in XX minutes"/>
+            android:text="@string/delivers_in_xx_minutes"/>
 
         <TextView
             android:id="@+id/res_min_order"
@@ -86,7 +86,7 @@
             android:layout_marginStart="10dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="12sp"
-            android:text="Min Order: 100"/>
+            android:text="@string/min_order_xxx"/>
 
     </RelativeLayout>
 

@@ -39,7 +39,7 @@ public class RestaurantFragment extends Fragment {
         super.onResume();
 
         ((MainActivity) getActivity())
-                .setActionBarTitle("Restaurants");
+                .setActionBarTitle(getString(R.string.restaurants));
     }
 
     @Override
@@ -88,9 +88,9 @@ public class RestaurantFragment extends Fragment {
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "restaurants";
+            json_url = getString(R.string.request_url) + "restaurants";
             Log.e("json_url", json_url);
-            pd = ProgressDialog.show(getContext(), "", "Fetching Restaurants...", false);
+            pd = ProgressDialog.show(getContext(), "", getString(R.string.fetching_restaurants), false);
         }
 
         @Override
@@ -146,10 +146,10 @@ public class RestaurantFragment extends Fragment {
                 mResAdapter.notifyDataSetChanged();
 
             } else if (status == 0) {
-                Toast.makeText(getContext(), "Error Ocurred. Try Again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_occurred, Toast.LENGTH_SHORT).show();
 
             } else {
-                Toast.makeText(getContext(), "Couldn't load Restaurant data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_occurred, Toast.LENGTH_SHORT).show();
             }
 
             pd.dismiss();

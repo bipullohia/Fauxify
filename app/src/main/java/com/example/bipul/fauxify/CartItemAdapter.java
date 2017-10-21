@@ -40,9 +40,9 @@ class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyViewHolder>
         public boolean onLongClick(View v) {
 
             AlertDialog.Builder alertbuilder = new AlertDialog.Builder(context);
-            alertbuilder.setMessage("Do you want to remove this dish?")
+            alertbuilder.setMessage(R.string.remove_dish_ques)
                     .setCancelable(true)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -55,7 +55,7 @@ class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyViewHolder>
                             }
                     )
 
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

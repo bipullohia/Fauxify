@@ -28,9 +28,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 8/31/2016.
- */
 
 class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
 
@@ -57,9 +54,9 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
             mPosition = getAdapterPosition();
 
             AlertDialog.Builder alertbuilder = new AlertDialog.Builder(context);
-            alertbuilder.setMessage("Do you want to delete this address?")
+            alertbuilder.setMessage(R.string.delete_address_ques)
                     .setCancelable(true)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                                 class BGTaskDeleteAddress extends AsyncTask<Void, Void, String> {
 
@@ -81,8 +78,9 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                             e.printStackTrace();
                                         }
 
-                                        urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-                                        Log.e("checkurl", urlFinal);
+                                        urlFinal = context.getString(R.string.request_url) + "Fauxusers/"
+                                                                    + utfUserId + "?access_token=" + userToken;
+                                        Log.i("checkurl", urlFinal);
                                     }
 
                                     @Override
@@ -121,7 +119,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                                 }
 
                                             } else {
-                                                Log.e("AddressConfirm activity", "No Previous Address found");
+                                                Log.i("AddressConfirm activity", "No Previous Address found");
                                             }
 
                                         } catch (JSONException | IOException e) {
@@ -156,7 +154,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                                 }
 
                                             } else {
-                                                Log.e("Addressconfirm activity", "No Previous Address found while posting");
+                                                Log.i("Addressconfirm activity", "No Previous Address found while posting");
                                             }
 
                                             JSONObject jsonObject = new JSONObject();
@@ -200,7 +198,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                         if(jArrayNewAddresses.length()==0){ //it will update the textview which says no saved
                                             AddressesFragment.noSavedAdd.setVisibility(View.VISIBLE); //addresses since no of Add is zero
                                         }
-                                        Log.e("No. of Addresses-new", String.valueOf(jArrayNewAddresses.length()));
+                                        Log.i("No. of Addresses-new", String.valueOf(jArrayNewAddresses.length()));
                                     }
                                 }
 
@@ -208,7 +206,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     mAddressList.clear(); //clearing the old address list
-                                    Toast.makeText(context, "Address Deleted!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.address_deleted, Toast.LENGTH_SHORT).show();
                                     deleteAddress();
                                 }
 
@@ -218,7 +216,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                             }
                     )
 
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -226,7 +224,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                     });
 
             AlertDialog alert = alertbuilder.create();
-            alert.setTitle("Alert");
+            alert.setTitle(context.getString(R.string.alert));
             alert.show();
 
             return true;

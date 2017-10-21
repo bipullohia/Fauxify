@@ -25,7 +25,7 @@
                 android:padding="10dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/headingCardView"
-                android:text="Your Offers"/>
+                android:text="@string/your_offers"/>
 
             <View
                 android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:padding="10dp"
                 android:gravity="center"
                 android:textSize="14sp"
-                android:text="No Offers Yet. We're working on it!"/>
+                android:text="@string/no_offers_yet_we_re_working_on_it"/>
 
         </LinearLayout>
 

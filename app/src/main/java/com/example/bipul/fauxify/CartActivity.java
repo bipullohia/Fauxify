@@ -1,6 +1,5 @@
 package com.example.bipul.fauxify;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -91,7 +90,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         mToolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Review Order");
+        getSupportActionBar().setTitle(R.string.review_order);
 
         RecyclerView addressRecyclerView;
         addressRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_addresscart);
@@ -162,10 +161,10 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                     }
 
                 } else if ((finaladdress == null) && (totaldishcount != 0)) {
-                    Toast.makeText(getApplicationContext(), "Select a delivery address", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.select_delivery_address, Toast.LENGTH_LONG).show();
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Add dishes to cart", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.add_dishes_cart, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -222,7 +221,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 e.printStackTrace();
             }
 
-            urlFinal = MainActivity.requestURL + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
+            urlFinal = getString(R.string.request_url) + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
             Log.e("json_url", urlFinal);
         }
 
@@ -409,7 +408,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         String userId, userToken;
         JSONArray jsonArray;
         String jsonString;
-        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
@@ -426,7 +424,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 e.printStackTrace();
             }
 
-            urlFinal = MainActivity.requestURL + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
 
             Log.e("checkurl", urlFinal);
         }

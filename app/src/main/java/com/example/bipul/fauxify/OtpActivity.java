@@ -65,7 +65,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_otpactivity);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Phone Number Verification");
+        getSupportActionBar().setTitle(R.string.phone_number_verification);
 
         mOtpInputEditText = (EditText) findViewById(R.id.otp_edittext);
         mNumberInputEditText = (EditText) findViewById(R.id.edittext_phone_number);
@@ -96,17 +96,14 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                // This callback is invoked in an invalid request for verification is made,
-                // for instance if the the phone number format is not valid.
+
                 Log.w(TAG, "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    // Invalid request
-                    Toast.makeText(OtpActivity.this, "Verification Failed. Invalid Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtpActivity.this, R.string.verification_failed_invalid_num, Toast.LENGTH_SHORT).show();
 
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-                    Toast.makeText(OtpActivity.this, "Verification Failed. Quota exceeded!", Toast.LENGTH_SHORT).show();
-                    // The SMS quota for the project has been exceeded
+                    Toast.makeText(OtpActivity.this, R.string.verification_failed_quota_exceeded, Toast.LENGTH_SHORT).show();
                 }
 
                 mNumberInputLinearLayout.setVisibility(View.VISIBLE);
@@ -122,9 +119,9 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
                 //Log.d(TAG, "onCodeSent:" + verificationId);
-                Toast.makeText(OtpActivity.this, "Verification Code sent!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OtpActivity.this, R.string.verification_code_sent, Toast.LENGTH_SHORT).show();
 
-                // Save verification ID and resending token so we can use them later
+                // Saving verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 //mResendToken = token;
                 mNumberInputLinearLayout.setVisibility(View.GONE);
@@ -142,7 +139,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
 
             case button_submit:
                 mPhoneNumber = mNumberInputEditText.getText().toString();
-                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
+                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", getString(R.string.processing_request), false);
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
                         "+91"+ mPhoneNumber,        // Phone number to verify
                         60,                 // Timeout duration
@@ -152,7 +149,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case button_verify:
-                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", "Processing request...", false);
+                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", getString(R.string.processing_request), false);
                 PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mOtpInputEditText.getText().toString());
                 signInWithPhoneAuthCredential(credential);
                 break;
@@ -166,7 +163,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            Toast.makeText(OtpActivity.this, "Phone number verification is successful!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OtpActivity.this, R.string.phone_verification_success, Toast.LENGTH_SHORT).show();
                             mProgressDialog.dismiss();
                             mAuth.signOut();
 
@@ -179,7 +176,8 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(OtpActivity.this, "Invalid code!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OtpActivity.this, R.string.verification_failed_invalid_code,
+                                                Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -200,7 +198,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         @Override
         protected void onPreExecute() {
 
-            pd = ProgressDialog.show(OtpActivity.this, "", "Saving contact info...", false);
+            pd = ProgressDialog.show(OtpActivity.this, "", getString(R.string.saving_contact_info), false);
             SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
 
             userId = sharedPref.getString("userId", null);
@@ -213,7 +211,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 e.printStackTrace();
             }
 
-            urlFinal = "http://fauxify.com/api/" + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
+            urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
             Log.e("checkurl", urlFinal);
         }
 
@@ -284,7 +282,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
 
             } else {
-                Toast.makeText(OtpActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OtpActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
                 Log.e("login failed", "while posting contact info");
             }
 
