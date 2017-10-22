@@ -48,17 +48,14 @@ import java.net.URLEncoder;
 
 public class GoogleSignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
+    private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 0;
+
     ProgressDialog processdialog;
-    //private static final int PROFILE_PIC_SIZE = 400;
-    private static final String TAG = "data ";
     public static String personDisplayName, personGivenName, personFamilyName, personId, personEmail, personGender;
-    //private ImageView profile_pic;
     String result_checkjson;
     Toolbar toolbar;
-
     boolean doubleBackToExitPressedOnce = false;
-    Integer noOfAddress;
     boolean ifUserEmailExists;
     public GoogleApiClient mGoogleApiClient;
 
@@ -152,8 +149,8 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        Log.d(TAG, "handlesignInResult:" + result.getStatus());
+        //Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        //Log.d(TAG, "handlesignInResult:" + result.getStatus());
 
         if (result.isSuccess()) {
 
@@ -175,7 +172,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                     personFamilyName = person.getName().getFamilyName();
                     personId = person.getId();
                     int pg = person.getGender();
-                    // String personUrl = person.getImage().getUrl();
 
                     switch (pg) {
                         case 0:
@@ -205,13 +201,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                     editor.putString("personGender", personGender);
                     editor.apply();
 
-                    /*personUrl = personUrl.substring(0,
-                            personUrl.length() - 2)
-                            + PROFILE_PIC_SIZE;*/
-
-                    //new LoadProfileImage(profile_pic).execute(personUrl);
-
-                    Log.e("i reached", "here");
                     checkIfExists();
                 }
             });
@@ -227,38 +216,11 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
         processdialog.dismiss();
     }
 
-   /* private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public LoadProfileImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }*/
-
     private void checkIfExists() {
         new BGTaskCheckIfExists().execute();
     }
 
     private class BGTaskCheckIfExists extends AsyncTask<Void, Void, String> {
-
-        //String postconcat = personId.substring(3, 6);
 
         ProgressDialog pd;
         String JSON_STRING;
@@ -282,7 +244,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
             }
 
             String jsonUrl = url + urlfind + "/exists";
-            Log.i("url", jsonUrl);
 
             try {
                 URL urll = new URL(jsonUrl);
@@ -299,17 +260,16 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                 inputStream.close();
                 httpConnection.disconnect();
                 result_checkjson = stringBuilder.toString().trim();
-                Log.e("result", result_checkjson);
+                //Log.d(TAG, "result: " + result_checkjson);
 
                 JSONObject jobject = new JSONObject(result_checkjson);
                 ifUserEmailExists = jobject.getBoolean("exists");
-
-                Log.e("if exists", String.valueOf(ifUserEmailExists));
+                Log.d(TAG, "If exists: " + String.valueOf(ifUserEmailExists));
 
             } catch (JSONException | IOException e) {
 
                 exceptioncaught = true;
-                Log.i("status", "Login failed");
+                Log.e(TAG, "Login failed");
                 e.printStackTrace();
             }
             return null;
@@ -322,12 +282,13 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
 
                     postUserData();
 
-                    Log.i("user doesn't exist", "Posting needed");
-                } else {
+                    Log.d(TAG, "User doesn't exist, posting needed");
 
+                } else {
                     LoginUser();
-                    Log.i("user exists", "Login required");
+                    Log.d(TAG, "User exists, Login required");
                 }
+
             } else Toast.makeText(GoogleSignInActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
 
             pd.dismiss();
@@ -407,20 +368,17 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                     editor.putString("userId", userId);
                     editor.apply();
 
-                    Log.i("details", token + "   " + userId);
-
                     System.out.println("" + sb.toString());
                 } else {
                     System.out.println(httpURLConnection.getResponseMessage());
                     issuccess = false;
                 }
 
-                Log.e("test", json);
+                //Log.d(TAG, "test-data: " + json);
 
             } catch (IOException | JSONException e) {
 
                 exceptioncaught = true;
-                Log.i("Status", "loginfailed3");
                 e.printStackTrace();
             }
 
@@ -462,8 +420,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
 
             // post new user data
             try {
-                Log.i("jsonurl", jsonUrl);
-
                 URL url = new URL(jsonUrl);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -515,12 +471,11 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                     issuccess = false;
                 }
 
-                Log.e("test", json);
+                //Log.d(TAG, "test-data: " + json);
 
             } catch (IOException | JSONException e) {
 
                 exceptioncaught = true;
-                Log.i("status", "loginfailed2");
                 e.printStackTrace();
             }
             return null;
@@ -534,7 +489,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
 
             } else {
                 Toast.makeText(GoogleSignInActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
-                Log.e("login failed", "while posting info");
+                Log.e(TAG, "Login failed while posting info");
             }
             pd.dismiss();
         }
@@ -571,7 +526,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
             }
 
             urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-            Log.e("json_url", urlFinal);
         }
 
         @Override
@@ -592,7 +546,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "result: " + resultjson);
 
                 JSONObject jobject = new JSONObject(resultjson);
                 phoneNumber = jobject.getString("Contact");
@@ -612,10 +566,10 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
         protected void onPostExecute(String s) {
 
             if(status==0){ //during development, if any account was registered without contact no., that will show status code = 0
-                           // and not redirect to Otpavtivity class. Fix it or keep that in mind.
+                           // and not redirect to Otpactivity class. Fix it or keep that in mind.
 
                 Toast.makeText(GoogleSignInActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
-                Log.e("Login failed", "while enquiring about contact number existence");
+                Log.e(TAG, "Login failed while enquiring about contact number existence");
             }
 
             else if(status==1 && phoneNumber != null && !phoneNumber.matches("")){
@@ -629,6 +583,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
 
             }else if(status==1 && (phoneNumber==null || phoneNumber.matches(""))){
                startActivity(new Intent(GoogleSignInActivity.this, OtpActivity.class));
+               finish();
             }
 
             pd.dismiss();

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
 
+    private static final String TAG = "AddressAdapter";
     private ArrayList<Address> mAddressList;
     private Integer mPosition;
 
@@ -80,7 +81,6 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
 
                                         urlFinal = context.getString(R.string.request_url) + "Fauxusers/"
                                                                     + utfUserId + "?access_token=" + userToken;
-                                        Log.i("checkurl", urlFinal);
                                     }
 
                                     @Override
@@ -102,7 +102,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                             httpURLConnection.disconnect();
 
                                             String result_checkjson = stringBuilder.toString().trim();
-                                            Log.e("result", result_checkjson);
+                                            //Log.d(TAG, "result: " + result_checkjson);
 
                                             JSONObject jobject = new JSONObject(result_checkjson);
 
@@ -115,11 +115,11 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
 
                                                 for (int j = 0; j <= (jArrayOldAddresses.length() - 1); j++) {
                                                     savedaddress[j] = jArrayOldAddresses.getString(j);
-                                                    Log.e("saved addresses", savedaddress[j]);
+                                                    //Log.d(TAG, "saved addresses: " + savedaddress[j]);
                                                 }
 
                                             } else {
-                                                Log.i("AddressConfirm activity", "No Previous Address found");
+                                                Log.d(TAG, "No Previous Address found");
                                             }
 
                                         } catch (JSONException | IOException e) {
@@ -149,12 +149,12 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                                         Address address = new Address(savedaddress[i]); //adding the new addresses to list
                                                         mAddressList.add(address);
                                                         jArrayNewAddresses.put(savedaddress[i]);
-                                                        Log.e("posting addresses", savedaddress[i]);
+                                                        //Log.d(TAG, "posting addresses: " + savedaddress[i]);
                                                     }
                                                 }
 
                                             } else {
-                                                Log.i("Addressconfirm activity", "No Previous Address found while posting");
+                                                Log.d(TAG, "No Previous Address found while posting");
                                             }
 
                                             JSONObject jsonObject = new JSONObject();
@@ -182,7 +182,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                                 System.out.println(httpConnection.getResponseMessage());
                                             }
 
-                                            Log.e("test-finalAddressPost", json);
+                                            //Log.d(TAG, "test-finalAddressPost: " + json);
 
                                         } catch (IOException | JSONException e) {
                                             e.printStackTrace();
@@ -198,7 +198,6 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
                                         if(jArrayNewAddresses.length()==0){ //it will update the textview which says no saved
                                             AddressesFragment.noSavedAdd.setVisibility(View.VISIBLE); //addresses since no of Add is zero
                                         }
-                                        Log.i("No. of Addresses-new", String.valueOf(jArrayNewAddresses.length()));
                                     }
                                 }
 

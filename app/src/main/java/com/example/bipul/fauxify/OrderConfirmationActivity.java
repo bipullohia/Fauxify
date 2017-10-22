@@ -31,6 +31,8 @@ import java.net.URLEncoder;
 
 public class OrderConfirmationActivity extends AppCompatActivity {
 
+    private static final String TAG = "OrderConfirmActivity";
+
     TextView mCurrentStatusTextView, mDeliveryTimeTextView, mOrderIdTextView, mRestNameTextView,
              mTotalOrderAmountTextView, mOrderRefreshTextView;
     Handler mHandler = new Handler();
@@ -106,15 +108,13 @@ public class OrderConfirmationActivity extends AppCompatActivity {
 
                 if (mJOOrderConfirmationInt == 0) {
                     checkConfirmationStatus();
-                    Log.e("checking", "again");
                     mHandler.postDelayed(this, 5000);
 
                 } else if (mJOOrderConfirmationInt == 1) {
-                    Log.e("Runnable Stopped", "No longer Running");
                     mHandler.removeCallbacks(this);
 
                 } else {
-                    Log.e("invalid", "value of orderconfirmation");
+                    Log.d(TAG, "error occured");
                 }
             }
         };
@@ -152,7 +152,6 @@ public class OrderConfirmationActivity extends AppCompatActivity {
             }
 
             json_url = getString(R.string.request_url) + "fauxusers/" + utfUserId + "/fauxorders/" + orderId + "?access_token=" + userToken;
-            Log.e("json_url", json_url);
         }
 
         @Override
@@ -173,7 +172,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "result: " + resultjson);
 
                 JSONObject jobject = new JSONObject(resultjson);
                 JSONObject jodelivery = jobject.getJSONObject("delivery");
@@ -182,10 +181,10 @@ public class OrderConfirmationActivity extends AppCompatActivity {
 
                 if (mJOOrderConfirmationInt == 1) {
                     joDeliveryTime = jodelivery.getString("deliverytime");
-                    Log.e("result deliverytime", joDeliveryTime);
+                    //Log.d(TAG, "result deliverytime: " + joDeliveryTime);
                 }
 
-                Log.e("result orderconfirm", String.valueOf(mJOOrderConfirmationInt));
+                //Log.d(TAG, "result orderconfirm: " + String.valueOf(mJOOrderConfirmationInt));
 
             } catch (JSONException | IOException e) {
                 e.printStackTrace();

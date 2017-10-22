@@ -89,7 +89,6 @@ public class RestaurantFragment extends Fragment {
         protected void onPreExecute() {
 
             json_url = getString(R.string.request_url) + "restaurants";
-            Log.e("json_url", json_url);
             pd = ProgressDialog.show(getContext(), "", getString(R.string.fetching_restaurants), false);
         }
 
@@ -111,7 +110,7 @@ public class RestaurantFragment extends Fragment {
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "result: " + resultjson);
 
                 status = 1;
                 jsonArray = new JSONArray(resultjson);
@@ -128,7 +127,6 @@ public class RestaurantFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             if (jsonArray != null && status == 1) {
-                Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
                         jobject = jsonArray.getJSONObject(j);
@@ -137,7 +135,7 @@ public class RestaurantFragment extends Fragment {
                                 jobject.getString("restaurantId"), jobject.getString("Deliveryfee"),
                                 jobject.getString("freeDeliveryAmount"), jobject.getString("RestaurantStatus"));
                         mRestaurantList.add(restaurant);
-                        Log.e("add", String.valueOf(jobject.getString("Restname")));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

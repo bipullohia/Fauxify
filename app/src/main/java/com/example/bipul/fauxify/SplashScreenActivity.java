@@ -10,6 +10,7 @@ import android.util.Log;
 
 public class SplashScreenActivity extends Activity {
 
+    private static final String TAG = "SplashScreen";
     SharedPreferences mSharedPref = null;
 
     @Override
@@ -26,23 +27,22 @@ public class SplashScreenActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //setContentView(R.layout.splash); don't uncomment this
 
         mSharedPref = getSharedPreferences("myshared", MODE_PRIVATE);
 
         if (mSharedPref.getBoolean("firstrun", true)) {
-            Log.i("firstrun", "true");
+            Log.d(TAG, "firstrun: true");
             Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(intent);
+            finish();
             mSharedPref.edit().putBoolean("firstrun", false).apply();
 
         } else {
-            Log.i("firstrun", "false");
-            Intent intent = new Intent(this, GoogleSignInActivity.class);
-            startActivity(intent);
+            Log.d(TAG, "firstrun: false");
             launchHomeScreen();
         }
+
         //Insert an intent here to bypass the whole login system
     }
 
@@ -60,19 +60,17 @@ public class SplashScreenActivity extends Activity {
 
         if ((personEmail == null) || (personDisplayName == null) || (personId == null) || (personUserId == null)
                 || (personToken == null) || (personContactNumber == null)) {
-            Log.e("Data status", "Some/All info is Null");
 
+            Log.d(TAG, "Data status: Some/All info are Null");
             Intent intent = new Intent(this, GoogleSignInActivity.class);
             startActivity(intent);
             finish();
 
         } else {
-            Log.e("Data status", "None of the info is null");
-
-            //Log.i("token", personToken);
-            //Log.i("id", personUserId);
-            //Log.i("number", personContactNumber);
-
+            Log.d(TAG, "Data status: None of the info is null");
+            //Log.d(TAG, "token: " + personToken);
+            //Log.d(TAG, "id: " + personUserId);
+            //Log.d(TAG, "number: " + personContactNumber);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

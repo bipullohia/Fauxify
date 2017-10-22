@@ -118,12 +118,10 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         resFreeDelAmount = getIntent().getStringExtra("freeDeliveryAmount");
         restStatus = getIntent().getStringExtra("restStatus");
 
-        Log.i("delfee freedelamount", resDeliveryFee + "  " + resFreeDelAmount);
         mRestDelTimeTextView = (TextView) findViewById(R.id.restDelTimeCollapse);
         mRestMinOrderTextView = (TextView) findViewById(R.id.restMinOrderCollapse);
         mResTypeTextView = (TextView) findViewById(R.id.restTypeCollapse);
         mResRatingInt = Integer.valueOf(getIntent().getStringExtra("restaurantRating"));
-        Log.e("resId", resId);
 
         mRestDelTimeTextView.setText(getIntent().getStringExtra("restaurantDeLTime"));
         String minOrder = "\u20B9 " + restMinimumOrder;
@@ -133,8 +131,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         if (!restStatus.equals("open")) {
             mCheckoutFAButton.setVisibility(View.GONE);
         }
-
-        Log.e("log value check", String.valueOf(mVegSwitch.isChecked()));
 
         mVegSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -167,19 +163,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         mCollapsingToolbar.setContentScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         mCollapsingToolbar.setStatusBarScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 
-//        checkOutButton.setOnClickListener(new View.OnClickListener() { //the supposed replacement of Floating Action Button
-//            @Override
-//            public void onClick(View v) {
-//                if (DishesAdapter.currentOrders.size()!=0)
-//                Intent intent = new Intent(RestaurantDetailsActivity.this, CartActivity.class);
-//                startActivity(intent);}
-//
-//                else {
-//                    Toast.makeText(getApplicationContext(), "Select Dishes to order", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-
         mCheckoutFAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,7 +193,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         protected void onPreExecute() {
 
             json_url = getString(R.string.request_url) + "restaurants/" + resId;
-            Log.e("json_url", json_url);
             pd = ProgressDialog.show(RestaurantDetailsActivity.this, "", getString(R.string.loading_restaurant_menu), false);
         }
 
@@ -238,8 +220,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 jobject = new JSONObject(resultjson);
                 JSONObject job = jobject.getJSONObject("Menu");
 
-                Log.e("log-JOB-menu", String.valueOf(job));
-
                 Iterator x = job.keys();
                 jsonArray = new JSONArray();
                 mNoOfCategoriesInt = 0;
@@ -251,8 +231,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                     jsonArray.put(job.get(key));
                     mNoOfCategoriesInt++;
                 }
-
-                Log.e("result", String.valueOf(jsonArray));
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

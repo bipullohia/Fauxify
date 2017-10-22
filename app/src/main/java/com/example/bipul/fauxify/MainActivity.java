@@ -15,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +34,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "MainActivity";
 
     ActionBarDrawerToggle mActionBarToggle;
     DrawerLayout mDrawerLayout;
@@ -62,27 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }, 2000);
     }
 
-    //    @Override
-//    public void onBackPressed() {
-//        //Checking for fragment count on backstack
-//        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//            getSupportFragmentManager().popBackStack();
-//        } else if (!doubleBackToExitPressedOnce) {
-//            this.doubleBackToExitPressedOnce = true;
-//            Toast.makeText(this,"Please click BACK again to exit.", Toast.LENGTH_SHORT).show();
-//
-//            new Handler().postDelayed(new Runnable() {
-//
-//                @Override
-//                public void run() {
-//                    doubleBackToExitPressedOnce = false;
-//                }
-//            }, 2000);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,26 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            getWindow().setStatusBarColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
-//        }
-
-// following commented out portion is for generating key-hash
-//        MessageDigest md = null;
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    getPackageName(),
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//            }
-//        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException ignored) {
-//
-//        }
-//        Log.i("SecretKey = ", Base64.encodeToString(md.digest(), Base64.DEFAULT));
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_mainactivity);
         setSupportActionBar(mToolbar);
@@ -128,11 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-//        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.main_container, new RestaurantFragment(), "RestFragment");
-//        fragmentTransaction.commit();
-//        getSupportActionBar().setTitle("Restaurants");
-
         View header = navigationView.getHeaderView(0);
         mHeadNameTextView = (TextView) header.findViewById(R.id.navhead_name);
         mHeadEmailTextView = (TextView) header.findViewById(R.id.navhead_email);
@@ -142,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String personEmail = sharedPref.getString("personEmail", null);
         String personDisplayName = sharedPref.getString("personDisplayName", null);
         String personContactNumber = sharedPref.getString("personContactNumber", null);
-        Log.i("defaultpersonContactNo", personContactNumber);
+        //Log.d(TAG, "defaultpersonContactNo: " + personContactNumber);
         mHeadNameTextView.setText(personDisplayName);
         mHeadEmailTextView.setText(personEmail);
         mHeadNumberTextView.setText(personContactNumber);
@@ -150,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //if contact no. isn't there in sharedpref, get it from DB (although it should definitely be there)
         if (personContactNumber == null || personContactNumber.matches("")) {
 
-            Log.i("pNo not avail-shredpref", "territory");
+            //Log.d(TAG, "phone Number not avail-shredpref");
             new BGTaskGetPhoneNum().execute();
         }
 
@@ -202,28 +157,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mDrawerLayout.closeDrawers();
                         break;
 
-//                    case R.id.nav_option_help:
-//                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                        fragmentTransaction.replace(R.id.main_container, new HelpFragment());
-//                        fragmentTransaction.commit();
-//                        getSupportActionBar().setTitle("Help");
-//                        getSupportActionBar().setSubtitle(null);
-//                        drawerLayout.closeDrawers();
-//                        break;
-
                     case R.id.logout:
-                        Log.i("Sign out button clicked", " success");
                         Toast.makeText(MainActivity.this, R.string.logged_out, Toast.LENGTH_SHORT).show();
 
                         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.clear();
-                        editor.apply();
+                        editor.apply(); //shared preference is cleared here
 
-                        Log.e("pref ", "cleared");
                         Intent intent = new Intent(getApplicationContext(), GoogleSignInActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("EXIT", true);
                         startActivity(intent);
                         finish();
                 }
@@ -287,7 +229,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-            Log.e("json_url", urlFinal);
         }
 
         @Override
@@ -308,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "result: " + resultjson);
 
                 JSONObject jobject = new JSONObject(resultjson);
                 phoneNumber = jobject.getString("Contact");

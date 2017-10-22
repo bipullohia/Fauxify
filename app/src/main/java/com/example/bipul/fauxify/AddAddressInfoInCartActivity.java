@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +16,8 @@ import android.widget.Toast;
 
 
 public class AddAddressInfoInCartActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "AddAddressInfoActivity";
 
     Spinner mSpinner;
     ArrayAdapter<CharSequence> mSpinnerAdapter;
@@ -52,7 +53,7 @@ public class AddAddressInfoInCartActivity extends AppCompatActivity implements V
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 mAddressPositionInt = position;
-                Log.i("Position", (String) parent.getItemAtPosition(position));
+                //Log.d(TAG, "position: " + (String) parent.getItemAtPosition(position));
 
                 if (position == 0) {
                     mFlatNoEditText.setVisibility(View.GONE);
@@ -69,8 +70,6 @@ public class AddAddressInfoInCartActivity extends AppCompatActivity implements V
                     mFullAddressEditText.setVisibility(View.VISIBLE);
                     mFlatNoEditText.setVisibility(View.GONE);
                 }
-
-                Log.i("selected address-pos", String.valueOf(parent.getItemAtPosition(position)));
 
                 switch (mAddressPositionInt) {
                     case 1:
@@ -110,8 +109,6 @@ public class AddAddressInfoInCartActivity extends AppCompatActivity implements V
         } else if (mAddressPositionInt == 4) {
             mInputAddress = mFullAddress;
         }
-
-        Log.i("flat no", mFlatNum);
 
         if (!mInputAddress.equals("")) {
             mTotalAddress = mInputAddress + "\n" + mDefaultAddress;

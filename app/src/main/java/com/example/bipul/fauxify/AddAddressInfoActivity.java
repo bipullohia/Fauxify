@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +17,8 @@ import android.widget.Toast;
 
 public class AddAddressInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Spinner mSpinner;
+    private static final String TAG = "AddAddressInfoActivity";
+
     ArrayAdapter<CharSequence> mSpinnerAdapter;
     EditText mFlatNoEditText, mFullAdressEditText;
     String mFlatNum, mFullAddress;
@@ -43,17 +43,17 @@ public class AddAddressInfoActivity extends AppCompatActivity implements View.On
         mSubmitButton = (Button) findViewById(R.id.button_submit);
         mHouseNoCardview = (CardView) findViewById(R.id.cardview_houseno);
 
-        mSpinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
         mSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.Areas, android.R.layout.simple_spinner_item);
         mSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(mSpinnerAdapter);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setAdapter(mSpinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 mAddressPositionInt = position;
-                Log.i("Position", (String) parent.getItemAtPosition(position));
+                //Log.d(TAG, "position: " + (String) parent.getItemAtPosition(position));
 
                 if (position == 0) {
                     mFlatNoEditText.setVisibility(View.GONE);
@@ -70,8 +70,6 @@ public class AddAddressInfoActivity extends AppCompatActivity implements View.On
                     mFullAdressEditText.setVisibility(View.VISIBLE);
                     mFlatNoEditText.setVisibility(View.GONE);
                 }
-
-                Log.i("address selected-pos", String.valueOf(parent.getItemAtPosition(position)));
 
                 switch (mAddressPositionInt) {
                     case 1:
@@ -110,7 +108,6 @@ public class AddAddressInfoActivity extends AppCompatActivity implements View.On
         } else if (mAddressPositionInt == 4) {
             mInputAddress = mFullAddress;
         }
-        Log.d("flat no", mInputAddress);
 
         if(!mInputAddress.equals("")) {
 

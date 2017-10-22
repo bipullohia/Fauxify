@@ -27,12 +27,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-/**
- * Created by Bipul Lohia on 8/28/2016.
- */
 
 public class AddressConfirmationActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "AddressConfirmActivity";
     TextView mFinalAddressTextView;
     Button mConfirmButton;
     String mAddress;
@@ -93,7 +91,6 @@ public class AddressConfirmationActivity extends AppCompatActivity implements Vi
             }
 
             urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-            Log.i("checkurl", urlFinal);
         }
 
         @Override
@@ -115,7 +112,7 @@ public class AddressConfirmationActivity extends AppCompatActivity implements Vi
                 httpURLConnection.disconnect();
 
                 String result_checkjson = stringBuilder.toString().trim();
-                Log.e("result", result_checkjson);
+                //Log.d(TAG, "result: " + result_checkjson);
 
                 JSONObject jobject = new JSONObject(result_checkjson);
                 jArrayOldAddresses = jobject.getJSONArray("Address");
@@ -126,11 +123,11 @@ public class AddressConfirmationActivity extends AppCompatActivity implements Vi
 
                 for (int j = 0; j <= (jArrayOldAddresses.length() - 1); j++) {
                     savedaddress[j] = jArrayOldAddresses.getString(j);
-                    Log.i("saved addresses", savedaddress[j]);
+                    //Log.d(TAG, "saved addresses: " + savedaddress[j]);
                 }}
 
                 else {
-                    Log.i("Addressconfirm activity", "No previous address found");
+                    Log.d(TAG, "No previous address found");
                 }
 
             } catch (JSONException | IOException e) {
@@ -155,11 +152,11 @@ public class AddressConfirmationActivity extends AppCompatActivity implements Vi
 
                 for (int i = 0; i <= jArrayOldAddresses.length() - 1; i++) {
                     jsonArray.put(savedaddress[i]);
-                    Log.i("posting addresses", savedaddress[i]);
+                    //Log.d(TAG, "posting addresses: " + savedaddress[i]);
                 }}
 
                 else {
-                    Log.i("Addressconfirm activity", "No previous address found while posting");
+                    Log.d(TAG, "No previous address found while posting");
                 }
 
                 jsonArray.put(mAddress);
@@ -189,7 +186,7 @@ public class AddressConfirmationActivity extends AppCompatActivity implements Vi
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.i("Final posted Addresses", json);
+                //Log.d(TAG, "Final posted Addresses: " + json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }

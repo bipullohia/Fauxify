@@ -44,7 +44,6 @@ public class RestaurantMenuFragment extends Fragment {
 
         try {
             JSONObject jo = new JSONObject(message);
-            Log.e("result1", String.valueOf(jo));
 
             ArrayList<String> dishDetails = new ArrayList<>();
             ArrayList<String> dishId = new ArrayList<>();
@@ -55,8 +54,6 @@ public class RestaurantMenuFragment extends Fragment {
                 dishId.add(key);
                 dishDetails.add(jo.getString(key));
             }
-
-            Log.e("subresult content1", String.valueOf(dishDetails));
 
             if (dishId.size() != mDishesList.size()) {
                 for (int j = 0; j <= (dishId.size() - 1); j++) {

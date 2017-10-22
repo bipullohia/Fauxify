@@ -33,6 +33,8 @@ import java.util.ArrayList;
 
 public class MyOrdersFragment extends Fragment {
 
+    private static final String TAG = "MyOrdersFragment";
+
     private ArrayList<MyOrders> mOrderList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MyOrdersAdapter mMyOrderAdapter;
@@ -91,7 +93,6 @@ public class MyOrdersFragment extends Fragment {
             }
 
             json_url = getString(R.string.request_url) + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
-            Log.e("json_url", json_url);
         }
 
         @Override
@@ -112,7 +113,7 @@ public class MyOrdersFragment extends Fragment {
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "result: " + resultjson);
 
                 jsonArray = new JSONArray(resultjson);
 
@@ -133,7 +134,7 @@ public class MyOrdersFragment extends Fragment {
             }
 
             else if (jsonArray != null) {
-                Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
+                //Log.d(TAG, "Jsonobject length: " + String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
 
                     try {
@@ -178,7 +179,7 @@ public class MyOrdersFragment extends Fragment {
 
                 mMyOrderAdapter.notifyDataSetChanged();
 
-            } else Log.e("Jsonarray length-", "zero");
+            } else Log.d(TAG, "JsonArray length is zero");
 
             pd.dismiss();
         }

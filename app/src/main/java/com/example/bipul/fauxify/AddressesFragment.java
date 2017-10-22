@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 public class AddressesFragment extends Fragment {
 
+    private static final String TAG = "AddressFragment";
     private ArrayList<Address> mAddressList = new ArrayList<>();
     private RecyclerView mAddressRecyclerView;
     FloatingActionButton mAddAddressFAButton;
@@ -49,7 +50,6 @@ public class AddressesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_addresses, container, false);
 
         noSavedAdd = (TextView) view.findViewById(R.id.no_saved_address);
@@ -107,7 +107,6 @@ public class AddressesFragment extends Fragment {
             }
 
             urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-            Log.e("json_url", urlFinal);
         }
 
         @Override
@@ -128,18 +127,18 @@ public class AddressesFragment extends Fragment {
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "result: " + resultjson);
 
                 JSONObject jobject = new JSONObject(resultjson);
                 jsonArray = jobject.getJSONArray("Address");
 
                 if (jsonArray != null) {
                     jsonString = jsonArray.toString();
-                    Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
-                    Log.e("jsonarray", jsonString);
+                    //Log.d(TAG, "Jsonarray length: " + String.valueOf(jsonArray.length()));
+                    //Log.d(TAG, "jsonarray: " + jsonString);
 
                 } else {
-                    Log.e("Jsonarray length", "is zero");
+                    Log.d(TAG, "jArray length is zero");
                 }
 
                 status = 1;
@@ -162,12 +161,12 @@ public class AddressesFragment extends Fragment {
             }
 
             else if (jsonArray != null && status == 1) {
-                Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
+                //Log.d(TAG, "Jsonarray length: " + String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
                         Address address = new Address(jsonArray.getString(j));
                         mAddressList.add(address);
-                        Log.e("add", String.valueOf(jsonArray.getString(j)));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

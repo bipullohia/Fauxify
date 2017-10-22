@@ -40,6 +40,8 @@ import java.util.Random;
 
 public class CartActivity extends AppCompatActivity implements View.OnKeyListener {
 
+    private static final String TAG = "CartActivity";
+
     private ArrayList<CurrentOrder> mItemSummaryList = new ArrayList<>();
     private ArrayList<Address> mAddressList = new ArrayList<>();
     private CartAddressAdapter mCartAddressAdapter;
@@ -173,8 +175,8 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
     public static void checkDeliveryFee() {
 
-        Log.i("totalitempricecount", String.valueOf(totalitempricecount));
-        Log.i("resFreedelAmount", String.valueOf(Integer.valueOf(RestaurantDetailsActivity.resFreeDelAmount)));
+        //Log.d(TAG, "totalitempricecount: " + String.valueOf(totalitempricecount));
+        //Log.d(TAG, "resFreedelAmount: " + String.valueOf(Integer.valueOf(RestaurantDetailsActivity.resFreeDelAmount)));
 
         if (totalitempricecount < Integer.valueOf(RestaurantDetailsActivity.resFreeDelAmount)) {
             deliveryfee = Integer.valueOf(RestaurantDetailsActivity.resDeliveryFee);
@@ -189,7 +191,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
     }
 
     private void confirmOrder() {
-        Log.e("cartact-confirm order", "order confirmed");
         new BGTaskConfirmOrder().execute();
     }
 
@@ -223,7 +224,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
             }
 
             urlFinal = getString(R.string.request_url) + "fauxusers/" + utfUserId + "/fauxorders" + "?access_token=" + userToken;
-            Log.e("json_url", urlFinal);
         }
 
         @Override
@@ -247,7 +247,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
                 //String mydate =java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                 String date = (DateFormat.format("dd-MM-yyyy hh:mm:ss a", new java.util.Date()).toString());
-                Log.d("date", date);
+                //Log.d(TAG, "date: " + date);
                 String hours, minutes, seconds, days, months, yearshort, timestamp;
                 Random random = new Random();
 
@@ -306,9 +306,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 orderinfo.put("dishesinfo", jarrayDishesInfo);
                 orderinfo.put("deliveryfee", deliveryfee);
 
-//                Random r = new Random();
-//                orderid = RestaurantDetailsActivity.resId + (r.nextInt(8999) + 1000);
-
                 orderid = timestamp;
 
                 JSONObject jsonObject = new JSONObject();
@@ -350,7 +347,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                     System.out.println(httpURLConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                //Log.d(TAG, "test-data: " + json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -392,9 +389,9 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                     DishesAdapter.currentOrders.get(i).getCurrentdishPrice(),
                     DishesAdapter.currentOrders.get(i).getCurrentdishQuantity());
             mItemSummaryList.add(currentOrder);
-            Log.e("sehfl", String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishName()));
-            Log.e("sehfl", String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishPrice()));
-            Log.e("sehfl", String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishQuantity()));
+            //Log.d(TAG, "current dish name" + String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishName()));
+            //Log.d(TAG, "current dish price" + String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishPrice()));
+            //Log.d(TAG, "current dish quantity" + String.valueOf(DishesAdapter.currentOrders.get(i).getCurrentdishQuantity()));
         }
     }
 
@@ -426,9 +423,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
             }
 
             urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-
-            Log.e("checkurl", urlFinal);
-        }
+            }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -448,7 +443,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "result: " + resultjson);
 
                 JSONObject jobject = new JSONObject(resultjson);
                 jsonArray = jobject.getJSONArray("Address");
@@ -456,10 +451,11 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 if (jsonArray != null) {
 
                     jsonString = jsonArray.toString();
-                    Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
-                    Log.e("jsonarray", jsonString);
+                    //Log.d(TAG, "Jsonarray length: " + String.valueOf(jsonArray.length()));
+                    //Log.d(TAG, "jsonarray: " + jsonString);
+
                 } else {
-                    Log.e("Jsonarray length", "is zero");
+                    Log.d(TAG, "JsonArray length is zero");
                 }
 
             } catch (IOException | JSONException e) {
@@ -477,12 +473,12 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
             }
 
             else if (jsonArray != null) {
-                Log.e("Jsonarray length", String.valueOf(jsonArray.length()));
+                //Log.d(TAG, "Jsonarray length: " + String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
                         Address address = new Address(jsonArray.getString(j));
                         mAddressList.add(address);
-                        Log.e("add", String.valueOf(jsonArray.getString(j)));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -490,7 +486,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
                 mCartAddressAdapter.notifyDataSetChanged();
 
-            } else Log.e("JsonArray length-", "is zero");
+            } else Log.d(TAG, "JsonArray length is zero");
         }
     }
 }

@@ -51,7 +51,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
     private FirebaseAuth mAuth;
     String mPhoneNumber;
 
-    private static final String TAG = "PhoneAuthActivity";
+    private static final String TAG = "OTPActivity";
     private String mVerificationId;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
@@ -89,7 +89,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                 // 2 - Auto-retrieval. On some devices Google Play services can automatically
                 //     detect the incoming verification SMS and perform verificaiton without
                 //     user action.
-                Log.d(TAG, "onVerificationCompleted:" + credential);
+                Log.d(TAG, "VerificationCompleted" + credential);
 
                 signInWithPhoneAuthCredential(credential);
             }
@@ -97,7 +97,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onVerificationFailed(FirebaseException e) {
 
-                Log.w(TAG, "onVerificationFailed", e);
+                Log.d(TAG, "VerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     Toast.makeText(OtpActivity.this, R.string.verification_failed_invalid_num, Toast.LENGTH_SHORT).show();
@@ -195,7 +195,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                         } else {
                             mProgressDialog.dismiss();
                             // Sign in failed, display a message and update the UI
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.d(TAG, "signInWithCredential:failure", task.getException());
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
@@ -235,7 +235,6 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
             }
 
             urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-            Log.e("checkurl", urlFinal);
         }
 
         @Override
@@ -277,12 +276,11 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
                     issuccess = false;
                 }
 
-                Log.e("test-otpActivity", json);
+                //Log.d(TAG, "test-data" + json);
 
             } catch (IOException | JSONException e) {
 
                 exceptioncaught = true;
-                Log.i("status", "loginfailed-while postcontactdetails");
                 e.printStackTrace();
             }
 
@@ -306,7 +304,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
 
             } else {
                 Toast.makeText(OtpActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
-                Log.e("login failed", "while posting contact info");
+                Log.d(TAG, "login failed while posting contact info");
             }
 
             pd.dismiss();

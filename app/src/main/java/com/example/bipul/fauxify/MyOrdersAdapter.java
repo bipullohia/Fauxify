@@ -3,7 +3,6 @@ package com.example.bipul.fauxify;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 
 class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder> {
 
+    private static final String TAG = "MyOrdersAdapter";
     private static ArrayList<MyOrders> orderList;
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -112,7 +112,7 @@ class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder>
                 }
             }
 
-            Log.d("dishinfo", dishDetails);
+            //Log.d(TAG, "dishinfo: " + dishDetails);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -123,7 +123,7 @@ class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder>
         //following code formats the timestamp into proper desired format of date under restaurant name
         String timestamp = orders.getOrdertime();
         String orderDate = timestamp.substring(0, 2);
-        Log.d("orderdate", orderDate);
+        //Log.d(TAG, "orderdate: " + orderDate);
         
         String orderMonth = "";
         String month = timestamp.substring(3,5);

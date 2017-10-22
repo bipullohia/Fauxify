@@ -35,8 +35,6 @@ class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.MyViewH
             int position = getAdapterPosition();
             Address addresscart = mAddressListInCart.get(position);
 
-            Log.d("error", "onClick " + getAdapterPosition());
-
             CartActivity.checkAddressCondition();
             CartActivity.setCurrentAddress(addresscart.getUserAddress());
         }

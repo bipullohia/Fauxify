@@ -83,8 +83,6 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
             mNonVegImageView.setVisibility(View.VISIBLE);
         }
 
-        Log.e("clicked", "check " + String.valueOf(dishes.getDishName() + dishes.getDishPrice()));
-
         mAddDishButton.setOnClickListener(new View.OnClickListener() {
 
 
@@ -124,7 +122,6 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
                     textView.setTextColor(ContextCompat.getColor(holder.context, R.color.colorAccent));
                     snackbar.show();
 
-                    Log.e("the count:", String.valueOf(currentOrder));
                 } else { //this means no item has been selected to add to cart. Let user select/reselect it
                     Toast.makeText(v.getContext(), R.string.select_item_quantity_tobe_added, Toast.LENGTH_SHORT).show();
                 }

@@ -33,6 +33,8 @@ import java.net.URLEncoder;
 
 public class AddressConfirmationInCartActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "AddressConfirmActivity";
+
     TextView mFinalAddressTextView;
     Button mConfirmButton;
     String mAddress;
@@ -93,7 +95,6 @@ public class AddressConfirmationInCartActivity extends AppCompatActivity impleme
             }
 
             urlFinal = getString(R.string.request_url) + "Fauxusers/" + utfUserId + "?access_token=" + userToken;
-            Log.e("checkurl", urlFinal);
         }
 
         @Override
@@ -115,7 +116,7 @@ public class AddressConfirmationInCartActivity extends AppCompatActivity impleme
                 httpURLConnection.disconnect();
 
                 String result_checkjson = stringBuilder.toString().trim();
-                Log.i("result", result_checkjson);
+                //Log.d(TAG, "result: " + result_checkjson);
 
                 JSONObject jobject = new JSONObject(result_checkjson);
                 mJArrayOldAddresses = jobject.getJSONArray("Address");
@@ -126,11 +127,11 @@ public class AddressConfirmationInCartActivity extends AppCompatActivity impleme
 
                     for (int j = 0; j <= (mJArrayOldAddresses.length() - 1); j++) {
                         savedaddress[j] = mJArrayOldAddresses.getString(j);
-                        Log.e("saved addresses", savedaddress[j]);
+                        //Log.d(TAG, "saved addresses: " + savedaddress[j]);
                     }}
 
                 else {
-                    Log.i("Addressconfirm activity", "no previous address found");
+                    Log.d(TAG, "No previous address found");
                 }
 
             } catch (IOException | JSONException e) {
@@ -155,11 +156,11 @@ public class AddressConfirmationInCartActivity extends AppCompatActivity impleme
 
                     for (int i = 0; i <= mJArrayOldAddresses.length() - 1; i++) {
                         jsonArray.put(savedaddress[i]);
-                        Log.e("posting addresses", savedaddress[i]);
+                        //Log.d(TAG, "posting addresses: " + savedaddress[i]);
                     }}
 
                 else {
-                    Log.i("Addressconfirm activity", "no previous address found while posting");
+                    Log.d(TAG, "No previous address found while posting");
                 }
 
                 jsonArray.put(mAddress);
@@ -189,7 +190,7 @@ public class AddressConfirmationInCartActivity extends AppCompatActivity impleme
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.i("test", json);
+                //Log.d(TAG, "test-data: " + json);
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
