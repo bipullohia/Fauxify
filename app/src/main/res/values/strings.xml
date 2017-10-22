@@ -147,13 +147,18 @@
     <string name="fauxify_logo">Fauxify Logo</string>
     <string name="fauxify_tagline">The Ultimate Food Solution</string>
     <string name="delivery">Delivery</string>
-    <string name="take_away">Take Away</string>
+    <string name="welcome_slide1_title">Restaurants</string>
+    <string name="welcome_slide2_title">Varied Choices</string>
+    <string name="welcome_slide3_title">Delivery</string>
+    <string name="welcome_slide4_title">Payment</string>
     <string name="multiple_payment_options">Multiple Payment Options</string>
     <string name="welcome_slide1">Explore the restaurants around you</string>
-    <string name="welcome_slide2">Get Home Delivery directly from your desired restaurants</string>
-    <string name="welcome_slide3">You can order your food in advance and take it from restaurant</string>
+    <string name="welcome_slide2">Add your desired dishes into the cart</string>
+    <string name="welcome_slide3">Get Home Delivery directly from your desired restaurants</string>
     <string name="welcome_slide4">Pay via Paytm or by Cash On Delivery</string>
     <string name="alert">Alert</string>
+    <string name="ten_digit_num_required">10 digit number required. Try again</string>
+    <string name="six_digit_code_required">6 digit code required. Try again</string>
 
     <string-array name="Areas">
         <item>Select a Location</item>

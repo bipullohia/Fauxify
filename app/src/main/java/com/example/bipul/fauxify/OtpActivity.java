@@ -138,20 +138,43 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         switch (v.getId()){
 
             case button_submit:
+
                 mPhoneNumber = mNumberInputEditText.getText().toString();
-                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", getString(R.string.processing_request), false);
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        "+91"+ mPhoneNumber,        // Phone number to verify
-                        60,                 // Timeout duration
-                        TimeUnit.SECONDS,   // Unit of timeout
-                        OtpActivity.this,  // Activity (for callback binding)
-                        mCallbacks);        // OnVerificationStateChangedCallbacks
+
+                if(!mPhoneNumber.equals("") && mPhoneNumber.length()==10){
+                    mProgressDialog = ProgressDialog.show(OtpActivity.this, "", getString(R.string.processing_request), false);
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                            "+91"+ mPhoneNumber,        // Phone number to verify
+                            60,                 // Timeout duration
+                            TimeUnit.SECONDS,   // Unit of timeout
+                            OtpActivity.this,  // Activity (for callback binding)
+                            mCallbacks);        // OnVerificationStateChangedCallbacks
+
+                }else if(!mPhoneNumber.equals("") && mPhoneNumber.length()<10){
+                    Toast.makeText(this, R.string.ten_digit_num_required, Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(this, R.string.empty_input_field, Toast.LENGTH_SHORT).show();
+                }
+
                 break;
 
             case button_verify:
-                mProgressDialog = ProgressDialog.show(OtpActivity.this, "", getString(R.string.processing_request), false);
-                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mOtpInputEditText.getText().toString());
-                signInWithPhoneAuthCredential(credential);
+
+                String otp = mOtpInputEditText.getText().toString();
+
+                if(!otp.equals("") && otp.length()==6){
+                    mProgressDialog = ProgressDialog.show(OtpActivity.this, "", getString(R.string.processing_request), false);
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mOtpInputEditText.getText().toString());
+                    signInWithPhoneAuthCredential(credential);
+
+                }else if(!otp.equals("") && otp.length()<6){
+                    Toast.makeText(this, R.string.six_digit_code_required, Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(this, R.string.empty_input_field, Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }

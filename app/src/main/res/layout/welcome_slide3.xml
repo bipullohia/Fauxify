@@ -18,7 +18,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/slide_title"
             android:textAlignment="center"
-            android:text="@string/take_away"/>
+            android:text="@string/welcome_slide3_title"/>
 
         <TextView
             android:layout_width="match_parent"

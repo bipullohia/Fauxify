@@ -119,7 +119,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         mAddNewAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, AddAddressInfoCart.class);
+                Intent intent = new Intent(CartActivity.this, AddAddressInfoInCartActivity.class);
                 startActivity(intent);
             }
         });
@@ -149,15 +149,16 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
                 if ((finaladdress != null) && totaldishcount != 0) {
 
-                    if (totalitempricecount >= Integer.parseInt(RestaurantDetails.restMinimumOrder)) {
+                    if (totalitempricecount >= Integer.parseInt(RestaurantDetailsActivity.restMinimumOrder)) {
                         confirmOrder();
                         DishesAdapter.currentOrders.clear();
                         Intent intent = new Intent(getApplicationContext(), OrderConfirmationActivity.class);
                         startActivity(intent);
+                        finish();
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Minimum order value is Rs "
-                                + RestaurantDetails.restMinimumOrder, Toast.LENGTH_LONG).show();
+                                + RestaurantDetailsActivity.restMinimumOrder, Toast.LENGTH_LONG).show();
                     }
 
                 } else if ((finaladdress == null) && (totaldishcount != 0)) {
@@ -173,10 +174,10 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
     public static void checkDeliveryFee() {
 
         Log.i("totalitempricecount", String.valueOf(totalitempricecount));
-        Log.i("resFreedelAmount", String.valueOf(Integer.valueOf(RestaurantDetails.resFreeDelAmount)));
+        Log.i("resFreedelAmount", String.valueOf(Integer.valueOf(RestaurantDetailsActivity.resFreeDelAmount)));
 
-        if (totalitempricecount < Integer.valueOf(RestaurantDetails.resFreeDelAmount)) {
-            deliveryfee = Integer.valueOf(RestaurantDetails.resDeliveryFee);
+        if (totalitempricecount < Integer.valueOf(RestaurantDetailsActivity.resFreeDelAmount)) {
+            deliveryfee = Integer.valueOf(RestaurantDetailsActivity.resDeliveryFee);
 
         } else {
             deliveryfee = 0;
@@ -306,7 +307,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                 orderinfo.put("deliveryfee", deliveryfee);
 
 //                Random r = new Random();
-//                orderid = RestaurantDetails.resId + (r.nextInt(8999) + 1000);
+//                orderid = RestaurantDetailsActivity.resId + (r.nextInt(8999) + 1000);
 
                 orderid = timestamp;
 
@@ -314,9 +315,9 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
                 jsonObject.accumulate("orderid", orderid);
                 jsonObject.accumulate("fauxuserId", email);
-                jsonObject.accumulate("restaurantId", RestaurantDetails.resId);
+                jsonObject.accumulate("restaurantId", RestaurantDetailsActivity.resId);
 
-                jsonObject.accumulate("restName", RestaurantDetails.resName);
+                jsonObject.accumulate("restName", RestaurantDetailsActivity.resName);
 
                 jsonObject.accumulate("customernumber", "9999999999");
                 jsonObject.accumulate("customeraddress", finaladdress);
@@ -378,7 +379,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
                     .currentdishQuantity * Integer.parseInt(CartItemAdapter.itemSummaryList.get(j).currentdishPrice));
         }
 
-        restaurantNameInCart = RestaurantDetails.resName;
+        restaurantNameInCart = RestaurantDetailsActivity.resName;
         RestaurantNameInCart.setText(restaurantNameInCart);
         TotalItemPriceInCart.setText(String.valueOf(totalitempricecount));
     }

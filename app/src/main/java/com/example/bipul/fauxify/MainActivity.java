@@ -221,10 +221,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         editor.apply();
 
                         Log.e("pref ", "cleared");
-                        Intent intent = new Intent(getApplicationContext(), GoogleSignIn.class);
+                        Intent intent = new Intent(getApplicationContext(), GoogleSignInActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("EXIT", true);
                         startActivity(intent);
+                        finish();
                 }
                 return true;
             }

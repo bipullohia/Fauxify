@@ -238,7 +238,7 @@ class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.address_fragment_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_address_fragment, parent, false);
 
         return new MyViewHolder(itemView);
     }

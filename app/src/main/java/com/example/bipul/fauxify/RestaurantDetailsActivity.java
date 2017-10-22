@@ -35,7 +35,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RestaurantDetails extends AppCompatActivity {
+public class RestaurantDetailsActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
     Integer mResRatingInt, mNoOfCategoriesInt;
@@ -66,7 +66,7 @@ public class RestaurantDetails extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             Toast.makeText(getApplicationContext(), R.string.cart_emptied, Toast.LENGTH_SHORT).show();
                             DishesAdapter.currentOrders.clear();
-                            RestaurantDetails.super.onBackPressed();
+                            RestaurantDetailsActivity.super.onBackPressed();
                         }
                     })
 
@@ -171,7 +171,7 @@ public class RestaurantDetails extends AppCompatActivity {
 //            @Override
 //            public void onClick(View v) {
 //                if (DishesAdapter.currentOrders.size()!=0)
-//                Intent intent = new Intent(RestaurantDetails.this, CartActivity.class);
+//                Intent intent = new Intent(RestaurantDetailsActivity.this, CartActivity.class);
 //                startActivity(intent);}
 //
 //                else {
@@ -184,7 +184,7 @@ public class RestaurantDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (DishesAdapter.currentOrders.size() != 0) {
-                    Intent intent = new Intent(RestaurantDetails.this, CartActivity.class);
+                    Intent intent = new Intent(RestaurantDetailsActivity.this, CartActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.select_dishes_to_order, Toast.LENGTH_LONG).show();
@@ -211,7 +211,7 @@ public class RestaurantDetails extends AppCompatActivity {
 
             json_url = getString(R.string.request_url) + "restaurants/" + resId;
             Log.e("json_url", json_url);
-            pd = ProgressDialog.show(RestaurantDetails.this, "", getString(R.string.loading_restaurant_menu), false);
+            pd = ProgressDialog.show(RestaurantDetailsActivity.this, "", getString(R.string.loading_restaurant_menu), false);
         }
 
         @Override

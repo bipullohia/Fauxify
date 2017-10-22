@@ -61,7 +61,7 @@ public class RestaurantMenuFragment extends Fragment {
             if (dishId.size() != mDishesList.size()) {
                 for (int j = 0; j <= (dishId.size() - 1); j++) {
 
-                    if(RestaurantDetails.isVeg) {   //this is only for the case when VEGETARIAN option is switched on by user
+                    if(RestaurantDetailsActivity.isVeg) {   //this is only for the case when VEGETARIAN option is switched on by user
 
                         JSONObject jsob = new JSONObject(dishDetails.get(j));
 

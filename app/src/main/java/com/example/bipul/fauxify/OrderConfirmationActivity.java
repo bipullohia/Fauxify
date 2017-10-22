@@ -62,6 +62,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
                         mHandler.removeCallbacks(mRunnable);
                         Intent intent = new Intent(OrderConfirmationActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
 

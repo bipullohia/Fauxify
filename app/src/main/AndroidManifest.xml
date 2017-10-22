@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashScreen"
+            android:name=".SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,16 +27,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".GoogleSignIn" />
+        <activity android:name=".GoogleSignInActivity" />
 
         <activity
-            android:name=".AddAddressInfo"
+            android:name=".AddAddressInfoActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".AddressConfirmation"
-            android:parentActivityName=".AddAddressInfo" />
+            android:name=".AddressConfirmationActivity"
+            android:parentActivityName=".AddAddressInfoActivity" />
 
         <activity android:name=".WelcomeActivity" />
 
@@ -45,21 +45,21 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".RestaurantDetails"
+            android:name=".RestaurantDetailsActivity"
             android:launchMode="singleTop" />
 
         <activity
             android:name=".CartActivity"
-            android:parentActivityName=".RestaurantDetails" />
+            android:parentActivityName=".RestaurantDetailsActivity" />
 
-        <activity android:name=".AddAddressInfoCart" />
+        <activity android:name=".AddAddressInfoInCartActivity" />
 
-        <activity android:name=".AddressConfirmationInCart" />
+        <activity android:name=".AddressConfirmationInCartActivity" />
 
         <activity android:name=".OrderConfirmationActivity" />
 
         <activity
-            android:name=".MyOrderDetails"
+            android:name=".MyOrderDetailsActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
 

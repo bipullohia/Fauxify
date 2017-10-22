@@ -46,7 +46,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 
-public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+public class GoogleSignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private static final int RC_SIGN_IN = 0;
     ProgressDialog processdialog;
@@ -89,7 +89,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.signin_google_layout);
+        setContentView(R.layout.activity_signin_google);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
@@ -267,7 +267,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
         @Override
         protected void onPreExecute() {
-            pd = ProgressDialog.show(GoogleSignIn.this, "", getString(R.string.checking_user), false);
+            pd = ProgressDialog.show(GoogleSignInActivity.this, "", getString(R.string.checking_user), false);
         }
 
         @Override
@@ -328,7 +328,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                     LoginUser();
                     Log.i("user exists", "Login required");
                 }
-            } else Toast.makeText(GoogleSignIn.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(GoogleSignInActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
 
             pd.dismiss();
         }
@@ -347,7 +347,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
         @Override
         protected void onPreExecute() {
-            pd = ProgressDialog.show(GoogleSignIn.this, "", getString(R.string.logging_in), false);
+            pd = ProgressDialog.show(GoogleSignInActivity.this, "", getString(R.string.logging_in), false);
         }
 
         @Override
@@ -434,7 +434,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                 checkIfContactNumberExists();
 
             } else if (!issuccess) {
-                Toast.makeText(GoogleSignIn.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoogleSignInActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
 
             pd.dismiss();
@@ -454,7 +454,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
 
         @Override
         protected void onPreExecute() {
-            pd = ProgressDialog.show(GoogleSignIn.this, "", getString(R.string.logging_in), false);
+            pd = ProgressDialog.show(GoogleSignInActivity.this, "", getString(R.string.logging_in), false);
         }
 
         @Override
@@ -533,7 +533,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                 LoginUser();
 
             } else {
-                Toast.makeText(GoogleSignIn.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoogleSignInActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
                 Log.e("login failed", "while posting info");
             }
             pd.dismiss();
@@ -555,7 +555,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
         @Override
         protected void onPreExecute() {
 
-            pd = ProgressDialog.show(GoogleSignIn.this, "", getString(R.string.checking_contact_info), false);
+            pd = ProgressDialog.show(GoogleSignInActivity.this, "", getString(R.string.checking_contact_info), false);
 
             SharedPreferences sharedPref;
             String userId, userToken;
@@ -614,7 +614,7 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
             if(status==0){ //during development, if any account was registered without contact no., that will show status code = 0
                            // and not redirect to Otpavtivity class. Fix it or keep that in mind.
 
-                Toast.makeText(GoogleSignIn.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoogleSignInActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
                 Log.e("Login failed", "while enquiring about contact number existence");
             }
 
@@ -624,10 +624,11 @@ public class GoogleSignIn extends AppCompatActivity implements GoogleApiClient.O
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("personContactNumber", phoneNumber);
                 editor.apply();
-                startActivity(new Intent(GoogleSignIn.this, MainActivity.class));
+                startActivity(new Intent(GoogleSignInActivity.this, MainActivity.class));
+                finish();
 
             }else if(status==1 && (phoneNumber==null || phoneNumber.matches(""))){
-               startActivity(new Intent(GoogleSignIn.this, OtpActivity.class));
+               startActivity(new Intent(GoogleSignInActivity.this, OtpActivity.class));
             }
 
             pd.dismiss();

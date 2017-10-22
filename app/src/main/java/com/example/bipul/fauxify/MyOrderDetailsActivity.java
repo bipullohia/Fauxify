@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class MyOrderDetails extends AppCompatActivity {
+public class MyOrderDetailsActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
     private ArrayList<CurrentOrder> mDishesList = new ArrayList<>();

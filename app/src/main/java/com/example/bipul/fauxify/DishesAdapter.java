@@ -50,14 +50,14 @@ class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.dishes_restaurantmenufragment_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_dishes_restaurantmenufragment, parent, false);
 
         mAddDishButton = (Button) itemView.findViewById(R.id.add_dish);
         mRemoveDishButton = (Button) itemView.findViewById(R.id.remove_dish);
         mAddToCartButton = (Button) itemView.findViewById(R.id.button_add_to_cart);
         LinearLayout linearLayoutButtons = (LinearLayout) itemView.findViewById(R.id.linearlayout_buttons);
 
-        if (!RestaurantDetails.restStatus.equals("open")) {
+        if (!RestaurantDetailsActivity.restStatus.equals("open")) {
             linearLayoutButtons.setVisibility(View.INVISIBLE);
             mAddToCartButton.setVisibility(View.INVISIBLE);
         }

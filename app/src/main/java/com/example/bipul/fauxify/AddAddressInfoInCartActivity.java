@@ -16,32 +16,31 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-public class AddAddressInfo extends AppCompatActivity implements View.OnClickListener {
+public class AddAddressInfoInCartActivity extends AppCompatActivity implements View.OnClickListener {
 
     Spinner mSpinner;
     ArrayAdapter<CharSequence> mSpinnerAdapter;
-    EditText mFlatNoEditText, mFullAdressEditText;
-    String mFlatNum, mFullAddress;
-    Button mSubmitButton;
-    CardView mHouseNoCardview;
+    EditText mFlatNoEditText, mFullAddressEditText;
     Toolbar mToolbar;
+    String mFlatNum, mFullAddress;
+    CardView mHouseNoCardView;
+    Button mSubmitButton;
     Integer mAddressPositionInt;
     String mInputAddress, mDefaultAddress, mTotalAddress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_addressinfo_layout);
+        setContentView(R.layout.activity_add_addressinfo);
 
-        mToolbar =(Toolbar) findViewById(R.id.toolbar_addaddressinfo);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_addaddressinfo);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.add_address);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mFlatNoEditText = (EditText) findViewById(R.id.flat_no);
-        mFullAdressEditText = (EditText) findViewById(R.id.full_address);
+        mFullAddressEditText = (EditText) findViewById(R.id.full_address);
         mSubmitButton = (Button) findViewById(R.id.button_submit);
-        mHouseNoCardview = (CardView) findViewById(R.id.cardview_houseno);
+        mHouseNoCardView = (CardView) findViewById(R.id.cardview_houseno);
 
         mSpinner = (Spinner) findViewById(R.id.spinner);
         mSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.Areas, android.R.layout.simple_spinner_item);
@@ -57,21 +56,21 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
 
                 if (position == 0) {
                     mFlatNoEditText.setVisibility(View.GONE);
-                    mFullAdressEditText.setVisibility(View.GONE);
-                    mHouseNoCardview.setVisibility(View.GONE);
+                    mFullAddressEditText.setVisibility(View.GONE);
+                    mHouseNoCardView.setVisibility(View.GONE);
 
                 } else if ((position == 1) || (position == 2) || (position == 3)) {
-                    mHouseNoCardview.setVisibility(View.VISIBLE);
                     mFlatNoEditText.setVisibility(View.VISIBLE);
-                    mFullAdressEditText.setVisibility(View.GONE);
+                    mHouseNoCardView.setVisibility(View.VISIBLE);
+                    mFullAddressEditText.setVisibility(View.GONE);
 
                 } else if (((position == 4))) {
-                    mHouseNoCardview.setVisibility(View.VISIBLE);
-                    mFullAdressEditText.setVisibility(View.VISIBLE);
+                    mHouseNoCardView.setVisibility(View.VISIBLE);
+                    mFullAddressEditText.setVisibility(View.VISIBLE);
                     mFlatNoEditText.setVisibility(View.GONE);
                 }
 
-                Log.i("address selected-pos", String.valueOf(parent.getItemAtPosition(position)));
+                Log.i("selected address-pos", String.valueOf(parent.getItemAtPosition(position)));
 
                 switch (mAddressPositionInt) {
                     case 1:
@@ -103,27 +102,27 @@ public class AddAddressInfo extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
 
         mFlatNum = mFlatNoEditText.getText().toString();
-        mFullAddress = mFullAdressEditText.getText().toString();
+        mFullAddress = mFullAddressEditText.getText().toString();
 
         if (mAddressPositionInt == (1) || mAddressPositionInt == (2) || mAddressPositionInt == (3)) {
             mInputAddress = mFlatNum;
+
         } else if (mAddressPositionInt == 4) {
             mInputAddress = mFullAddress;
         }
-        Log.d("flat no", mInputAddress);
 
-        if(!mInputAddress.equals("")) {
+        Log.i("flat no", mFlatNum);
 
-            mTotalAddress = mInputAddress + ", " + mDefaultAddress;
+        if (!mInputAddress.equals("")) {
+            mTotalAddress = mInputAddress + "\n" + mDefaultAddress;
 
-            Intent intent = new Intent(this, AddressConfirmation.class);
+            Intent intent = new Intent(this, AddressConfirmationInCartActivity.class);
             intent.putExtra("Address", mTotalAddress);
             startActivity(intent);
-            finish();
-        }
 
-        else{
+        } else {
             Toast.makeText(getApplicationContext(), R.string.empty_input_field, Toast.LENGTH_LONG).show();
         }
     }
 }
+

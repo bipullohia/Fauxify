@@ -42,7 +42,7 @@ class MyOrderDishesAdapter extends RecyclerView.Adapter<MyOrderDishesAdapter.MyV
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cart_item_summary_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_cart_item_summary, parent, false);
 
         return new MyViewHolder(itemView);
     }

@@ -31,7 +31,7 @@ import java.net.URLEncoder;
  * Created by Bipul Lohia on 8/28/2016.
  */
 
-public class AddressConfirmation extends AppCompatActivity implements View.OnClickListener {
+public class AddressConfirmationActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView mFinalAddressTextView;
     Button mConfirmButton;
@@ -42,7 +42,7 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.address_confirmation_layout);
+        setContentView(R.layout.activity_address_confirmation);
 
         mConfirmButton = (Button) findViewById(R.id.confirm_button);
         mFinalAddressTextView = (TextView) findViewById(R.id.confirm_address);
@@ -65,6 +65,7 @@ public class AddressConfirmation extends AppCompatActivity implements View.OnCli
         Toast.makeText(getBaseContext(), R.string.address_added_successfully, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void sendAddress() {

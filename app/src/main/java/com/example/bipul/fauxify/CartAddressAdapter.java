@@ -49,7 +49,7 @@ class CartAddressAdapter extends RecyclerView.Adapter<CartAddressAdapter.MyViewH
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.addresscart_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_address_cart, parent, false);
 
         return new MyViewHolder(itemView);
     }

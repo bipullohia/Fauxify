@@ -18,12 +18,12 @@
             android:textColor="@color/colorAccent"
             android:textAlignment="center"
             android:textSize="@dimen/slide_title"
-            android:text="@string/delivery"/>
+            android:text="@string/welcome_slide2_title"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginTop="60dp"
             android:paddingRight="15dp"
             android:paddingLeft="15dp"

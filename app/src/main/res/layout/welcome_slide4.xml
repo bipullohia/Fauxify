@@ -19,8 +19,8 @@
             android:paddingRight="10dp"
             android:textColor="@color/colorAccent"
             android:textAlignment="center"
-            android:textSize="28sp"
-            android:text="@string/multiple_payment_options"/>
+            android:textSize="30sp"
+            android:text="@string/welcome_slide4_title"/>
 
         <TextView
             android:layout_width="match_parent"

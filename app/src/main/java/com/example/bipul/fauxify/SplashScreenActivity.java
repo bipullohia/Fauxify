@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-public class SplashScreen extends Activity {
+public class SplashScreenActivity extends Activity {
 
     SharedPreferences mSharedPref = null;
 
@@ -39,7 +39,7 @@ public class SplashScreen extends Activity {
 
         } else {
             Log.i("firstrun", "false");
-            Intent intent = new Intent(this, GoogleSignIn.class);
+            Intent intent = new Intent(this, GoogleSignInActivity.class);
             startActivity(intent);
             launchHomeScreen();
         }
@@ -62,7 +62,7 @@ public class SplashScreen extends Activity {
                 || (personToken == null) || (personContactNumber == null)) {
             Log.e("Data status", "Some/All info is Null");
 
-            Intent intent = new Intent(this, GoogleSignIn.class);
+            Intent intent = new Intent(this, GoogleSignInActivity.class);
             startActivity(intent);
             finish();
 

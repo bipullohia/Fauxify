@@ -123,7 +123,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        startActivity(new Intent(WelcomeActivity.this, GoogleSignIn.class));
+        startActivity(new Intent(WelcomeActivity.this, GoogleSignInActivity.class));
         finish();
     }
 

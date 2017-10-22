@@ -43,7 +43,7 @@ class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHol
             int position = getAdapterPosition();
             Restaurant restaurant = restaurantList.get(position);
 
-            intent = new Intent(context, RestaurantDetails.class);
+            intent = new Intent(context, RestaurantDetailsActivity.class);
             intent.putExtra("restaurantName", restaurant.getResName());
             intent.putExtra("restaurantDeLTime", restaurant.getResDeliveryTime());
             intent.putExtra("restaurantMinOrder", restaurant.getResMinOrder());
@@ -65,7 +65,7 @@ class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHol
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.restaurant_fragment_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_restaurant_fragment, parent, false);
 
         return new MyViewHolder(itemView);
     }
