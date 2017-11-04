@@ -48,6 +48,7 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
     Button mSelectAnotherAddressButton, mAddNewAddressButton, mConfirmOrderButton;
     Toolbar mToolbar;
     EditText mUserMessageEditText;
+    RecyclerView addressRecyclerView;
     public static String orderid, restaurantNameInCart;
     static String finaladdress = null;
     static int totaldishcount = 0, totalitempricecount = 0, deliveryfee = 0, grandtotalamount = 0;
@@ -94,7 +95,6 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.review_order);
 
-        RecyclerView addressRecyclerView;
         addressRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_addresscart);
 
         mCartAddressAdapter = new CartAddressAdapter(mAddressList);
@@ -470,10 +470,15 @@ public class CartActivity extends AppCompatActivity implements View.OnKeyListene
 
             if(jsonArray==null || jsonArray.length()==0){
                 noSavedAddCart.setVisibility(View.VISIBLE);
+                addressRecyclerView.setMinimumHeight(0);
             }
 
             else if (jsonArray != null) {
                 //Log.d(TAG, "Jsonarray length: " + String.valueOf(jsonArray.length()));
+
+                if(jsonArray.length()>1){
+                    addressRecyclerView.setMinimumHeight(100);
+                }
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
                     try {
                         Address address = new Address(jsonArray.getString(j));

@@ -10,7 +10,7 @@
         android:id="@+id/cardview_fragaddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/marginCardViewOverall"
         cardView:cardCornerRadius="2dp"
         cardView:cardElevation="2dp">
 

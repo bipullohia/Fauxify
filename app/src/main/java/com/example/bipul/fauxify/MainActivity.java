@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle mActionBarToggle;
     DrawerLayout mDrawerLayout;
     Toolbar mToolbar;
-    public static String rupeesymbol;
     TextView mHeadNameTextView, mHeadEmailTextView, mHeadNumberTextView;
     FragmentTransaction fragmentTransaction;
     boolean doubleBackToExitPressedOnce = false;

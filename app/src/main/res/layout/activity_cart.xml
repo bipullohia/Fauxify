@@ -26,7 +26,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/marginCardViewOverall"
                 android:layout_marginTop="5dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -85,7 +85,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/marginCardViewOverall"
                 android:layout_marginTop="5dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -275,7 +275,7 @@
                 android:id="@+id/cardview_cart_toselectaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/marginCardViewOverall"
                 android:layout_marginTop="5dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -307,7 +307,6 @@
                         android:id="@+id/recyclerview_addresscart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="80dp"
                         android:longClickable="true"
                         android:overScrollMode="never"
                         android:scrollbars="vertical" />
@@ -322,19 +321,21 @@
                         android:visibility="gone"
                         android:text="@string/no_saved_address_found"/>
 
-                    <LinearLayout
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="@dimen/sectionSeparatorCardView"
+                        android:background="@color/sectionSeparatorCardView" />
 
-                        <Button
+                    <Button
                             android:id="@+id/button_addnewaddress_cart"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingStart="@dimen/paddingExtendedTextButton"
+                            android:paddingEnd="@dimen/paddingExtendedTextButton"
                             android:minHeight="0dp"
                             android:textAllCaps="false"
                             android:text="@string/add_new_address"/>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -344,7 +345,7 @@
                 android:id="@+id/cardview_cart_selectedaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/marginCardViewOverall"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
@@ -385,13 +386,16 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/headingSeparatorCardView"
-                        android:background="@color/headingSeparatorCardView" />
+                        android:layout_height="@dimen/sectionSeparatorCardView"
+                        android:background="@color/sectionSeparatorCardView" />
 
                     <Button
                         android:id="@+id/button_selectanotheraddress_cart"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingStart="@dimen/paddingExtendedTextButton"
+                        android:paddingEnd="@dimen/paddingExtendedTextButton"
                         android:minHeight="0dp"
                         android:textAllCaps="false"
                         android:text="@string/select_another_address"/>
@@ -403,7 +407,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/marginCardViewOverall"
                 android:layout_marginTop="5dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -452,11 +456,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/colorAccent"
-                android:paddingLeft="70dp"
-                android:paddingRight="70dp"
-                android:textAllCaps="true"
+                android:paddingLeft="@dimen/paddingNormalButton"
+                android:paddingRight="@dimen/paddingNormalButton"
+                android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
                 android:text="@string/confirm_order"/>

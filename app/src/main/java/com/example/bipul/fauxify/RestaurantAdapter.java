@@ -77,7 +77,7 @@ class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHol
         holder.resNameTextView.setText(restaurant.getResName());
         holder.restypeTextView.setText(restaurant.getResType());
         holder.resDeliveryTimeTextView.setText(restaurant.getResDeliveryTime());
-        holder.resMinimumOrderTextView.setText("Min Order  " + MainActivity.rupeesymbol + restaurant.getResMinOrder());
+        holder.resMinimumOrderTextView.setText("Min Order  " + holder.context.getString(R.string.Rs) + restaurant.getResMinOrder());
 
         if (!restaurant.getRestStatus().equals("open")) {
 

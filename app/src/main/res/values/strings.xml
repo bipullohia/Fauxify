@@ -70,7 +70,7 @@
     <string name="logout">Logout</string>
     <string name="addresses">Addresses</string>
     <string name="order_details">Order Details</string>
-    <string name="you_can_check_orders_at_myorders">You can always check your order in \'My Orders\'</string>
+    <string name="you_can_check_orders_at_myorders">You can always check your order in \'Orders\'</string>
     <string name="ok">OK</string>
     <string name="order_confirmation">Order Confirmation</string>
     <string name="your_order_being_prepared">Your Order has been confirmed and is being prepared by the Restaurant</string>
